@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cabeceraOrdenManufactura" language="groovy" pageWidth="612" pageHeight="792" columnWidth="528" leftMargin="42" rightMargin="42" topMargin="19" bottomMargin="19" uuid="942b406c-8cf3-471c-a9a4-3590f0a74a15">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="95"/>
+	<template><![CDATA["D:\\PRODUCCION OFICIAL\\PRODUCCION\\IMPRESION OM\\stylos\\StylosImpresionOM.jrtx"]]></template>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[EXEC datosLoteOrdenManufactura $P{codLoteProduccion},$P{codProgramaProd}]]>
+	</queryString>
+	<field name="nombreProducto" class="java.lang.String"/>
+	<field name="nombreForma" class="java.lang.String"/>
+	<field name="loteProduccion" class="java.lang.String"/>
+	<field name="concentracionProducto" class="java.lang.String"/>
+	<field name="registroSanitario" class="java.lang.String"/>
+	<field name="vidaUtil" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="754" splitType="Stretch">
+			<line>
+				<reportElement style="linea" x="1" y="1" width="527" height="1" uuid="64d804d6-dd2a-4efb-b59c-253583833ed3"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="753" width="529" height="1" uuid="c2c5b11c-acca-4ab4-8263-f81c79e5c56a"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="1" y="2" width="1" height="752" uuid="81f3cce8-50bb-494f-ba4c-37618092ff6c"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="528" y="1" width="1" height="752" uuid="c8fc3355-3594-44fe-9264-dd9a931999c0"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="2" y="66" width="526" height="1" uuid="82b7c9f3-7215-47c6-8742-8140b77afb5b"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" x="146" y="19" width="355" height="29" uuid="f4b0dd83-5144-41cc-920f-af6496b86c3e"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ORDEN DE MANUFACTURA]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="127" y="2" width="1" height="65" uuid="f5481752-f929-4bfd-8fcd-7282d3af2b81"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" x="67" y="106" width="52" height="20" uuid="6c67c8bb-47e3-47d1-b295-bb837599cf69"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Producto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="126" y="105" width="284" height="20" uuid="8c2665ed-3a43-4b6f-b055-46f3030ef5f1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreProducto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="texto" x="70" y="135" width="45" height="20" uuid="e768311e-0319-432c-8b5d-d4562ff290bb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Lote:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="128" y="134" width="311" height="20" uuid="cb2f0fe9-10de-44de-829a-ebec8e4139d2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loteProduccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="texto" x="63" y="316" width="136" height="20" uuid="61a725c0-07d5-4723-8f2b-b92441f03215"/>
+				<text><![CDATA[Nombre del Jefe de Area:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

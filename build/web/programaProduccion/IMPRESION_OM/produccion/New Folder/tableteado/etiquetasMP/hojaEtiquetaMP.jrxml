@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaEtiquetas" pageWidth="527" pageHeight="623" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["D:\\PRODUCCION OFICIAL\\PRODUCCION\\web\\programaProduccion\\IMPRESION_OM\\stylos\\StylosImpresionOM.jrtx"]]></template>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="codProgramaProd" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as indicaciones,
+pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+left outer join INDICACION_PROCESO ip on ip.COD_VERSION=pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO=2 and ip.COD_PROCESO_ORDEN_MANUFACTURA=16
+where pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and pp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="indicaciones" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="600" splitType="Stretch">
+			<rectangle>
+				<reportElement style="linea" x="15" y="15" width="489" height="568" uuid="503454e0-5e8f-495e-96c3-7e92d549113c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="28" y="58" width="472" height="182" forecolor="#999999" uuid="c9db0e08-ad17-4348-a463-402a8cce9b09"/>
+				<textElement textAlignment="Center">
+					<font size="40" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{indicaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

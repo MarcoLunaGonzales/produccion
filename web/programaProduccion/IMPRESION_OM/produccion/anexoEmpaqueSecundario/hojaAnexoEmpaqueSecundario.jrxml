@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-06-01T18:55:28 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaEmpaqueSecundario" pageWidth="527" pageHeight="623" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetCantidadEs" uuid="2260ef2a-4ab5-427f-9dcf-21ef6a7da5b5">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160105"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codProgramaProd" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="codLoteProduccion" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cantidadLote" class="java.lang.Double"/>
+		<parameter name="codTipoProgramaProd" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codCompProd" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codPresentacion" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="nombreTipoPrograma" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[exec PAA_CUALICUANTI_ES  $P{codLoteProduccion} , $P{codProgramaProd} , $P{codCompProd} , $P{codTipoProgramaProd} , $P{codPresentacion}]]>
+		</queryString>
+		<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+		<field name="NOMBRE_UNIDAD_MEDIDA" class="java.lang.String"/>
+		<field name="cantidadSalida" class="java.lang.Double"/>
+		<field name="CANTIDAD_LOTE" class="java.lang.Double"/>
+		<field name="CANTIDAD" class="java.lang.Double"/>
+		<field name="CANT_LOTE_PRODUCCION" class="java.lang.Double"/>
+	</subDataset>
+	<subDataset name="dataSetPresentacionesSecundarias" uuid="d49e39b9-d2d9-4ea2-ab9f-6872e1e68af0">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codLoteProduccion" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codProgramaProd" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select pp.COD_TIPO_PROGRAMA_PROD,ppp.NOMBRE_PRODUCTO_PRESENTACION,tpp.ABREVIATURA,pp.COD_COMPPROD,
+PP.COD_PRESENTACION,tpp.NOMBRE_TIPO_PROGRAMA_PROD,pp.COD_LOTE_PRODUCCION as codLoteProduccion
+from PROGRAMA_PRODUCCION pp
+inner join TIPOS_PROGRAMA_PRODUCCION tpp on pp.COD_TIPO_PROGRAMA_PROD=tpp.COD_TIPO_PROGRAMA_PROD
+inner join PRESENTACIONES_PRODUCTO ppp on ppp.COD_PRESENTACION=pp.COD_PRESENTACION
+
+where pp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+and
+(
+pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+or PP.COD_LOTE_PRODUCCION in
+(
+select lpc.COD_LOTE_PRODUCCION_ASOCIADO
+ from LOTES_PRODUCCION_CONJUNTA lpc
+ where lpc.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and lpc.COD_PROGRAMA_PROD=$P{codProgramaProd}
+)
+)
+order by tpp.COD_TIPO_PROGRAMA_PROD,ppp.NOMBRE_PRODUCTO_PRESENTACION]]>
+		</queryString>
+		<field name="COD_TIPO_PROGRAMA_PROD" class="java.lang.Integer"/>
+		<field name="NOMBRE_PRODUCTO_PRESENTACION" class="java.lang.String"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+		<field name="COD_COMPPROD" class="java.lang.Integer"/>
+		<field name="COD_PRESENTACION" class="java.lang.Integer"/>
+		<field name="NOMBRE_TIPO_PROGRAMA_PROD" class="java.lang.String"/>
+		<field name="codLoteProduccion" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA["112415"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer("298")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as observaciones,
+       pp.COD_COMPPROD_VERSION,
+       GETDATE() AS fechaImpresion,
+       totalLote.cantidadLote as cantidadLote,
+       (case
+          when cpv.COD_FORMA in (2, 25, 6, 1, 32, 35, 36, 37, 38, 39, 40, 41)
+          then f.ABREVIATURA_UNIDAD_OM
+          else ep.nombre_envaseprim
+        end) as unidadProducto,
+       cpv.NRO_VERSION,
+       (CASE
+          when cpv.COD_FORMA in (2) then cpv.CANTIDAD_VOLUMEN /1000
+          when cpv.COD_FORMA in (25) then cpv.CANTIDAD_VOLUMEN / 1000
+          else 1
+        end) as cantidadUnitaria,
+       (CASE
+	when cpv.COD_FORMA in (1,35,36,37,38,39,40,41,42) then 'PESO TOTAL SIN RECUBRIMIENTO'
+	else 'PESO TOTAL '
+	end) as textoPesoRecubrimiento
+from PROGRAMA_PRODUCCION pp
+     inner join COMPONENTES_PROD_VERSION cpv on cpv.COD_VERSION =
+     pp.COD_COMPPROD_VERSION
+     inner join FORMAS_FARMACEUTICAS f on f.cod_forma = cpv.COD_FORMA
+     left outer join PRESENTACIONES_PRIMARIAS_VERSION ppv on
+     pp.COD_COMPPROD_VERSION = ppv.COD_VERSION and pp.COD_TIPO_PROGRAMA_PROD =
+     ppv.COD_TIPO_PROGRAMA_PROD
+     left outer join ENVASES_PRIMARIOS ep on ep.cod_envaseprim =
+     ppv.COD_ENVASEPRIM
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO = 10 and
+     ip.COD_PROCESO_ORDEN_MANUFACTURA = 14
+     outer apply
+     (
+       select sum(case
+          when cpv1.COD_FORMA in (2) then (pp1.CANT_LOTE_PRODUCCION *(
+          cpv1.CANTIDAD_VOLUMEN_DE_DOSIFICADO / 1000)) +((pp1.CANT_LOTE_PRODUCCION *(
+          cpv1.CANTIDAD_VOLUMEN_DE_DOSIFICADO / 1000)) *
+          cpv1.TOLERANCIA_VOLUMEN_FABRICAR / 100)
+          when cpv1.COD_FORMA in (25) then (pp1.CANT_LOTE_PRODUCCION *(
+          cpv1.CANTIDAD_VOLUMEN / 1000)) +((pp1.CANT_LOTE_PRODUCCION *(
+          cpv1.CANTIDAD_VOLUMEN / 1000)) * cpv1.TOLERANCIA_VOLUMEN_FABRICAR / 100)
+          else pp1.CANT_LOTE_PRODUCCION
+        end) as cantidadLote
+       from programa_produccion pp1
+	inner join COMPONENTES_PROD_VERSION cpv1 on cpv1.COD_VERSION=pp1.COD_COMPPROD_VERSION
+            	and cpv1.COD_COMPPROD=pp1.COD_COMPPROD
+       where pp1.cod_programa_prod = pp.cod_programa_prod
+       and (pp1.cod_lote_Produccion = pp.cod_lote_produccion
+       or pp1.COD_LOTE_PRODUCCION in
+       (
+       select lpc.COD_LOTE_PRODUCCION_ASOCIADO
+       from LOTES_PRODUCCION_CONJUNTA lpc where  lpc.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+       and lpc.COD_LOTE_PRODUCCION=pp.COD_LOTE_PRODUCCION
+       )
+       )
+     ) totalLote
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion} and
+      pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="observaciones" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<field name="fechaImpresion" class="java.sql.Timestamp"/>
+	<field name="cantidadLote" class="java.lang.Double"/>
+	<field name="unidadProducto" class="java.lang.String"/>
+	<field name="NRO_VERSION" class="java.lang.Integer"/>
+	<field name="cantidadUnitaria" class="java.lang.Double"/>
+	<field name="textoPesoRecubrimiento" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="82" splitType="Stretch">
+			<componentElement>
+				<reportElement style="linea" positionType="Float" x="17" y="6" width="487" height="43" uuid="33843d27-7b9f-4036-b902-bf1ee6dbe310"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetPresentacionesSecundarias" uuid="a25872b3-1793-4456-ac7d-195a9ac9cfd9">
+						<datasetParameter name="codLoteProduccion">
+							<datasetParameterExpression><![CDATA[$P{codLoteProduccion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codProgramaProd">
+							<datasetParameterExpression><![CDATA[$P{codProgramaProd}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="43" width="487">
+						<frame>
+							<reportElement style="celdaCabecera" positionType="Float" x="2" y="0" width="484" height="13" uuid="f92316ff-bfa7-49ba-8b96-caec491ae376"/>
+							<textField>
+								<reportElement style="textoCabecera" x="87" y="2" width="313" height="9" uuid="d39dd0b8-37bb-4fa4-94ea-43dc680a9ac7"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_PRODUCTO_PRESENTACION}]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement style="celdaBody" x="2" y="13" width="484" height="30" uuid="f83f0495-022e-4366-9730-a20c2feb8adf"/>
+							<componentElement>
+								<reportElement key="table" x="19" y="2" width="437" height="25" uuid="a49ec34f-4ac0-41ac-ab83-f4cfa7f018d9"/>
+								<jr:table>
+									<datasetRun subDataset="dataSetCantidadEs" uuid="0e0e697d-2e2e-46b1-a469-313c4811b0b7">
+										<datasetParameter name="codLoteProduccion">
+											<datasetParameterExpression><![CDATA[$F{codLoteProduccion}]]></datasetParameterExpression>
+										</datasetParameter>
+										<datasetParameter name="codProgramaProd">
+											<datasetParameterExpression><![CDATA[$P{codProgramaProd}]]></datasetParameterExpression>
+										</datasetParameter>
+										<datasetParameter name="codTipoProgramaProd">
+											<datasetParameterExpression><![CDATA[$F{COD_TIPO_PROGRAMA_PROD}]]></datasetParameterExpression>
+										</datasetParameter>
+										<datasetParameter name="codCompProd">
+											<datasetParameterExpression><![CDATA[$F{COD_COMPPROD}]]></datasetParameterExpression>
+										</datasetParameter>
+										<datasetParameter name="codPresentacion">
+											<datasetParameterExpression><![CDATA[$F{COD_PRESENTACION}]]></datasetParameterExpression>
+										</datasetParameter>
+										<datasetParameter name="nombreTipoPrograma">
+											<datasetParameterExpression><![CDATA[$F{NOMBRE_TIPO_PROGRAMA_PROD}]]></datasetParameterExpression>
+										</datasetParameter>
+										<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+									</datasetRun>
+									<jr:column width="156" uuid="31eeacb8-c0eb-45d4-b4f4-9236c57be6ed">
+										<jr:columnHeader style="celdaCabecera" height="30" rowSpan="2">
+											<staticText>
+												<reportElement style="textoCabecera" x="0" y="0" width="156" height="30" uuid="2877f782-8c6b-4cba-bbde-f025ab1fb144"/>
+												<text><![CDATA[MATERIAL]]></text>
+											</staticText>
+										</jr:columnHeader>
+										<jr:detailCell style="celdaBody" height="21" rowSpan="1">
+											<textField>
+												<reportElement style="textoBody." x="0" y="0" width="156" height="21" uuid="23f3919d-97f0-4b59-9886-8f27f3d96d8e"/>
+												<textElement>
+													<font size="6"/>
+												</textElement>
+												<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+											</textField>
+										</jr:detailCell>
+									</jr:column>
+									<jr:column width="68" uuid="d896dfc3-5846-4fa1-ba4b-d7b2afce8650">
+										<jr:columnHeader style="celdaCabecera" height="30" rowSpan="2">
+											<staticText>
+												<reportElement style="textoCabecera" x="0" y="0" width="68" height="30" uuid="58ddd4c0-581f-45d1-89e2-ee05f9af8e62"/>
+												<text><![CDATA[TIPO DE MERCADERIA]]></text>
+											</staticText>
+										</jr:columnHeader>
+										<jr:detailCell style="celdaBody" height="21" rowSpan="1">
+											<textField>
+												<reportElement style="textoBody." x="0" y="0" width="68" height="21" uuid="2e5c5328-863c-4ded-92be-d14734a6335f"/>
+												<textElement textAlignment="Center"/>
+												<textFieldExpression><![CDATA[$P{nombreTipoPrograma}]]></textFieldExpression>
+											</textField>
+										</jr:detailCell>
+									</jr:column>
+									<jr:columnGroup width="106" uuid="0494a35c-86fe-4477-9465-36a680ac11d7">
+										<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+											<textField>
+												<reportElement style="textoCabecera" x="0" y="0" width="106" height="19" uuid="2c835144-da30-469d-893b-b732f0fffedf"/>
+												<textElement>
+													<font size="6"/>
+												</textElement>
+												<textFieldExpression><![CDATA["CANTIDAD PARA UN LOTE DE "+$F{CANTIDAD_LOTE}.intValue()]]></textFieldExpression>
+											</textField>
+										</jr:columnHeader>
+										<jr:column width="57" uuid="810ef153-8c5d-42f6-ac2d-4109c3b79fe2">
+											<jr:columnHeader style="celdaCabecera" height="11" rowSpan="1">
+												<textField pattern="#,##0">
+													<reportElement style="textoCabecera" x="0" y="0" width="57" height="11" uuid="f564f817-32ba-435c-afd7-bd9cffe7c972"/>
+													<textElement>
+														<font size="6"/>
+													</textElement>
+													<textFieldExpression><![CDATA[$F{CANTIDAD_LOTE}]]></textFieldExpression>
+												</textField>
+											</jr:columnHeader>
+											<jr:detailCell style="celdaBody" height="21" rowSpan="1">
+												<textField pattern="#,##0.0">
+													<reportElement style="textoBody." x="0" y="0" width="53" height="21" uuid="336c734d-3118-43ee-985b-5df7cb22eb41"/>
+													<textElement textAlignment="Right"/>
+													<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+												</textField>
+											</jr:detailCell>
+										</jr:column>
+										<jr:column width="49" uuid="104a34de-0acd-473d-9879-0557014e4f6a">
+											<jr:columnHeader style="celdaCabecera" height="11" rowSpan="1">
+												<staticText>
+													<reportElement style="textoCabecera" x="0" y="0" width="49" height="11" uuid="501d5d83-d469-443f-a3d0-e0b36f723af8"/>
+													<textElement>
+														<font size="6" isBold="true"/>
+													</textElement>
+													<text><![CDATA[UNIDADES]]></text>
+												</staticText>
+											</jr:columnHeader>
+											<jr:detailCell style="celdaBody" height="21" rowSpan="1">
+												<textField>
+													<reportElement style="textoBody." x="0" y="0" width="49" height="21" uuid="ec9f9115-9677-4769-875f-3b4c086bb31a"/>
+													<textFieldExpression><![CDATA[$F{NOMBRE_UNIDAD_MEDIDA}]]></textFieldExpression>
+												</textField>
+											</jr:detailCell>
+										</jr:column>
+									</jr:columnGroup>
+									<jr:columnGroup width="106" uuid="95ce13f0-0038-418f-a11a-ad56eae0b38a">
+										<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+											<staticText>
+												<reportElement style="textoCabecera" x="0" y="0" width="106" height="19" uuid="5940b87c-d66a-4b45-bf8b-a0c9a9addaae"/>
+												<textElement>
+													<font size="6"/>
+												</textElement>
+												<text><![CDATA[CANTIDAD PARA EL LOTE INDUSTRIAL]]></text>
+											</staticText>
+										</jr:columnHeader>
+										<jr:column width="54" uuid="72d6dfbb-f646-4986-bf50-1acfafabb61f">
+											<jr:columnHeader style="celdaCabecera" height="11" rowSpan="1">
+												<textField pattern="#,##0">
+													<reportElement style="textoCabecera" x="0" y="0" width="54" height="11" uuid="214e48ba-7dfb-4573-a8b5-fb7f639757bc"/>
+													<textElement>
+														<font size="6"/>
+													</textElement>
+													<textFieldExpression><![CDATA[$F{CANT_LOTE_PRODUCCION}]]></textFieldExpression>
+												</textField>
+											</jr:columnHeader>
+											<jr:detailCell style="celdaBody" height="21" rowSpan="1">
+												<textField pattern="#,##0.0">
+													<reportElement style="textoBody." x="0" y="0" width="50" height="21" uuid="2b18ec37-0633-47f9-9c22-2584ef389a1e"/>
+													<textElement textAlignment="Right"/>
+													<textFieldExpression><![CDATA[$F{cantidadSalida}]]></textFieldExpression>
+												</textField>
+											</jr:detailCell>
+										</jr:column>
+										<jr:column width="52" uuid="82681aa9-8e59-4a36-be27-10152ead5d17">
+											<jr:columnHeader style="celdaCabecera" height="11" rowSpan="1">
+												<staticText>
+													<reportElement style="textoCabecera" x="0" y="0" width="52" height="11" uuid="6a1404f9-7dbd-4854-8418-0922cdd91af2"/>
+													<textElement>
+														<font size="6"/>
+													</textElement>
+													<text><![CDATA[UNIDADES]]></text>
+												</staticText>
+											</jr:columnHeader>
+											<jr:detailCell style="celdaBody" height="21" rowSpan="1">
+												<textField>
+													<reportElement style="textoBody." x="0" y="0" width="52" height="21" uuid="1d5d37dd-1491-441e-a6ac-342faa6e06fb"/>
+													<textFieldExpression><![CDATA[$F{NOMBRE_UNIDAD_MEDIDA}]]></textFieldExpression>
+												</textField>
+											</jr:detailCell>
+										</jr:column>
+									</jr:columnGroup>
+								</jr:table>
+							</componentElement>
+						</frame>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="19" y="50" width="65" height="10" uuid="17295254-d565-4b11-8650-a4305f8d95a9"/>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" mode="Opaque" x="20" y="65" width="485" height="1" uuid="90bcf006-d3d4-41de-85cb-a47d90116a9b"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" mode="Opaque" x="20" y="77" width="485" height="1" uuid="b086b6cb-9733-49b5-98d8-131e08d02dfb"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

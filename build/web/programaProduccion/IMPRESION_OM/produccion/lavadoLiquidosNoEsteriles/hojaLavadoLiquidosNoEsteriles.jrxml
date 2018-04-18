@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-05-05T15:14:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaLavado" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="28"/>
+	<property name="ireport.y" value="373"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetPresentacionesPrimarias" uuid="97296d64-c2c9-40fd-827a-fbc6d8221f76">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codLoteProduccion" class="java.lang.String"/>
+		<parameter name="codProgramaProd" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select  ppv.COD_PRESENTACION_PRIMARIA,tpp.PRIORIDAD_PROCESOS_PRODUCCION,tpp.NOMBRE_TIPO_PROGRAMA_PROD
+from PROGRAMA_PRODUCCION pp 
+	inner join TIPOS_PROGRAMA_PRODUCCION tpp on tpp.COD_TIPO_PROGRAMA_PROD=pp.COD_TIPO_PROGRAMA_PROD
+	inner join PRESENTACIONES_PRIMARIAS_VERSION ppv on ppv.COD_VERSION=pp.COD_COMPPROD_VERSION
+    		and ppv.COD_TIPO_PROGRAMA_PROD=pp.COD_TIPO_PROGRAMA_PROD
+where pp.COD_LOTE_PRODUCCION= $P{codLoteProduccion} 
+	and pp.COD_PROGRAMA_PROD= $P{codProgramaProd} 
+group by tpp.PRIORIDAD_PROCESOS_PRODUCCION,ppv.COD_PRESENTACION_PRIMARIA,tpp.NOMBRE_TIPO_PROGRAMA_PROD
+order by tpp.PRIORIDAD_PROCESOS_PRODUCCION]]>
+		</queryString>
+		<field name="COD_PRESENTACION_PRIMARIA" class="java.lang.Integer"/>
+		<field name="PRIORIDAD_PROCESOS_PRODUCCION" class="java.lang.Integer"/>
+		<field name="NOMBRE_TIPO_PROGRAMA_PROD" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetEmpaquePrimario" uuid="20f6ba6c-01f5-4463-824c-54e5b305a348">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codLoteProduccion" class="java.lang.String"/>
+		<parameter name="codProgramaProd" class="java.lang.Integer"/>
+		<parameter name="codPresentacionPrimaria" class="java.lang.Integer"/>
+		<parameter name="nombreTipoProgramaProd" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[exec PAA_CUALICUANTI_EP  $P{codLoteProduccion} , $P{codProgramaProd} , $P{codPresentacionPrimaria}]]>
+		</queryString>
+		<field name="CODIGO_ANTIGUO" class="java.lang.String"/>
+		<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+		<field name="cantidadLote" class="java.lang.Double"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+		<field name="NOMBRE_TIPO_PROGRAMA_PROD" class="java.lang.String"/>
+		<field name="cantidadUnitaria" class="java.lang.Double"/>
+	</subDataset>
+	<subDataset name="dataSetRegistroOperario" uuid="04960377-d0ae-4162-afa0-427e822c6db1">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[select 1 as nro union
+select 2 as nro union
+select 3 as nro union
+select 4 as nro union
+select 5 as nro union
+select 6 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["H2249"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as indicacionRecepcionMaterialPrimario,
+		ip1.INDICACION_PROCESO as indicacionLavado,
+       pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+	inner join TIPOS_PROGRAMA_PRODUCCION tpp on tpp.COD_TIPO_PROGRAMA_PROD=pp.COD_TIPO_PROGRAMA_PROD
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =pp.COD_COMPPROD_VERSION 
+     		and ip.COD_TIPO_INDICACION_PROCESO = 27 and ip.COD_PROCESO_ORDEN_MANUFACTURA = 2
+ 	 left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION =pp.COD_COMPPROD_VERSION 
+     		and ip1.COD_TIPO_INDICACION_PROCESO = 28 and ip1.COD_PROCESO_ORDEN_MANUFACTURA = 2	
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion}
+		 and  pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by case when pp.cod_compprod=pp.cod_compprod_padre then 1 else 2 end, tpp.PRIORIDAD_PROCESOS_PRODUCCION]]>
+	</queryString>
+	<field name="indicacionRecepcionMaterialPrimario" class="java.lang.String"/>
+	<field name="indicacionLavado" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="256" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" x="11" y="7" width="499" height="3" uuid="2028ad04-1c2c-4498-ac1b-5ab1557aa1fc"/>
+				<textFieldExpression><![CDATA[$F{indicacionRecepcionMaterialPrimario}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="14" width="526" height="1" uuid="4d5f03f8-07ed-40a5-8c5d-f657eef5bb52"/>
+			</line>
+			<componentElement>
+				<reportElement positionType="Float" x="1" y="26" width="527" height="34" uuid="6ae22dac-7fd3-4d1e-b2c3-13933f9b7a73">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetPresentacionesPrimarias" uuid="26424977-64ca-437d-92fa-0b9219db4818">
+						<datasetParameter name="codLoteProduccion">
+							<datasetParameterExpression><![CDATA[$P{codLoteProduccion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codProgramaProd">
+							<datasetParameterExpression><![CDATA[$P{codProgramaProd}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="34" width="527">
+						<componentElement>
+							<reportElement x="0" y="0" width="527" height="30" uuid="4e6102a9-84d7-4def-bcb2-bcc04afb72fb">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<jr:table>
+								<datasetRun subDataset="dataSetEmpaquePrimario" uuid="8d948dbb-e131-44e2-a8a7-df12de1455c6">
+									<datasetParameter name="codLoteProduccion">
+										<datasetParameterExpression><![CDATA[$P{codLoteProduccion}]]></datasetParameterExpression>
+									</datasetParameter>
+									<datasetParameter name="codProgramaProd">
+										<datasetParameterExpression><![CDATA[$P{codProgramaProd}]]></datasetParameterExpression>
+									</datasetParameter>
+									<datasetParameter name="codPresentacionPrimaria">
+										<datasetParameterExpression><![CDATA[$F{COD_PRESENTACION_PRIMARIA}]]></datasetParameterExpression>
+									</datasetParameter>
+									<datasetParameter name="nombreTipoProgramaProd">
+										<datasetParameterExpression><![CDATA[$F{NOMBRE_TIPO_PROGRAMA_PROD}]]></datasetParameterExpression>
+									</datasetParameter>
+									<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+								</datasetRun>
+								<jr:columnGroup width="527" uuid="d7eb7847-aeed-4880-bb14-89b514053c86">
+									<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [3]"/>
+									<jr:columnHeader style="celdaCabecera" height="15">
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<textField>
+											<reportElement style="textoCabecera" x="0" y="0" width="527" height="15" uuid="d72b1592-e8b5-4b4d-bb3a-350b0b1d01da"/>
+											<textFieldExpression><![CDATA[$P{nombreTipoProgramaProd}]]></textFieldExpression>
+										</textField>
+									</jr:columnHeader>
+									<jr:column width="280" uuid="1ffe75ed-7eb9-421d-be1c-0a86c55aac93">
+										<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+										<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+										<jr:columnHeader style="celdaCabecera" height="15">
+											<property name="com.jaspersoft.studio.unit.height" value="px"/>
+											<staticText>
+												<reportElement style="textoCabecera" x="0" y="0" width="280" height="15" uuid="bef781f5-6c0c-45c3-911e-7d5a219fef16"/>
+												<text><![CDATA[Material Primario]]></text>
+											</staticText>
+										</jr:columnHeader>
+										<jr:detailCell style="celdaBody" height="15">
+											<textField isStretchWithOverflow="true">
+												<reportElement style="textoBody." x="0" y="0" width="280" height="15" uuid="6733bf1a-13a0-4dfe-8ce1-960ba2406bfc"/>
+												<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+											</textField>
+										</jr:detailCell>
+									</jr:column>
+									<jr:column width="130" uuid="eb7e7238-1b24-4cba-bd79-32119d3fe17b">
+										<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+										<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+										<jr:columnHeader style="celdaCabecera" height="15">
+											<property name="com.jaspersoft.studio.unit.height" value="px"/>
+											<staticText>
+												<reportElement style="textoCabecera" x="0" y="0" width="130" height="15" uuid="b1c583d3-f912-45c2-9bdc-d2ac046fe4c1"/>
+												<text><![CDATA[Cantidad Teórica]]></text>
+											</staticText>
+										</jr:columnHeader>
+										<jr:detailCell style="celdaBody" height="15">
+											<property name="com.jaspersoft.studio.unit.height" value="px"/>
+											<textField pattern="#,##0.00">
+												<reportElement style="textoBody." x="0" y="0" width="130" height="15" uuid="d11648cb-b248-44af-80c0-5921d0058c00"/>
+												<textElement textAlignment="Right">
+													<paragraph rightIndent="10"/>
+												</textElement>
+												<textFieldExpression><![CDATA[$F{cantidadLote}]]></textFieldExpression>
+											</textField>
+										</jr:detailCell>
+									</jr:column>
+									<jr:column width="117" uuid="8dbee9b3-646b-443a-aa41-4be529f98fef">
+										<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+										<jr:columnHeader style="celdaCabecera" height="15">
+											<property name="com.jaspersoft.studio.unit.height" value="px"/>
+											<staticText>
+												<reportElement style="textoCabecera" x="0" y="0" width="117" height="15" uuid="3df2c9d3-dd92-4c63-8d10-16029944e120"/>
+												<text><![CDATA[Conforme]]></text>
+											</staticText>
+										</jr:columnHeader>
+										<jr:detailCell style="celdaBody" height="15">
+											<rectangle>
+												<reportElement style="linea" x="0" y="0" width="117" height="15" uuid="dc410c3d-a6da-49cb-88bc-428242fba794">
+													<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+													<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+													<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+												</reportElement>
+											</rectangle>
+										</jr:detailCell>
+									</jr:column>
+								</jr:columnGroup>
+							</jr:table>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="10" y="88" width="500" height="32" uuid="34bbe58b-626c-43b0-a4fa-29c44d399d3e">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRegistroOperario" uuid="35e4374a-b3cb-403f-ba86-729ec449c05b">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="30" uuid="dca6e8dc-592d-4df6-abfa-cdeab55817fe">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="30" height="15" uuid="5607606b-e575-46d8-a854-d6074025e021"/>
+								<text><![CDATA[N°]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="18">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="30" height="18" uuid="44de2e7d-012f-4918-9a5f-132a2d10aa38"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="cb021631-3bf7-409b-8e9c-6839d1bc5095">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="140" height="15" uuid="5ac668c4-ee98-454c-8e02-25ff35980999"/>
+								<text><![CDATA[Operario]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="18">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="238e0c25-c086-4f16-af0b-81e1ceb36591">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="15" uuid="e4b164c4-3680-4a00-b595-be373a6996d5"/>
+								<text><![CDATA[N° de frascos lavados]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="18"/>
+					</jr:column>
+					<jr:column width="90" uuid="7446e753-f5a4-40af-9c06-a41cec2c76b5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="15" uuid="4222dda9-441b-4622-8501-3c2b9c701ffd"/>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="18"/>
+					</jr:column>
+					<jr:column width="70" uuid="ec513088-0c60-410e-8140-8e86fdc40591">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="15" uuid="a17427da-1996-4c5f-adbf-5eeb6f993384"/>
+								<text><![CDATA[Hora Inicio]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="18"/>
+					</jr:column>
+					<jr:column width="80" uuid="352fb299-9a29-4edc-bf49-803a7f7c28c0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="80" height="15" uuid="5e6ded2b-187d-4cee-83a2-9b6335bd02fd"/>
+								<text><![CDATA[Hora Final]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="18"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="10" y="66" width="100" height="10" uuid="efdc1e7f-c8e7-4ab0-a5df-156db02de79b"/>
+				<text><![CDATA[Nombre del encargado de recepción:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="115" y="72" width="334" height="1" uuid="c74c27a7-35c0-4f4d-9953-7b18b69cfb4e"/>
+			</line>
+			<frame>
+				<reportElement style="linea" positionType="Float" x="52" y="126" width="432" height="130" uuid="caff48f3-2972-4b7f-b773-420c5852aee2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement style="textoCabeceraProceso" x="-1" y="0" width="432" height="10" uuid="ded45195-e02e-4391-8813-3347f53cfd52"/>
+					<text><![CDATA[RENDIMIENTO DEL PROCESO DE LAVADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="9" y="15" width="90" height="11" uuid="bc772fca-76a6-4912-abc5-f6a7b5e509f4"/>
+					<text><![CDATA[Cantidad de frascos recibidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="10" y="29" width="90" height="11" uuid="1deff998-31a7-4628-b53c-2289d5a61de9"/>
+					<text><![CDATA[Cantidad de frascos lavados]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="9" y="43" width="122" height="11" uuid="32813463-d4ed-42bc-9db2-921ba8bebd57"/>
+					<text><![CDATA[Cantidad de frascos con defectos de fabrica]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="10" y="57" width="140" height="11" uuid="7385b8c7-a273-4978-b9ff-39ea4c280297"/>
+					<text><![CDATA[Cantidad de frascos con defectos de serigrafiado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="11" y="72" width="140" height="11" uuid="b9f8faab-766a-49ca-9c4d-291ac6cb3306"/>
+					<text><![CDATA[Cantidad de frascos dañados durante el lavado]]></text>
+				</staticText>
+				<line>
+					<reportElement style="lineaPunto" x="266" y="21" width="140" height="1" uuid="449bee10-1d5a-4af2-8fee-ac21e3f4b347"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="267" y="34" width="140" height="1" uuid="f927f299-b05e-4457-86fb-72592dfdabf3"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="267" y="49" width="140" height="1" uuid="9a00fe0a-67bf-427a-aad8-798abd8b4f20"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="267" y="62" width="140" height="1" uuid="b7983b6d-dbf1-4306-b11c-f3413d65457c"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="267" y="77" width="140" height="1" uuid="fa7e2df4-7668-405e-bd2c-832fde6b2392"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="69" y="97" width="47" height="11" uuid="ea2e4b98-1384-4497-bea8-6ac95c2ac4f9"/>
+					<text><![CDATA[% Rendimiento=]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="120" y="101" width="135" height="1" uuid="35f4a88d-60c4-4a96-9dc0-791dfafbd164"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="145" y="90" width="90" height="11" uuid="2f375b8d-cc28-42ea-a9b9-c8f8570f375b"/>
+					<text><![CDATA[Cantidad de frascos lavados]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="145" y="102" width="90" height="11" uuid="8d811590-dcc2-4f55-94dd-38403bd498e9"/>
+					<text><![CDATA[Cantidad de frascos lavados]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="259" y="97" width="47" height="11" uuid="aadb4692-8ad9-4d90-9f9b-7f1bcaa0cc00"/>
+					<text><![CDATA[ X   100]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" positionType="Float" x="69" y="115" width="47" height="11" uuid="827a3815-9ecc-4baa-a35b-8cedd7d95ea5"/>
+					<text><![CDATA[% Rendimiento=]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement style="linea" x="122" y="115" width="100" height="9" uuid="7f12dabb-d9c5-4fbf-9669-9ae281680916"/>
+				</rectangle>
+				<line>
+					<reportElement key="" style="linea" x="-1" y="0" width="1" height="130" uuid="c310f51d-39b3-464f-8c68-aeb63b1b5414"/>
+				</line>
+				<line>
+					<reportElement key="" style="linea" x="431" y="0" width="1" height="130" uuid="b6581c64-370a-4720-a43c-562a362a3bf8"/>
+				</line>
+				<line>
+					<reportElement key="" style="linea" x="-1" y="130" width="432" height="1" uuid="2e295043-5dcc-41f6-af0c-21bb74ba8af5"/>
+				</line>
+			</frame>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="10" y="78" width="499" height="3" uuid="660cf46d-8359-4dd7-9c48-4d780bb3d5b0"/>
+				<textFieldExpression><![CDATA[$F{indicacionLavado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

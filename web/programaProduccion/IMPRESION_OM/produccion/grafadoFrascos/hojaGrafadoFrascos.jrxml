@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-05-05T15:13:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaControlDosificado" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetRegistrosOtros" uuid="39b97b9e-d25f-4846-b665-4899fedaefd4">
+		<queryString>
+			<![CDATA[select 1  as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro
+union
+select 6 as nro
+union
+select 7 as nro
+union
+select 8 as nro
+union
+select 9 as nro
+union
+select 10 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 1 as nro]]>
+	</queryString>
+	<field name="nro" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="98" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="34" y="14" width="456" height="38" uuid="f33f0ef0-477b-4430-825e-9b7efbf4cb5c"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRegistrosOtros" uuid="d6a71a7e-4cbc-45db-87d1-d4ad0c256c07">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="455" uuid="7e8e7cfb-62e5-446f-be70-e0ee38382fca">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [7]"/>
+						<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="455" height="12" uuid="a86af6bf-34af-4800-afc2-ea2a0c30acf3"/>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Colocado de Tapones]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:column width="80" uuid="01b38542-f08f-45c3-9014-2d8e39ea592e">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="80" height="12" uuid="2c10533b-8c8a-4536-8eac-29cd9b3c0e5c"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Personal]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="80" height="12" forecolor="#FFFFFF" uuid="acc50666-173e-405e-b700-0cd986d2124b"/>
+									<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="1209734b-df9c-4c03-9dd4-b4f038a7d988">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="033d1934-a79e-47d9-9cf3-2cf89a044f8e"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Fecha]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="60" uuid="b2d05fb9-ec25-4a4e-8df5-116ced71e2d6">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="c3205404-c8e2-40bd-9db0-b49b9cbfffa4"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Inicio]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="70" uuid="55ba7df2-a466-40f6-9e2f-fc9556172d27">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="70" height="12" uuid="86c2cf63-12a7-403b-912c-8f870291b4d8"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Final]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="60" uuid="6b475d80-279f-4774-bb5d-de50bec0bf98">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="19cf6966-3e71-470f-bf0d-083cc4c3f770"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Horas Hombre]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="60" uuid="202ad441-1eb7-494c-97f1-555fa49d1913">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+							<jr:tableHeader style="celdaCabecera" height="12">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="6af972b4-026f-453b-aa48-7368325046b0"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Cantidad]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12"/>
+						</jr:column>
+						<jr:column width="65" uuid="0b1ab607-e227-476f-9827-9442a14824fc">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+							<jr:tableHeader style="celdaCabecera" height="12">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="65" height="12" uuid="0b9cfbf0-77ea-4976-9e3e-80982dc8b1f7"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Tipo Producción]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12"/>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="34" y="60" width="455" height="38" uuid="eb455951-e0e7-4f74-b037-5408685d69ad"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRegistrosOtros" uuid="c15f33f1-3233-470e-80ca-8e86291b872e">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="455" uuid="68803837-1c5e-4ee9-8718-7f4aa88ef3fc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [7]"/>
+						<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="455" height="12" uuid="175ee7ee-9366-42c5-b40b-7caa91139e6c"/>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Grafado de Frascos]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:column width="80" uuid="2f1913b3-d1f9-421e-91bf-aa08019a2afe">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="80" height="12" uuid="0a8ae02a-a193-4f73-bcec-2ceb4b9f7645"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Personal]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="80" height="12" forecolor="#FFFFFF" uuid="8cf16dca-60f0-4d4e-8d33-5a111528f738"/>
+									<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="a72ce747-c6ce-4080-b99f-940ff56737d4">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="70" height="12" uuid="0fcd794a-b565-4672-8ad3-ace5ef77c389"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Fecha]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="60" uuid="41467d77-d0f3-4e82-a89a-1495e29e5e80">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="d2f0fff8-aebd-4e45-8b68-abeb0ebd1b31"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Inicio]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="70" uuid="d3595ae5-9ebd-4b3b-b64b-46d1d9ac2995">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="70" height="12" uuid="5b665033-7317-4279-a55b-ba6c6ce214a5"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Final]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="60" uuid="6224610a-17e1-4484-88b9-c44abadd2b33">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="9f999375-9a63-4dce-99e5-b77eba4fc3dc"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Horas Hombre]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="50" uuid="43385719-f96d-4f8f-8494-f6389dad0a47">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+							<jr:tableHeader style="celdaCabecera" height="12">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="50" height="12" uuid="65d3363a-de9c-446f-a3b7-47704560bdbd"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Cantidad]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12"/>
+						</jr:column>
+						<jr:column width="65" uuid="f438d6e7-2e88-4cc8-91d4-bd2a73700cea">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+							<jr:tableHeader style="celdaCabecera" height="12">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="65" height="12" uuid="1525deb7-625d-4087-915d-6df7a926d2e8"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Tipo Producción]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12"/>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

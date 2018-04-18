@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteEspecificacionesCCPeso" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetEspecificacionPesoLoteProduccion" uuid="ee81b93c-f5ad-4b0a-b60b-6005d343c6e6">
+		<parameter name="codCompProd" class="java.lang.Integer"/>
+		<parameter name="fechaInicio" class="java.sql.Timestamp"/>
+		<parameter name="fechaFinal" class="java.sql.Timestamp"/>
+		<queryString>
+			<![CDATA[exec PAA_RAP_ESPECIFICACION_PESO_LOTES_PRODUCCION $P{fechaInicio},$P{fechaFinal}]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="RESULTADO_NUMERICO" class="java.lang.Double"/>
+		<field name="LIMITE_INFERIOR" class="java.lang.Double"/>
+		<field name="LIMITE_SUPERIOR" class="java.lang.Double"/>
+		<field name="UNIDAD" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.sql.Timestamp"/>
+	<parameter name="fechaFinal" class="java.sql.Timestamp"/>
+	<queryString>
+		<![CDATA[select getdate() as feha]]>
+	</queryString>
+	<field name="feha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="593" splitType="Stretch">
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="15" y="8" width="157" height="12" uuid="362e1720-ef78-478d-84a3-fb8879abb16e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[4) Resultados atributos criticos de calidad]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="40" y="23" width="414" height="9" uuid="555943be-dc3d-4d84-85a1-199c99790c25"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetEspecificacionPesoLoteProduccion" uuid="150b6274-1788-4ce2-a25d-96e4f9111a70">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="73ef25c1-a51b-4429-b6f2-e9ad3fc8340c">
+						<jr:columnHeader style="celdaCabecera" height="30">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="30" uuid="9ff272bc-e808-4b58-9bf3-d27e2fe063fa"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="20">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="90" height="20" uuid="a89103df-c875-4578-8e91-e581c00c7fed"/>
+								<textElement verticalAlignment="Top">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c6d0c530-f334-4486-88ad-8cc9056bb54d">
+						<jr:columnHeader style="celdaCabecera" height="30">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="30" uuid="f888e73c-d1e8-448d-8491-3f38509d9569"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[PESO PROMEDIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="20">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="90" height="20" uuid="5f50bfaa-3102-491c-a402-331d65c83893"/>
+								<textElement verticalAlignment="Top">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{RESULTADO_NUMERICO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c47bf720-5032-43f3-949f-4288f32e47f2">
+						<jr:columnHeader style="celdaCabecera" height="30">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="30" uuid="122abf9a-c012-429d-851d-686cef4163fc"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[LIMITE SUPERIOR]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="20">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="90" height="20" uuid="6c650840-0435-4e84-8be6-9879a299bb9b"/>
+								<textElement verticalAlignment="Top">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{LIMITE_INFERIOR}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="943a7745-2f07-4df3-9c58-baa9e711f189">
+						<jr:columnHeader style="celdaCabecera" height="30">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="30" uuid="861243d2-caed-4fc8-8042-a763fc3dcf3a"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[LIMITE INFERIOR]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="20">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="90" height="20" uuid="b223fe94-ee02-4f01-b7b0-7d5971a3e589"/>
+								<textElement verticalAlignment="Top">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{LIMITE_SUPERIOR}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="1479b85a-5720-4cdc-bf26-55067a2a3587">
+						<jr:columnHeader style="celdaCabecera" height="30">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="30" uuid="1add7058-a90e-4533-b062-ed4c0133da45"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[CUMPLE/NO CUMPLE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="20">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="90" height="20" uuid="12ed68d1-49de-4f45-87da-6d4159b76876"/>
+								<textElement verticalAlignment="Top">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{UNIDAD}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<xyBarChart>
+				<chart>
+					<reportElement positionType="Float" x="116" y="69" width="200" height="100" uuid="25d9b554-fb7d-450e-ba68-16b694505e42"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<xyDataset>
+					<dataset>
+						<datasetRun subDataset="dataSetEspecificacionPesoLoteProduccion" uuid="a671b07c-cdfa-4c1c-9bda-9210dbe45a10">
+							<datasetParameter name="fechaInicio">
+								<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaFinal">
+								<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</xyDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</xyBarChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

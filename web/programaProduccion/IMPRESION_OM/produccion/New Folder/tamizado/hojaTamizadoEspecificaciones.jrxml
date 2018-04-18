@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaTamizadoEspecificaciones" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2300b10c-4c53-48d1-a97c-f8f60f184ab5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="89"/>
+	<template><![CDATA["D:\\PRODUCCION OFICIAL\\PRODUCCION\\web\\programaProduccion\\IMPRESION_OM\\stylos\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetMaquinaria" uuid="23ba84a4-aff2-4939-8581-0533104d1fd2">
+		<parameter name="codVersion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select cpvmp.COD_COMPPROD_VERSION_MAQUINARIA_PROCESO,m.COD_MAQUINA,m.NOMBRE_MAQUINA,m.CODIGO
+from COMPONENTES_PROD_VERSION_MAQUINARIA_PROCESO cpvmp
+inner join maquinarias m on m.COD_MAQUINA=cpvmp.COD_MAQUINA
+where cpvmp.COD_VERSION=$P{codVersion}
+and cpvmp.COD_PROCESO_ORDEN_MANUFACTURA=8
+order by m.NOMBRE_MAQUINA]]>
+		</queryString>
+		<field name="COD_COMPPROD_VERSION_MAQUINARIA_PROCESO" class="java.lang.Integer"/>
+		<field name="COD_MAQUINA" class="java.lang.Integer"/>
+		<field name="NOMBRE_MAQUINA" class="java.lang.String"/>
+		<field name="CODIGO" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetEspecificacionesMaquinaria" uuid="5d968de6-804b-43d2-8f4c-06c1937f03df">
+		<parameter name="codCompProdVersionMaquinariaProceso" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[exec PAA_ESPECIFICACIONES_PROCESO_MAQUINARIA $P{codCompProdVersionMaquinariaProceso}]]>
+		</queryString>
+		<field name="NOMBRE_ESPECIFICACIONES_PROCESO" class="java.lang.String"/>
+		<field name="NOMBRE_UNIDAD_MEDIDA" class="java.lang.String"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+		<field name="RESULTADO_NUMERICO" class="java.lang.Integer"/>
+		<field name="PORCIENTO_TOLERANCIA" class="java.lang.Double"/>
+		<field name="VALOR_EXACTO" class="java.lang.Double"/>
+		<field name="VALOR_TEXTO" class="java.lang.String"/>
+		<field name="VALOR_MINIMO" class="java.lang.Double"/>
+		<field name="VALOR_MAXIMO" class="java.lang.Double"/>
+		<field name="RESULTADO_ESPERADO_LOTE" class="java.lang.Integer"/>
+		<field name="COD_TIPO_DESCRIPCION" class="java.lang.Integer"/>
+		<field name="NOMBRE_TIPO_DESCRIPCION" class="java.lang.String"/>
+		<field name="ESPECIFICACION" class="java.lang.String"/>
+		<field name="especificacionReporte" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as precauciones,
+       ip1.INDICACION_PROCESO as CondicionesGenerales,
+	ip2.INDICACION_PROCESO as indicacionesEnvioCC,
+       ip3.INDICACION_PROCESO as nota,
+	ip4.INDICACION_PROCESO as finalizacionTamizado,
+       pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO = 1 and
+     ip.COD_PROCESO_ORDEN_MANUFACTURA = 8
+     left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip1.COD_TIPO_INDICACION_PROCESO = 3 and
+     ip1.COD_PROCESO_ORDEN_MANUFACTURA = 8
+     left outer join INDICACION_PROCESO ip2 on ip2.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip2.COD_TIPO_INDICACION_PROCESO = 4 and
+     ip2.COD_PROCESO_ORDEN_MANUFACTURA = 8
+     left outer join INDICACION_PROCESO ip3 on ip3.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip3.COD_TIPO_INDICACION_PROCESO = 5 and
+     ip3.COD_PROCESO_ORDEN_MANUFACTURA = 8
+     left outer join INDICACION_PROCESO ip4 on ip4.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip4.COD_TIPO_INDICACION_PROCESO = 6 and
+     ip4.COD_PROCESO_ORDEN_MANUFACTURA = 8
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion} and
+      pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="precauciones" class="java.lang.String"/>
+	<field name="CondicionesGenerales" class="java.lang.String"/>
+	<field name="indicacionesEnvioCC" class="java.lang.String"/>
+	<field name="nota" class="java.lang.String"/>
+	<field name="finalizacionTamizado" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="282" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoBold" x="5" y="4" width="70" height="9" uuid="4fa11763-db95-43fc-976c-643d44f583ff"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Precauciones]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="5" y="14" width="517" height="13" uuid="8843cbae-1aed-4992-8a70-5cfe531d74f3"/>
+				<textFieldExpression><![CDATA[$F{precauciones}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="6" y="29" width="119" height="13" uuid="9dcfe44a-9b1f-496d-a0ee-69b15dd71f83"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Condiciones generales]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="7" y="44" width="512" height="14" uuid="c0733ce6-8dc2-4eff-ae0a-a07fc1284117"/>
+				<textFieldExpression><![CDATA[$F{CondicionesGenerales}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" x="0" y="61" width="527" height="1" uuid="ce4b729d-c98a-45a1-a30b-cba7dbfd5425"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="73" width="527" height="1" uuid="55b5edfe-9378-47e6-b8a8-79572a8e6f28"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" x="1" y="63" width="526" height="9" uuid="3b374367-f789-43c9-b537-85375125c7ba"/>
+				<textElement textAlignment="Center">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CONDICIONES DE OPERACIÓNDEL EQUIPO/AMBIENTE]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="5" y="77" width="518" height="48" uuid="64339e02-8760-47f2-bca9-e5ec0c6b035c"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetMaquinaria" uuid="31cc236a-2839-47cc-b552-6688fd9e51bd">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="48" width="518">
+						<textField>
+							<reportElement style="textoBold" x="203" y="2" width="215" height="9" uuid="c925f44f-051a-448d-b737-d5ff80a93099"/>
+							<textElement>
+								<font pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NOMBRE_MAQUINA}+'('+$F{CODIGO}+')']]></textFieldExpression>
+						</textField>
+						<rectangle>
+							<reportElement x="193" y="3" width="6" height="6" uuid="189fc4d5-e44d-41fc-bcf9-823773a33299"/>
+						</rectangle>
+						<componentElement>
+							<reportElement key="table" x="5" y="13" width="508" height="32" uuid="e6a42512-fbaf-4cd8-bed4-c0796585c839"/>
+							<jr:table>
+								<datasetRun subDataset="dataSetEspecificacionesMaquinaria" uuid="078ab049-7950-416c-85c5-2508bf811b69">
+									<datasetParameter name="codCompProdVersionMaquinariaProceso">
+										<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION_MAQUINARIA_PROCESO}]]></datasetParameterExpression>
+									</datasetParameter>
+									<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+								</datasetRun>
+								<jr:column width="184" uuid="9ccc8b41-01b0-421d-8272-86f7a340f62f">
+									<jr:tableHeader style="celdaCabecera" height="16" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="180" height="16" uuid="77debecd-7783-4b25-aa06-d983c6f1c317"/>
+											<textElement>
+												<font pdfFontName="Helvetica-Bold"/>
+											</textElement>
+											<text><![CDATA[CONDICIÓN DEL PROCESO]]></text>
+										</staticText>
+									</jr:tableHeader>
+									<jr:detailCell style="celdaBody" height="17" rowSpan="1">
+										<textField>
+											<reportElement style="texto" x="3" y="3" width="163" height="10" uuid="00847185-0a32-4c94-b93f-60bb027a9cf8"/>
+											<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACIONES_PROCESO}]]></textFieldExpression>
+										</textField>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="139" uuid="35b2e550-bd99-4df8-9f8b-9ae69549ac42">
+									<jr:tableHeader style="celdaCabecera" height="16" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="139" height="16" uuid="4b7ee906-eaf6-48e0-8436-15bfc7141140"/>
+											<textElement>
+												<font pdfFontName="Helvetica-Bold"/>
+											</textElement>
+											<text><![CDATA[ESPECIFICACIÓN]]></text>
+										</staticText>
+									</jr:tableHeader>
+									<jr:detailCell style="celdaBody" height="17" rowSpan="1">
+										<textField>
+											<reportElement style="textoBody." x="0" y="0" width="139" height="17" uuid="50ecd697-d134-408a-b2dc-2c5bdd31c253"/>
+											<textElement textAlignment="Center"/>
+											<textFieldExpression><![CDATA[$F{especificacionReporte}]]></textFieldExpression>
+										</textField>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="65" uuid="65c3c07a-b7c5-4243-906a-f8fca998d94f">
+									<jr:tableHeader style="celdaCabecera" height="16" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="65" height="16" uuid="63d94d82-4477-4acd-bf8f-9f88db19b39e"/>
+											<text><![CDATA[U.M.]]></text>
+										</staticText>
+									</jr:tableHeader>
+									<jr:detailCell style="celdaBody" height="17" rowSpan="1">
+										<textField>
+											<reportElement style="textoBody." x="0" y="0" width="65" height="17" uuid="3b6a421d-41a9-43ab-9fa8-75b86f4fea59"/>
+											<textElement textAlignment="Center"/>
+											<textFieldExpression><![CDATA[$F{ABREVIATURA}]]></textFieldExpression>
+										</textField>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="119" uuid="5ac46c1e-9bb5-4a40-90b9-65e58e5a1688">
+									<jr:tableHeader style="celdaCabecera" height="16" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="119" height="16" uuid="a225e8e2-dd3d-47be-a6ee-c8f146b42239"/>
+											<textElement>
+												<font pdfFontName="Helvetica-Bold"/>
+											</textElement>
+											<text><![CDATA[DATOS DEL PROCESO]]></text>
+										</staticText>
+									</jr:tableHeader>
+									<jr:detailCell style="celdaBody" height="17" rowSpan="1"/>
+								</jr:column>
+							</jr:table>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="8" y="128" width="120" height="13" uuid="56dec072-e694-43e7-8a1c-db7eaae0fd3d"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Responsable de operación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="8" y="142" width="120" height="13" uuid="2a343b0f-1334-4780-bdcd-0bc59953496d"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Supervisor del proceso]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="133" y="137" width="212" height="1" uuid="84e7b445-f063-463e-8a34-23e4d2a151ab"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="134" y="150" width="212" height="1" uuid="f24667bd-811f-4db7-b119-2f8c95d5802a"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="382" y="127" width="32" height="13" uuid="186af439-3624-4d4a-9a29-c180220e5bee"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="382" y="141" width="32" height="13" uuid="6f85258d-9fdb-4159-a655-d431cebef4f2"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="428" y="137" width="83" height="1" uuid="c243ddd9-865d-43d6-803f-4b96e616811f"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="428" y="150" width="83" height="1" uuid="70fbef5c-693a-4d39-8840-6e91175532d3"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="1" y="157" width="526" height="1" uuid="c0c3c12e-479c-4857-ab4c-eb079bf56c3c"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="1" y="165" width="526" height="1" uuid="e2d1723c-2fed-48b1-8886-bd52f3dfa2c1"/>
+			</line>
+			<textField>
+				<reportElement style="texto" positionType="Float" x="8" y="168" width="514" height="9" uuid="21580d88-cb5b-4e8a-a780-06c05d2adfe2"/>
+				<textFieldExpression><![CDATA[$F{indicacionesEnvioCC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="10" y="181" width="68" height="9" uuid="e3b7a915-3308-4ebe-93be-e6ad2376ac90"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="176" y="181" width="25" height="9" uuid="e409978a-e6f6-4a28-bdde-413b3eea1ab4"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="270" y="182" width="25" height="9" uuid="6a7e3701-a57e-4b93-91d8-bdc822f52bb2"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="362" y="182" width="32" height="9" uuid="25bddf82-b272-4075-a0e7-db873f58a892"/>
+				<text><![CDATA[Cantidad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="461" y="181" width="7" height="9" uuid="89f07c55-407a-4c64-8e5a-bafb822b31d1"/>
+				<text><![CDATA[g]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="83" y="186" width="84" height="1" uuid="67a732c9-dbd5-449b-b55c-fadd15675074"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="203" y="187" width="57" height="1" uuid="d0444922-4366-4e81-840e-08f6aeaaf43a"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="299" y="187" width="55" height="1" uuid="f9b60012-8e77-471a-a7c2-064adb9a208e"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="400" y="187" width="55" height="1" uuid="6b01a868-70ef-463f-a8dc-047edf95bf99"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="362" y="191" width="32" height="9" uuid="6c21211b-aa04-4738-adf2-877b16373481"/>
+				<text><![CDATA[Cantidad:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="400" y="196" width="55" height="1" uuid="1a370ecd-e29d-47cc-ba52-6e1906f31aef"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="270" y="191" width="25" height="9" uuid="339e8e77-7f7d-49cf-a6f1-15b873130c1c"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="299" y="196" width="55" height="1" uuid="4a118f1e-da3b-4eb1-ac86-319b1644d385"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="83" y="195" width="84" height="1" uuid="1944fb02-fbe3-450d-b66d-42646d04af44"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="461" y="190" width="7" height="9" uuid="f30c8fef-b5db-4f60-809b-59fe85d2a176"/>
+				<text><![CDATA[g]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="203" y="196" width="57" height="1" uuid="4580efbc-4781-4b30-84ef-162a441abc32"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="176" y="190" width="25" height="9" uuid="26198547-3d40-4464-9e57-939674fd65b9"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="10" y="190" width="68" height="9" uuid="716cc92e-f516-4357-86ab-28df083720b2"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="11" y="202" width="24" height="9" uuid="bb949b56-1109-4cb6-935d-f647cb76e34c"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" positionType="Float" x="36" y="202" width="485" height="20" uuid="76ab3ad9-cb38-43a6-a07b-a0f3b710a214"/>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="12" y="222" width="129" height="10" uuid="002fff09-d060-4b91-91b0-02e890af61fb"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Peso del producto luego de tamizar:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="144" y="228" width="75" height="1" uuid="f406018a-d089-4dce-8fa4-176b8774fee5"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="225" y="223" width="12" height="8" uuid="1f0c02b9-a30b-4a7b-aa57-07d2f21847ad"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Kg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="242" y="223" width="49" height="10" uuid="321f4fe8-811f-49a3-a5c0-4c47a50ef397"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Responsable:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="296" y="229" width="214" height="1" uuid="2003fc60-20f5-4ece-9ccb-802ba6c8ff39"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="11" y="237" width="116" height="10" uuid="f5e00ceb-b5e4-4b1b-b247-6273a4a3fb56"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[MERMA DEL PROCESO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="144" y="242" width="75" height="1" uuid="e4f14a93-b198-490c-be8c-cc95e7365990"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="225" y="237" width="12" height="8" uuid="c7968cdd-8693-4331-9cc5-b312557209dd"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[g]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" positionType="Float" x="11" y="252" width="510" height="24" uuid="5ce2f6cb-34f5-4dc8-a5d3-6c054118833c"/>
+				<textFieldExpression><![CDATA[$F{finalizacionTamizado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

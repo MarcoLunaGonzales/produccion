@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-09T14:57:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapImpresionGeneral" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<subDataset name="dataSetRapValidacion" uuid="fccb4cdf-5321-4e45-90f7-da19bfbc8f55">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicio" class="java.util.Date"/>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[select trd.COD_LOTE_PRODUCCION,trd.codigo_desviacion,trd.motivo_desviacion
+from PROGRAMA_PRODUCCION pp
+     inner join PROGRAMA_PRODUCCION_PERIODO ppp on ppp.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+     inner join TEMP_RAP_DATOS_DESVIACION trd on trd.COD_LOTE_PRODUCCION=pp.COD_LOTE_PRODUCCION	 
+where pp.COD_COMPPROD in 
+        (
+            select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+        )
+        and ppp.FECHA_INICIO>= $P{fechaInicio} 
+        and ppp.FECHA_FINAL<= $P{fechaFinal} 
+order by trd.COD_LOTE_PRODUCCION]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="codigo_desviacion" class="java.lang.String"/>
+		<field name="motivo_desviacion" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetDatosEstabilidad" uuid="8f31c22d-dacb-45e5-81b2-74b2c5258b1b">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicio" class="java.util.Date"/>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[select trd.*
+from PROGRAMA_PRODUCCION pp
+     inner join PROGRAMA_PRODUCCION_PERIODO ppp on ppp.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+     inner join TEMP_RAP_DATOS_ESTABILIDAD trd on trd.COD_LOTE_PRODUCCION=pp.COD_LOTE_PRODUCCION	 
+where pp.COD_COMPPROD in 
+        (
+            select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+        )
+        and ppp.FECHA_INICIO>= $P{fechaInicio} 
+        and ppp.FECHA_FINAL<= $P{fechaFinal} 
+order by trd.COD_LOTE_PRODUCCION]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="TIPO_ESTABILIDAD" class="java.lang.String"/>
+		<field name="TEMPERATURA_ESTUDIO" class="java.lang.String"/>
+		<field name="HUMEDAD_ESTUDIO" class="java.lang.String"/>
+		<field name="FECHA_INGRESO_PRODUCTO" class="java.sql.Timestamp"/>
+		<field name="FECHA_DEL_REPORTE" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="DatasetReclamos" uuid="206bfa84-672f-467a-87be-5e22852cdae1">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicio" class="java.lang.String"/>
+		<parameter name="fechaFinal" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select getdate() as fecha
+where 1=2]]>
+		</queryString>
+		<field name="fecha" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date("01/01/2015")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select getdate() as feha]]>
+	</queryString>
+	<field name="feha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="287" splitType="Stretch">
+			<staticText>
+				<reportElement style="texto" x="12" y="4" width="238" height="16" uuid="d2d8cf27-b18e-4100-8c0c-a7e3b010b2fd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[6)DATOS DE ESTABILIDAD]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" x="12" y="23" width="498" height="57" uuid="96d6c177-eb26-4e48-9242-63baaea2c031"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="dataSetDatosEstabilidad" uuid="8d59b80a-f131-4ae8-b4d6-f40e58e06fdd">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="84" uuid="657ff2f9-6bd9-4046-ad30-f9470f33a019">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="84" height="19" uuid="3dcea3b4-2749-4bc3-9218-0297052afc52"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="84" height="35" uuid="3af1e0a9-abd8-4b0c-94d7-1970e7beba0f"/>
+								<textElement>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="86" uuid="41d42e9a-84df-4f80-98af-2064ffee9543">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="8fe7bf51-8463-45c4-ae97-d1fc1db5f38d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[TIPO DE ESTUDIO DE ESTABILIDAD]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="86" height="35" uuid="3b330c56-d373-4631-b814-56cf4f2d9f30"/>
+								<textElement>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TIPO_ESTABILIDAD}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="86" uuid="26427ed8-f543-4436-9955-a93e38cdaea4">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="3a18c5dd-359b-445f-aec6-809ce0c4c688"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[TEMPERATURA DEL ESTUDIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="86" height="35" uuid="d4f2da4e-4efa-40c2-a983-78c6c34cb485"/>
+								<textElement>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TEMPERATURA_ESTUDIO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="86" uuid="a27824a3-3897-4fc6-9e82-317d4f7062f5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="aba36298-fd40-4aa6-82fa-c552e710cdec"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[HUMEDAD DEL ESTUDIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="86" height="35" uuid="ecb1bfea-32df-4078-84e4-e78be3ff3557"/>
+								<textElement>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{HUMEDAD_ESTUDIO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="82" uuid="104284dc-fd13-4de1-b72b-be24e9763428">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="82" height="19" uuid="f8b3cbab-acac-4595-b8ef-992bc432882c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[FECHA DE INGRESO DEL PRODUCTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement style="textoBody" x="0" y="0" width="82" height="35" uuid="14515a15-fd86-4927-b3f8-1bd306d7c16f"/>
+								<textElement>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FECHA_INGRESO_PRODUCTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="74" uuid="1a6abb01-d455-40c2-b8ae-59d21d31590d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="74" height="19" uuid="efe06e62-5414-41bb-b129-96d913edc297"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[A LA FECHA DEL REPORTE (APROBADO/RECHAZADO)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement style="textoBody" x="0" y="0" width="74" height="35" uuid="bbf3c7dc-0dce-4504-a910-30c809404a37"/>
+								<textElement>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FECHA_DEL_REPORTE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="12" y="84" width="238" height="12" uuid="a7879f31-f110-4451-904f-8759b37eb19d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[7)DATOS DE VALIDACION]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="12" y="100" width="342" height="57" uuid="573009b2-a934-4cfc-8e6d-e139d2805164"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="DatasetReclamos" uuid="f05fb7ae-9fe7-4cd3-ae8a-02e545144305">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="84" uuid="5727d44f-b6ac-4549-a8c0-40061f936be0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="84" height="19" uuid="063d361d-2b76-41e8-96ed-9a13e5e419b0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement x="2" y="1" width="82" height="30" uuid="446cad18-f85d-4123-9d00-c9ce0b49041f"/>
+								<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="86" uuid="2aedcee2-807a-4d66-bbdc-583b3a132d7f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="090ffc77-46ce-49c2-a98f-830f636694f6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[TIPO DE PROCESO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="86" uuid="f77f60eb-ceba-4ed9-840a-33c1c79de900">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="783d7fd3-0575-4d96-a28f-a7d874fe3c6f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[CODIGO DE INFORME]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="86" uuid="b4841075-0b55-4600-aee8-4942bb0b55cd">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="892dc85a-1234-40f1-aff8-0f39ce6a6a7a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[METODOLOGIA DE ANALISIS VALIDADA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

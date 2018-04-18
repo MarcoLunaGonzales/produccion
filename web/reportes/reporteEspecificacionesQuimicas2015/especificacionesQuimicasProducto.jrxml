@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-02-29T15:17:09 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteEspecificacionesProcesoInyectables" pageWidth="612" pageHeight="792" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<style name="textoCaracteristicaProducto" style="texto" mode="Opaque" fill="Solid">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{nombre_prod_semiterminado}.equals($F{nombre_prod_semiterminadoVersion})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FC730A"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="codCompProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer("1799")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codVersion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer("1988")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[DECLARE @codVersionAnterior integer
+
+select @codVersionAnterior=isnull(MAX(c.COD_VERSION), 0) 
+from COMPONENTES_PROD_VERSION c
+where c.COD_COMPPROD =  $P{codCompProd} 
+	 and c.COD_VERSION < $P{codVersion} 
+	 and c.COD_ESTADO_VERSION in (2, 4, 6)
+
+select isnull(cp.COD_COMPPROD, 0) as codComprodOfi,
+       isnull(cp.nombre_prod_semiterminado, '') as nombre_prod_semiterminado,
+       cpv.nombre_prod_semiterminado as nombre_prod_semiterminadoVersion,
+       isnull(ae.NOMBRE_AREA_EMPRESA, '') as NOMBRE_AREA_EMPRESA,
+       isnull(ae1.NOMBRE_AREA_EMPRESA, '') as NOMBRE_AREA_EMPRESAVersion,
+       ISNULL(p.nombre_prod, '') as nombre_prod,
+       isnull(p1.nombre_prod, '') as nombre_prodVersion,
+       isnull(cp.NOMBRE_GENERICO, '') as NOMBRE_GENERICO,
+       isnull(cpv.NOMBRE_GENERICO, '') as NOMBRE_GENERICOVersion,
+       isnull(ff.nombre_forma, '') as nombre_forma,
+       isnull(ff1.nombre_forma, '') as nombre_formaVersion,
+       isnull(cpp.NOMBRE_COLORPRESPRIMARIA, '') as NOMBRE_COLORPRESPRIMARIA,
+       isnull(cpp1.NOMBRE_COLORPRESPRIMARIA, '') as
+       NOMBRE_COLORPRESPRIMARIAVersion,
+       isnull(vap.NOMBRE_VIA_ADMINISTRACION_PRODUCTO, '') as
+       NOMBRE_VIA_ADMINISTRACION_PRODUCTO,
+       ISNULL(vap1.NOMBRE_VIA_ADMINISTRACION_PRODUCTO, '') as
+       NOMBRE_VIA_ADMINISTRACION_PRODUCTOVersion,
+       isnull(cp.PESO_ENVASE_PRIMARIO, '') as PESO_ENVASE_PRIMARIO,
+       cpv.PESO_ENVASE_PRIMARIO as PESO_ENVASE_PRIMARIOVersion,
+       isnull(cp.TOLERANCIA_VOLUMEN_FABRICAR, '') as TOLERANCIA_VOLUMEN_FABRICAR,
+       isnull(cpv.TOLERANCIA_VOLUMEN_FABRICAR, '') as
+       TOLERANCIA_VOLUMEN_FABRICARVersion,
+       isnull(sp.NOMBRE_SABOR, '') as NOMBRE_SABOR,
+       isnull(sp1.NOMBRE_SABOR, '') as NOMBRE_SABORVersion,
+       isnull(tap.NOMBRE_TAMANIO_CAPSULA_PRODUCCION, '') as
+       NOMBRE_TAMANIO_CAPSULA_PRODUCCION,
+       ISNULL(tap1.NOMBRE_TAMANIO_CAPSULA_PRODUCCION, '') as
+       NOMBRE_TAMANIO_CAPSULA_PRODUCCIONVersion,
+       isnull(ec.NOMBRE_ESTADO_COMPPROD, '') as NOMBRE_ESTADO_COMPPROD,
+       isnull(ec1.NOMBRE_ESTADO_COMPPROD, '') as NOMBRE_ESTADO_COMPPRODVersion,
+       isnull(cp.REG_SANITARIO, '') as REG_SANITARIO,
+       cpv.REG_SANITARIO as REG_SANITARIOVersion,
+       isnull(cp.VIDA_UTIL, 0) as VIDA_UTIL,
+       cpv.VIDA_UTIL as VIDA_UTILVersion,
+       cp.FECHA_VENCIMIENTO_RS,
+       cpv.FECHA_VENCIMIENTO_RS as FECHA_VENCIMIENTO_RSVersion,
+       isnull(cast (cp.CANTIDAD_VOLUMEN as varchar) + ' ' + um.ABREVIATURA, '')
+       as volumen,
+       isnull(cast (cpv.CANTIDAD_VOLUMEN as varchar) + ' ' + um1.ABREVIATURA, ''
+       ) as volumenVersion,
+       isnull(cvp.NOMBRE_CONDICION_VENTA_PRODUCTO, '') as
+       NOMBRE_CONDICION_VENTA_PRODUCTO,
+       isnull(cvp1.NOMBRE_CONDICION_VENTA_PRODUCTO, '') as
+       NOMBRE_CONDICION_VENTA_PRODUCTOVersion,
+       isnull(cp.PRESENTACIONES_REGISTRADAS_RS, '') as
+       PRESENTACIONES_REGISTRADAS_RS,
+       isnull(cpv.PRESENTACIONES_REGISTRADAS_RS, '') as
+       PRESENTACIONES_REGISTRADAS_RSVersion,
+       cp.TAMANIO_LOTE_PRODUCCION,
+       cpv.TAMANIO_LOTE_PRODUCCION as TAMANIO_LOTE_PRODUCCIONVersion,
+       cp.CANTIDAD_VOLUMEN_DE_DOSIFICADO,
+       cpv.CANTIDAD_VOLUMEN_DE_DOSIFICADO as
+       CANTIDAD_VOLUMEN_DE_DOSIFICADOVersion
+from COMPONENTES_PROD_VERSION cpv
+     left outer join COMPONENTES_PROD_VERSION cp on cp.COD_COMPPROD =
+     cpv.COD_COMPPROD and cp.COD_VERSION = '1987' and cpv.COD_VERSION = '1988'
+     left outer join AREAS_EMPRESA ae on ae.COD_AREA_EMPRESA =
+     cp.COD_AREA_EMPRESA
+     left outer join AREAS_EMPRESA ae1 on ae1.COD_AREA_EMPRESA =
+     cpv.COD_AREA_EMPRESA
+     left outer join PRODUCTOS p on p.cod_prod = cp.COD_PROD
+     left outer join PRODUCTOS p1 on p1.cod_prod = cpv.COD_PROD
+     left outer join FORMAS_FARMACEUTICAS ff on ff.cod_forma = cp.COD_FORMA
+     left outer join FORMAS_FARMACEUTICAS ff1 on ff1.cod_forma = cpv.COD_FORMA
+     left outer join COLORES_PRESPRIMARIA cpp on cp.COD_COLORPRESPRIMARIA =
+     cpp.COD_COLORPRESPRIMARIA
+     left outer join COLORES_PRESPRIMARIA cpp1 on cpv.COD_COLORPRESPRIMARIA =
+     cpp1.COD_COLORPRESPRIMARIA
+     left outer join VIAS_ADMINISTRACION_PRODUCTO vap on
+     vap.COD_VIA_ADMINISTRACION_PRODUCTO = cp.COD_VIA_ADMINISTRACION_PRODUCTO
+     left outer join VIAS_ADMINISTRACION_PRODUCTO vap1 on
+     vap1.COD_VIA_ADMINISTRACION_PRODUCTO = cpv.COD_VIA_ADMINISTRACION_PRODUCTO
+     left outer join SABORES_PRODUCTO sp on sp.COD_SABOR = cp.COD_SABOR
+     left outer join SABORES_PRODUCTO sp1 on sp1.COD_SABOR = cpv.COD_SABOR
+     left outer join TAMANIOS_CAPSULAS_PRODUCCION tap on
+     tap.COD_TAMANIO_CAPSULA_PRODUCCION = cp.COD_TAMANIO_CAPSULA_PRODUCCION
+     left outer join TAMANIOS_CAPSULAS_PRODUCCION tap1 on
+     tap1.COD_TAMANIO_CAPSULA_PRODUCCION = cpv.COD_TAMANIO_CAPSULA_PRODUCCION
+     left outer join ESTADOS_COMPPROD ec on ec.COD_ESTADO_COMPPROD =
+     cp.COD_ESTADO_COMPPROD
+     left outer join ESTADOS_COMPPROD ec1 on ec1.COD_ESTADO_COMPPROD =
+     cpv.COD_ESTADO_COMPPROD
+     left outer join UNIDADES_MEDIDA um on um.COD_UNIDAD_MEDIDA =
+     cp.COD_UNIDAD_MEDIDA_VOLUMEN
+     left outer join UNIDADES_MEDIDA um1 on um1.COD_UNIDAD_MEDIDA =
+     cpv.COD_UNIDAD_MEDIDA_VOLUMEN
+     left outer join CONDICIONES_VENTA_PRODUCTO cvp on
+     cvp.COD_CONDICION_VENTA_PRODUCTO = cp.COD_CONDICION_VENTA_PRODUCTO
+     left outer join CONDICIONES_VENTA_PRODUCTO cvp1 on
+     cvp1.COD_CONDICION_VENTA_PRODUCTO = cpv.COD_CONDICION_VENTA_PRODUCTO
+where (cpv.COD_VERSION = $P{codVersion} 
+	 and cp.cod_version is null) or
+      (cp.COD_VERSION = @codVersionAnterior
+     and cpv.cod_version is null) or
+      (cp.cod_version = @codVersionAnterior and
+      cpv.cod_version =$P{codVersion} )]]>
+	</queryString>
+	<field name="codComprodOfi" class="java.lang.Integer"/>
+	<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+	<field name="nombre_prod_semiterminadoVersion" class="java.lang.String"/>
+	<field name="NOMBRE_AREA_EMPRESA" class="java.lang.String"/>
+	<field name="NOMBRE_AREA_EMPRESAVersion" class="java.lang.String"/>
+	<field name="nombre_prod" class="java.lang.String"/>
+	<field name="nombre_prodVersion" class="java.lang.String"/>
+	<field name="NOMBRE_GENERICO" class="java.lang.String"/>
+	<field name="NOMBRE_GENERICOVersion" class="java.lang.String"/>
+	<field name="nombre_forma" class="java.lang.String"/>
+	<field name="nombre_formaVersion" class="java.lang.String"/>
+	<field name="NOMBRE_COLORPRESPRIMARIA" class="java.lang.String"/>
+	<field name="NOMBRE_COLORPRESPRIMARIAVersion" class="java.lang.String"/>
+	<field name="NOMBRE_VIA_ADMINISTRACION_PRODUCTO" class="java.lang.String"/>
+	<field name="NOMBRE_VIA_ADMINISTRACION_PRODUCTOVersion" class="java.lang.String"/>
+	<field name="PESO_ENVASE_PRIMARIO" class="java.lang.String"/>
+	<field name="PESO_ENVASE_PRIMARIOVersion" class="java.lang.String"/>
+	<field name="TOLERANCIA_VOLUMEN_FABRICAR" class="java.lang.Double"/>
+	<field name="TOLERANCIA_VOLUMEN_FABRICARVersion" class="java.lang.Double"/>
+	<field name="NOMBRE_SABOR" class="java.lang.String"/>
+	<field name="NOMBRE_SABORVersion" class="java.lang.String"/>
+	<field name="NOMBRE_TAMANIO_CAPSULA_PRODUCCION" class="java.lang.String"/>
+	<field name="NOMBRE_TAMANIO_CAPSULA_PRODUCCIONVersion" class="java.lang.String"/>
+	<field name="NOMBRE_ESTADO_COMPPROD" class="java.lang.String"/>
+	<field name="NOMBRE_ESTADO_COMPPRODVersion" class="java.lang.String"/>
+	<field name="REG_SANITARIO" class="java.lang.String"/>
+	<field name="REG_SANITARIOVersion" class="java.lang.String"/>
+	<field name="VIDA_UTIL" class="java.lang.Integer"/>
+	<field name="VIDA_UTILVersion" class="java.lang.Integer"/>
+	<field name="FECHA_VENCIMIENTO_RS" class="java.sql.Timestamp"/>
+	<field name="FECHA_VENCIMIENTO_RSVersion" class="java.sql.Timestamp"/>
+	<field name="volumen" class="java.lang.String"/>
+	<field name="volumenVersion" class="java.lang.String"/>
+	<field name="NOMBRE_CONDICION_VENTA_PRODUCTO" class="java.lang.String"/>
+	<field name="NOMBRE_CONDICION_VENTA_PRODUCTOVersion" class="java.lang.String"/>
+	<field name="PRESENTACIONES_REGISTRADAS_RS" class="java.lang.String"/>
+	<field name="PRESENTACIONES_REGISTRADAS_RSVersion" class="java.lang.String"/>
+	<field name="TAMANIO_LOTE_PRODUCCION" class="java.lang.Integer"/>
+	<field name="TAMANIO_LOTE_PRODUCCIONVersion" class="java.lang.Integer"/>
+	<field name="CANTIDAD_VOLUMEN_DE_DOSIFICADO" class="java.lang.Double"/>
+	<field name="CANTIDAD_VOLUMEN_DE_DOSIFICADOVersion" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="269" splitType="Stretch">
+			<frame>
+				<reportElement x="80" y="0" width="400" height="230" uuid="9ef96668-a971-4f64-9b76-ce22d21d6371"/>
+				<line>
+					<reportElement x="0" y="20" width="400" height="1" uuid="803b4c93-5e9a-4913-b690-dd044627ddb6"/>
+				</line>
+				<textField>
+					<reportElement style="textoCaracteristicaProducto" x="114" y="0" width="142" height="20" uuid="4443a0d7-f44a-43c3-9917-c850241b419c"/>
+					<textFieldExpression><![CDATA[$F{nombre_prod_semiterminado}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="textoCabecera" x="0" y="0" width="114" height="20" uuid="ce78e068-b4bd-4e9a-8381-a668c793f317"/>
+					<text><![CDATA[Nombre Producto]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="textoCaracteristicaProducto" x="256" y="0" width="144" height="21" uuid="93764427-dcf7-45fc-9a1e-6dc0c7a774ca"/>
+					<textFieldExpression><![CDATA[$F{nombre_prod_semiterminadoVersion}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="40" width="400" height="1" uuid="4a911603-70d7-41ff-9802-18b4f4f37db3"/>
+				</line>
+				<staticText>
+					<reportElement style="textoCabecera" x="0" y="20" width="114" height="20" uuid="55e4ffe4-f405-4471-b1d3-5eac9fe25f38"/>
+					<text><![CDATA[Area Empresa]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="texto" x="114" y="21" width="142" height="19" uuid="fbbf93c0-20f9-4f60-af57-2b096b4285aa"/>
+					<textFieldExpression><![CDATA[$F{nombre_prod_semiterminadoVersion}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

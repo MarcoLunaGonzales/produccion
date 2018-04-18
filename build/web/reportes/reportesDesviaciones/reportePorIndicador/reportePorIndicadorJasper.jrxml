@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-08-01T09:44:33 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportePorAreaGeneradora" pageWidth="612" pageHeight="792" columnWidth="570" leftMargin="21" rightMargin="21" topMargin="21" bottomMargin="21" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetDesviacion" uuid="2260ef2a-4ab5-427f-9dcf-21ef6a7da5b5">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20170721"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicioIndicador" class="java.util.Date" isForPrompting="false"/>
+		<parameter name="fechaFinaIndicador" class="java.util.Date">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+		</parameter>
+		<queryString>
+			<![CDATA[select agd.NOMBRE_AREA_GENERADORA_DESVIACION,cantidadDesviaciones.*,agd.CODIGO_CORRELATIVO
+from AREAS_GENERADORAS_DESVIACION agd
+inner join(
+select sum(case when d.COD_CLASIFICACION_RIESGO_DESVIACION = 1 then 1 else 0 end) as cantidadMenor,
+		sum(case when d.COD_CLASIFICACION_RIESGO_DESVIACION = 2 then 1 else 0 end) as cantidadMayor,
+        sum(case when d.COD_CLASIFICACION_RIESGO_DESVIACION = 3 then 1 else 0 end) as cantidadCritica,
+        d.COD_AREA_GENERADORA_DESVIACION	
+from DESVIACION d
+where d.FECHA_ENVIO_ASEGURAMIENTO BETWEEN  $P{fechaInicioIndicador}  and  $P{fechaFinaIndicador} 
+group by d.COD_AREA_GENERADORA_DESVIACION
+) as cantidadDesviaciones on cantidadDesviaciones.COD_AREA_GENERADORA_DESVIACION = agd.COD_AREA_GENERADORA_DESVIACION
+where agd.COD_ESTADO_REGISTRO = 1
+order by agd.NOMBRE_AREA_GENERADORA_DESVIACION]]>
+		</queryString>
+		<field name="NOMBRE_AREA_GENERADORA_DESVIACION" class="java.lang.String"/>
+		<field name="cantidadMenor" class="java.lang.Integer"/>
+		<field name="cantidadMayor" class="java.lang.Integer"/>
+		<field name="cantidadCritica" class="java.lang.Integer"/>
+		<field name="COD_AREA_GENERADORA_DESVIACION" class="java.lang.Integer"/>
+		<field name="CODIGO_CORRELATIVO" class="java.lang.String"/>
+		<variable name="sumaCantidadMenor" class="java.lang.Integer" calculation="Sum">
+			<variableExpression><![CDATA[$F{cantidadMenor}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCantidadMayor" class="java.lang.Integer" calculation="Sum">
+			<variableExpression><![CDATA[$F{cantidadMayor}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCantidadCritica" class="java.lang.Integer" calculation="Sum">
+			<variableExpression><![CDATA[$F{cantidadCritica}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="dataSetGroupClasificacion" uuid="8a5a1ddc-b0f8-45db-ba04-c5daf8e01244">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20170721"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicioIndicador" class="java.util.Date"/>
+		<parameter name="fechaFinalIndicador" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[select crd.NOMBRE_CLASIFICACION_RIESGO_DESVIACION,count(*) as cantidadDesviacion,
+	count(distinct d.COD_DESVIACION_GENERICA) as cantidadDesviacionesGenericas
+from desviacion d 
+	inner join CLASIFICACION_RIESGO_DESVIACION crd on crd.COD_CLASIFICACION_RIESGO_DESVIACION = d.COD_CLASIFICACION_RIESGO_DESVIACION
+where d.FECHA_ENVIO_ASEGURAMIENTO BETWEEN  $P{fechaInicioIndicador}  and  $P{fechaFinalIndicador} 
+group by crd.NOMBRE_CLASIFICACION_RIESGO_DESVIACION
+order by crd.NOMBRE_CLASIFICACION_RIESGO_DESVIACION]]>
+		</queryString>
+		<field name="NOMBRE_CLASIFICACION_RIESGO_DESVIACION" class="java.lang.String"/>
+		<field name="cantidadDesviacion" class="java.lang.Integer"/>
+		<field name="cantidadDesviacionesGenericas" class="java.lang.Integer"/>
+		<variable name="sumaPorCantDesviacion" class="java.lang.Integer" calculation="Sum">
+			<variableExpression><![CDATA[$F{cantidadDesviacion}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="sumaPorRiesgo" class="java.lang.Integer" calculation="Sum">
+			<variableExpression><![CDATA[$F{cantidadDesviacionesGenericas}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<parameter name="fechaInicioIndicador" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date(117,01,01)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinalIndicador" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date(117,06,01)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirLogoCofar" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["D:\\PROYECTOS\\PRODUCCION\\web\\img\\cofar.gif"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 
+1 as nro]]>
+	</queryString>
+	<field name="nro" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="440" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoCabecera" x="2" y="0" width="562" height="16" uuid="2013cd69-8f52-4194-989b-35e0f33fb72c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Reporte De Desviaciones (Indicadores)]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="91" y="38" width="384" height="28" uuid="297c71c3-9e85-4586-9d0f-84da19dcf2ad">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetDesviacion" uuid="8b5b3292-f3e3-4bc3-9d3f-6a7259c64261">
+						<datasetParameter name="fechaInicioIndicador">
+							<datasetParameterExpression><![CDATA[$P{fechaInicioIndicador}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinaIndicador">
+							<datasetParameterExpression><![CDATA[$P{fechaFinalIndicador}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="170" uuid="c0bc9e2d-8e89-49d3-b6f6-e3d1b17c9743">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="170" height="10" uuid="ce2027c1-3890-4352-a3ab-68b7c0d14988"/>
+								<text><![CDATA[Áreas]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="celdaBody" height="10">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="170" height="10" uuid="eeb653c6-ca8b-4b95-9a85-a9b7100d436b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="170" height="10" uuid="91fc8e91-16fd-45b0-a9dc-1b74a1e61a17"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_AREA_GENERADORA_DESVIACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="8cec7f4e-2101-4ea1-a775-9080d4da29d2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="50" height="10" uuid="3458240b-998c-497a-aabc-a0a91c158eb7"/>
+								<text><![CDATA[Menor]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="celdaBody" height="10">
+							<textField>
+								<reportElement style="textoCabecera" x="0" y="0" width="50" height="10" uuid="6c7f3721-4ab3-4d8f-a105-6eb20f10c6ff"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$V{sumaCantidadMenor}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="10" uuid="69208d6c-a0ce-4029-9c35-ea0e1a91ec29"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{cantidadMenor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="6a3cba50-a364-4884-8585-6a5ddc6abc94">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="10" uuid="fd7d7873-4803-4a5c-8480-10ee1bb40cbe"/>
+								<text><![CDATA[Mayor]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="celdaBody" height="10">
+							<textField>
+								<reportElement key="" style="textoCabecera" x="0" y="0" width="60" height="10" uuid="ea4fbf1b-9322-4078-8492-d047f3e99a77"/>
+								<textFieldExpression><![CDATA[$V{sumaCantidadMayor}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="10" uuid="0d94662d-3c43-4cab-afd5-18bc1fd6733a"/>
+								<textElement textAlignment="Center" markup="html"/>
+								<textFieldExpression><![CDATA[$F{cantidadMayor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="49" uuid="d496c884-d4bd-4f5d-b620-df41fafb6572">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="49" height="10" uuid="fe8c520f-c4f4-4b71-b2c4-c39291252c08"/>
+								<text><![CDATA[Crítica]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="celdaBody" height="10">
+							<textField>
+								<reportElement style="textoCabecera" x="0" y="0" width="49" height="10" uuid="82f5fac2-7eef-4f9a-b89c-0c6fe6774437"/>
+								<textFieldExpression><![CDATA[$V{sumaCantidadCritica}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="49" height="10" uuid="f25df709-88d4-46df-ae0f-6f0cba98d100"/>
+								<textElement textAlignment="Center" markup="html"/>
+								<textFieldExpression><![CDATA[$F{cantidadCritica}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="54" uuid="e849d3e1-2f70-4198-a673-cee7e60e05a2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="54" height="10" uuid="f5f541fb-15e3-4281-84f7-bf51cf5e53a2"/>
+								<text><![CDATA[Cantidad Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="celdaBody" height="10">
+							<textField>
+								<reportElement style="textoCabecera" x="0" y="0" width="54" height="10" uuid="c6b4f370-c4d8-417f-bfec-312beb25a1a1"/>
+								<textFieldExpression><![CDATA[$V{sumaCantidadCritica}+$V{sumaCantidadMayor}+$V{sumaCantidadMenor}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="54" height="10" uuid="386d3a69-eab1-43c1-a212-e4acf5301e43"/>
+								<textElement textAlignment="Center" markup="html"/>
+								<textFieldExpression><![CDATA[$F{cantidadMenor}+$F{cantidadMayor}+$F{cantidadCritica}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="3" y="0" width="80" height="41" uuid="e4a74617-a8a3-4229-a6bb-9ad497c4269e"/>
+				<imageExpression><![CDATA[$P{dirLogoCofar}]]></imageExpression>
+			</image>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement positionType="Float" x="4" y="69" width="561" height="200" uuid="9381eeac-058f-41d6-b2ba-14954b037f2d"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend>
+						<font fontName="Arial_OM" size="7"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="dataSetDesviacion" uuid="a701b9f8-84ba-4c46-a9ab-094a31dd9d0e">
+							<datasetParameter name="fechaInicioIndicador">
+								<datasetParameterExpression><![CDATA[$P{fechaInicioIndicador}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaFinaIndicador">
+								<datasetParameterExpression><![CDATA[$P{fechaFinalIndicador}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["MENOR"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{CODIGO_CORRELATIVO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidadMenor}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["MAYOR"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{CODIGO_CORRELATIVO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidadMayor}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["CRITICA"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{CODIGO_CORRELATIVO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidadCritica}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot foregroundAlpha="1.0" labelRotation="90.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat verticalTickLabels="true">
+							<tickLabelFont>
+								<font fontName="Arial_OM" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<tickLabelFont>
+								<font fontName="Arial_OM" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="texto" x="191" y="23" width="100" height="8" uuid="2c2ea405-8ec6-4c4b-939a-7dd0bdaadb24">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{fechaInicioIndicador}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement key="" style="texto" x="340" y="23" width="100" height="8" uuid="2c3a5803-2463-4a3e-9d45-aa143947ec12">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{fechaFinalIndicador}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="140" y="23" width="50" height="8" uuid="d63b64c1-77fb-41e8-a7cf-5da92f503d3e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Fecha Inicio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="291" y="23" width="50" height="8" uuid="3702333f-0138-4a6b-8245-c9a650837ae4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Fecha Final:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="100" y="280" width="324" height="19" uuid="30dcb794-94a6-4652-bf30-1d33a11bbebb">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="Blank">
+					<datasetRun subDataset="dataSetGroupClasificacion" uuid="266327b1-cdf2-4caf-8f22-f10e72d900ab">
+						<datasetParameter name="fechaInicioIndicador">
+							<datasetParameterExpression><![CDATA[$P{fechaInicioIndicador}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinalIndicador">
+							<datasetParameterExpression><![CDATA[$P{fechaFinalIndicador}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="170" uuid="a9e8b15f-ef03-4fc8-8aa3-ec9ce1e33fb9">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:tableFooter style="celdaBody" height="10">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="170" height="10" uuid="04dba7ae-5696-4b55-a008-6c854dc46bb8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="170" height="10" uuid="8f386d1c-5fc9-40dc-96de-7d448f93eccd"/>
+								<text><![CDATA[Tipo de desviación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="170" height="10" uuid="f34ee86c-06ca-44f6-bd87-7e42b7795c57"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_CLASIFICACION_RIESGO_DESVIACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="d0a39cf5-52ae-4fca-a419-a38fcb3c15c1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableFooter style="celdaBody" height="10">
+							<textField>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="10" uuid="d0b59210-8f6e-4148-867a-3636a1082ee0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{sumaPorCantDesviacion}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="10" uuid="a79579ea-4634-4c14-a0f2-43d2d2ddf83e"/>
+								<text><![CDATA[Por Cant. Desviación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="10" uuid="c41105e5-12ae-46d5-864e-a240132da931"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{cantidadDesviacion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="660b0a31-ce76-4871-9594-220b906862c7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableFooter style="celdaBody" height="10">
+							<textField>
+								<reportElement style="textoCabecera" x="0" y="0" width="80" height="10" uuid="2cf64198-fc88-4cb5-abe7-afce77ee5045"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{sumaPorRiesgo}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="celdaCabecera" height="10">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="80" height="10" uuid="60fe0743-faa0-4d6f-801b-ba1217189cc3"/>
+								<text><![CDATA[Por Riesgo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="10">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="10" uuid="0028579f-cb1a-4843-be79-f6456cb1d432"/>
+								<textElement textAlignment="Center" markup="html"/>
+								<textFieldExpression><![CDATA[$F{cantidadDesviacionesGenericas}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<barChart>
+				<chart isShowLegend="true" evaluationTime="Report">
+					<reportElement positionType="Float" x="100" y="302" width="330" height="131" uuid="78e8a98e-8488-4a9a-9524-7390f2c3d1dd"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<chartTitle position="Top">
+						<font fontName="Arial_OM" size="7" isBold="true"/>
+						<titleExpression><![CDATA["CLASIFICACIÓN DE LAS DESVIACIONES"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Top">
+						<font fontName="Arial_OM" size="7" isBold="true"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="dataSetGroupClasificacion" uuid="df646cd8-7d41-43d6-b557-75d797f08aed">
+							<datasetParameter name="fechaFinalIndicador">
+								<datasetParameterExpression><![CDATA[$P{fechaFinalIndicador}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaInicioIndicador">
+								<datasetParameterExpression><![CDATA[$P{fechaInicioIndicador}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["POR CANT. DESVIACION"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{NOMBRE_CLASIFICACION_RIESGO_DESVIACION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidadDesviacion}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["POR RIESGO"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{NOMBRE_CLASIFICACION_RIESGO_DESVIACION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidadDesviacionesGenericas}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot orientation="Horizontal"/>
+					<itemLabel>
+						<font fontName="Arial_OM" size="7"/>
+					</itemLabel>
+					<categoryAxisFormat>
+						<axisFormat>
+							<tickLabelFont>
+								<font fontName="Arial_OM" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font fontName="Arial_OM" size="7"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Arial_OM" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="texto" x="0" y="0" width="70" height="10" uuid="0d25d4ef-a52f-40cb-9ae7-429be6231425"/>
+				<textFieldExpression><![CDATA[(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="424" y="0" width="100" height="10" uuid="fba2a61e-ced9-46a4-ab87-46a1927e6619"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="texto" x="524" y="0" width="40" height="10" uuid="35a66d51-379c-4c17-b0aa-22c88b5fcb08"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="11" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="texto" x="0" y="0" width="70" height="10" uuid="80b97c9f-bb9d-49e8-a3d2-45d6ed9ffcba"/>
+				<textFieldExpression><![CDATA[(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="424" y="0" width="100" height="10" uuid="17bca161-e4df-4441-9cfc-d3a8a178ac10"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="texto" x="524" y="0" width="40" height="10" uuid="c73f81bb-e122-4d88-a2bb-3bea28ccf93a"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-05-22T12:04:14 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaTimbradoEmpaquePrimario" pageWidth="527" pageHeight="623" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20170120"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetDescripcionRendimiento" uuid="fd3d7589-cc6f-4003-9627-3f0869fa8d4a">
+		<parameter name="codLoteProduccion" class="java.lang.String"/>
+		<parameter name="codProgramaProd" class="java.lang.String"/>
+		<parameter name="codTipoMaterial" class="java.lang.String"/>
+		<parameter name="cantidadLoteProduccion" class="java.lang.Double"/>
+		<parameter name="unidadMedidaOm" class="java.lang.String"/>
+		<parameter name="cantidadUnitariaLote" class="java.lang.Double"/>
+		<parameter name="textoPeso" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select 'UNIDADES RECIBIDAS DE PRODUCCION' as desripcion,1 AS NRO
+union
+select 'UNIDADES ENTREGADAS COMO MERCADERIA CORRIENTE' as desripcion,2 AS NRO
+union
+select 'UNIDADES ENTREGADAS COMO MUESTRA MEDICA' as desripcion,3 AS NRO
+UNION
+select 'UNIDADES ENTREGADAS COMO LICITACION' as desripcion,4 AS NRO
+UNION
+select 'UNIDADES ENTREGADAS PARA FRV' as desripcion,5 AS NRO
+UNION
+select 'UNIDADES ENTREGADAS PARA CONTROL DE CALIDAD COMO CONTRAMUESTRA' as descripcion,6 AS NRO
+ORDER BY 2]]>
+		</queryString>
+		<field name="desripcion" class="java.lang.String"/>
+		<field name="NRO" class="java.lang.Integer"/>
+		<variable name="cantidadUnidadProducto" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+		<variable name="cantidadTotal" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="dataSetBalanceFinal" uuid="4b223baf-48ce-47be-8235-d2153282f1e9">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[select 1 as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro
+union
+select 6 as nro
+union
+select 7 as nro
+union
+select 8 as nro
+union
+select 9 as nro
+union
+select 10 as nro
+union
+select 11 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["H2291"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as indicacion
+	,pp.COD_COMPPROD_VERSION
+	,ip1.INDICACION_PROCESO as indicacionBalance
+
+from PROGRAMA_PRODUCCION pp
+     inner join COMPONENTES_PROD_VERSION cpv on cpv.COD_VERSION =pp.COD_COMPPROD_VERSION
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =pp.COD_COMPPROD_VERSION
+					 and ip.COD_TIPO_INDICACION_PROCESO = 2-- tipos de indicacio:indicacion
+					 and ip.COD_PROCESO_ORDEN_MANUFACTURA = 39--hoja timbrado de empaque primario
+	 left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION =pp.COD_COMPPROD_VERSION
+					 and ip1.COD_TIPO_INDICACION_PROCESO = 35-- indificacion rendimiento balance
+					 and ip1.COD_PROCESO_ORDEN_MANUFACTURA = 39--hoja timbrado de empaque primario
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion} and
+      pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="indicacion" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<field name="indicacionBalance" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="164" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="1" width="526" height="8" uuid="fdf7b9b2-2302-4a8d-9316-3104d1df149c"/>
+				<text><![CDATA[RENDIMIENTO FINAL]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="56" y="16" width="414" height="27" uuid="3b952b00-522e-48eb-a563-06687e7407fb"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetDescripcionRendimiento" uuid="36c70684-14ff-46d1-a2b4-54c88f2dc3e4">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="255" uuid="4572ee75-70cb-44fe-93e2-35833c4b784d">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="213" height="13" uuid="22690f8c-d1ad-422b-bddc-4205907b7be6"/>
+								<text><![CDATA[Descripción]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="253" height="15" uuid="f6d6fe2d-4744-42b3-abcf-7c62e166cb45"/>
+								<textFieldExpression><![CDATA[$F{desripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="127" uuid="d5bf6ce2-45e0-4f86-8d80-a127208d08fa">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="127" height="13" uuid="b568a91a-885c-4c32-8e00-151ba1178050"/>
+								<text><![CDATA[Cantidad]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1">
+							<line>
+								<reportElement style="lineaPunto" x="13" y="12" width="104" height="1" uuid="7bc15f0a-70ad-4b37-bf02-2181aa6b3710"/>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<frame>
+				<reportElement positionType="Float" x="63" y="70" width="357" height="26" uuid="1749b823-600e-450a-9a88-d2c9a1f79ccc"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement style="texto" x="4" y="9" width="57" height="8" uuid="c256a28b-9fe7-4034-9f02-554757d52056"/>
+					<text><![CDATA[Rendimiento Total =]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="68" y="13" width="203" height="1" uuid="46fe077d-493f-4df4-a736-96ae56faa68c"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" x="64" y="4" width="207" height="8" uuid="605f0127-5da5-4caa-809c-a56699199c56"/>
+					<text><![CDATA[UNIDADES ENTREGADAS A A.P.T. + UNIDADES ENTREGADAS A C.C.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="65" y="15" width="206" height="8" uuid="b66157b6-20b5-475f-8663-f2cd08c16769"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[TAMAÑO DE LOTE INDUSTRIAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="271" y="10" width="76" height="8" uuid="c21da346-5350-4670-93c6-69150b42971d"/>
+					<text><![CDATA[=...................................%]]></text>
+				</staticText>
+			</frame>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="10" y="12" width="507" height="2" uuid="2be31ed8-18cd-4b93-b896-bb449c15a9a5"/>
+				<textFieldExpression><![CDATA[$F{indicacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="13" y="48" width="105" height="8" uuid="1c09b1bb-a4b6-4749-9693-e1cc348aebc4"/>
+				<text><![CDATA[MOTIVO DE RECHAZO PARA FRV]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="121" y="54" width="168" height="1" uuid="046e5a8b-9c57-4666-998f-ce8d9a031cd8"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="13" y="58" width="110" height="8" uuid="98e5faab-4b92-49fd-9e9f-2deffa7a79be"/>
+				<text><![CDATA[CALCULO DE RENDIMIENTO FINAL]]></text>
+			</staticText>
+			<frame>
+				<reportElement positionType="Float" x="10" y="100" width="353" height="60" uuid="1e219ab7-da6f-483f-838a-b37db48e3a37"/>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="5" width="119" height="8" uuid="63cfa1e0-aa15-4e18-b9fb-a78e05c4cf4c"/>
+					<text><![CDATA[NOMBRE DEL JEFE DE AREA:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="14" width="229" height="8" uuid="8d53fcc1-282b-474a-be7d-d108b0fa16ce"/>
+					<text><![CDATA[Fecha:  .........../.........../...............]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="22" width="45" height="8" uuid="bf248ab2-6faa-47eb-8734-52aef038c783"/>
+					<text><![CDATA[Observacion:]]></text>
+				</staticText>
+				<line>
+					<reportElement style="lineaPunto" x="5" y="41" width="343" height="1" uuid="7f333f80-1a09-49fe-b56b-0d06bda01f24"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="122" y="8" width="133" height="1" uuid="00e25edd-14c9-4056-92da-fac084597d6b"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="5" y="55" width="343" height="1" uuid="c97b7c70-ff82-4584-b962-9305eed45f60"/>
+				</line>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

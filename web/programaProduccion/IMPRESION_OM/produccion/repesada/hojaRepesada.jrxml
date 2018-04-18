@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-08-09T18:32:32 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaRepesada" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="34a95c68-1eaa-4b20-bc4c-bd6e53f596be">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="325"/>
+	<property name="ireport.y" value="27"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetMateriales" uuid="0dba4c11-e6ff-4d83-81f1-f5d930d7973c">
+		<parameter name="codLoteProduccion" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codProgramaProd" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[exec PAA_CANTIDAD_MP_LOTE $P{codLoteProduccion},$P{codProgramaProd}]]>
+		</queryString>
+		<field name="COD_MATERIAL" class="java.lang.Integer"/>
+		<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+		<field name="cantidadFraccion" class="java.math.BigDecimal"/>
+		<field name="COD_FORMULA_MAESTRA_FRACCIONES" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as condicionesGenerales,
+ip1.INDICACION_PROCESO as precauciones,
+pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+left outer join INDICACION_PROCESO ip on ip.COD_VERSION=pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO=3 and ip.COD_PROCESO_ORDEN_MANUFACTURA=9
+left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION=pp.COD_COMPPROD_VERSION and ip1.COD_TIPO_INDICACION_PROCESO=1 and ip1.COD_PROCESO_ORDEN_MANUFACTURA=9
+where pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and pp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="condicionesGenerales" class="java.lang.String"/>
+	<field name="precauciones" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="131" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoBold" x="11" y="7" width="120" height="8" uuid="72f21478-63c2-455e-a9c1-e8d51b5088a9"/>
+				<text><![CDATA[Condiciones generales]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" x="11" y="16" width="504" height="4" uuid="e93942bf-5cfb-4ea4-a027-3de2742304a5"/>
+				<textFieldExpression><![CDATA[$F{condicionesGenerales}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="57" y="24" width="398" height="45" uuid="8709705d-2b10-47ab-bc3e-0d1891c531bb"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetMateriales" uuid="4de4ad51-920d-4b52-bed1-f2a0930b441a">
+						<datasetParameter name="codLoteProduccion">
+							<datasetParameterExpression><![CDATA[$P{codLoteProduccion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codProgramaProd">
+							<datasetParameterExpression><![CDATA[$P{codProgramaProd}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="269" uuid="ae6ebcd1-f719-4a94-a1b4-d2b3a2779f53">
+						<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="269" height="12" uuid="f8f3dfe8-89a2-4316-9635-b426b26f0bc2"/>
+								<text><![CDATA[PESADA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="157" uuid="2ca9f132-83cd-4257-8700-7566402e72f9">
+							<jr:columnHeader style="celdaCabecera" height="18" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="157" height="18" uuid="c5a10f7c-0a0c-4a0a-ae44-9858020718fa"/>
+									<textElement>
+										<font pdfFontName="Helvetica-Bold"/>
+									</textElement>
+									<text><![CDATA[Materia Prima]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="18" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="157" height="18" uuid="dcb8cf8a-5778-4638-9c7a-52e1d07268c8"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="71" uuid="451e2a98-7562-488e-a727-c9a18a47d2bb">
+							<jr:columnHeader style="celdaCabecera" height="18" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="71" height="18" uuid="eb0c8b27-b461-474e-aadd-46b8d954eb88"/>
+									<textElement>
+										<font pdfFontName="Helvetica-Bold"/>
+									</textElement>
+									<text><![CDATA[Cantidad]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="18" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="71" height="18" uuid="479ab9c7-ce07-4683-b459-7e1362e2cf3f"/>
+									<textFieldExpression><![CDATA[$F{cantidadFraccion}.setScale(2, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="41" uuid="58984733-4220-46a1-affa-5c19ac3b6bfb">
+							<jr:columnHeader style="celdaCabecera" height="18" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="41" height="18" uuid="5523136f-ab36-4be2-8872-25df6e81cccf"/>
+									<textElement>
+										<font pdfFontName="Helvetica-Bold"/>
+									</textElement>
+									<text><![CDATA[Unidad de  Medida]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="18" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="41" height="18" uuid="cf162aaf-f529-4461-8cd7-cd39d511d181"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{ABREVIATURA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="128" uuid="d7573a7c-ca26-4277-811c-e223460980f1">
+						<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="128" height="12" uuid="0ce84326-d6d5-4a88-8259-98d1abda3eb4"/>
+								<textElement>
+									<font size="7" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<text><![CDATA[REPESADA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="44" uuid="07167f00-29b4-4f1d-9ddc-be3b7b87660b">
+							<jr:columnHeader style="celdaCabecera" height="18" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="44" height="18" uuid="0dbf91c3-8783-4048-a6ca-a8cd5d64d4f5"/>
+									<textElement>
+										<font pdfFontName="Helvetica-Bold"/>
+									</textElement>
+									<text><![CDATA[V°B° Repesada]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="18" rowSpan="1">
+								<rectangle>
+									<reportElement style="linea" x="18" y="7" width="6" height="6" uuid="d79e0686-fafe-4034-9e88-a090c4f41b43"/>
+								</rectangle>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="84" uuid="9b93a85f-29a9-44e5-8f4f-a30d271e1ef9">
+							<jr:columnHeader style="celdaCabecera" height="18" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="84" height="18" uuid="498a782c-04e2-43a6-a563-544760272ee8"/>
+									<textElement>
+										<font pdfFontName="Helvetica-Bold"/>
+									</textElement>
+									<text><![CDATA[Observaciones]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="18" rowSpan="1">
+								<line>
+									<reportElement style="lineaPunto" x="4" y="14" width="75" height="1" uuid="95254a10-24fd-4642-89d1-371c45dfd3a4"/>
+								</line>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="17" y="72" width="74" height="10" uuid="180ecfe6-e9b9-472d-ad38-788e425f2068"/>
+				<text><![CDATA[PRECAUCIONES:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="17" y="82" width="503" height="3" uuid="645162ff-dc65-4bcc-93f1-cba94856adc7"/>
+				<textFieldExpression><![CDATA[$F{precauciones}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement positionType="Float" x="14" y="89" width="353" height="40" uuid="0c6e2045-0bd1-425c-a81e-7c6767782fc0"/>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="3" width="97" height="8" uuid="2d317bb4-f655-4e79-b254-6aaef5cbbbce"/>
+					<text><![CDATA[NOMBRE DEL JEFE DE AREA:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="12" width="229" height="8" uuid="2305b95a-972a-44ec-96b5-07ce1088f6d4"/>
+					<text><![CDATA[Fecha:  .........../.........../...............]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="22" width="45" height="8" uuid="74064e17-90ba-4580-a515-05c3da2caf42"/>
+					<text><![CDATA[Observacion:]]></text>
+				</staticText>
+				<line>
+					<reportElement style="lineaPunto" x="5" y="36" width="343" height="1" uuid="3f9cbc6e-36bc-44c7-b1b4-620c7038a2f8"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="102" y="8" width="178" height="1" uuid="6c5aa154-c495-40f1-b596-9256f5668624"/>
+				</line>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,58 @@
+/*
+ *  Created on 5 de Marzo de 2008, 18:24
+ *  @author Wilmer Manzaneda Chavez
+ *  @group ISAWI
+*/
+.tablaAccesos{
+    border-collapse:collapse;
+    border-bottom:2px solid #4c1f49;
+    border-spacing:0px;
+    width:100%;
+    margin-bottom:4px;
+}
+.stylo{
+    cursor:pointer;
+    border:1px solid #4c1f49;
+    padding-left:10px;
+    padding-right:10px;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+}
+.styloBlur{
+    background-color:#4c1f49;
+    color:white;
+}
+
+ul{
+    list-style-type:none;
+    list-style-position:inside;
+    margin:0px;
+    padding:0px;
+    width: 1000px;
+}
+.n{
+    padding-left: 10px;
+    width: 800px;
+    /*border: 1px solid red;*/
+}
+.node{
+   text-decoration:none;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size:10px;
+   margin:0px;	
+   padding:10px;
+   color:#000000;
+ }
+ .node:hover{
+   color:#0066FF;
+}
+img{
+        border:0px;
+        padding:0px;
+        margin-top:0px;
+}
+.bodySimple{
+    padding: 0px;
+}	
+	
+	

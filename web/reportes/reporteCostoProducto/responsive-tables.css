@@ -1,0 +1,43 @@
+/* Foundation v2.1.4 http://foundation.zurb.com */
+/* Artfully masterminded by ZURB  */
+
+/* -------------------------------------------------- 
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Page Name 1
+:: Page Name 2
+*/
+
+
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+
+table thead tr td:last-child
+{
+	border:none;
+}
+table tbody tr td{ border-bottom: 1px solid #cccccc;border-right: 1px solid #cccccc}
+
+/* Mobile */
+	
+	table.responsive { margin-bottom: 0; }
+	
+	.pinned { position: absolute; left: 0; top: 0; background: #fff; width: 50%; overflow: hidden; overflow-x: scroll; border-right: 1px solid #ccc; border-left: 1px solid #ccc; }
+	.pinned table { border-right: none; border-left: none; width: 100%; }
+	.pinned table th, .pinned table td { white-space: nowrap; }
+	.pinned td:last-child { border-bottom: 0; }
+	
+	div.table-wrapper { position: relative; margin-bottom: 20px; overflow: hidden; border-right: 1px solid #ccc; }
+	div.table-wrapper div.scrollable { margin-left: 50%; }
+	div.table-wrapper div.scrollable { overflow: scroll; overflow-y: hidden; }	
+	
+	table.responsive td, table.responsive th { position: relative; white-space: nowrap; overflow: hidden; }
+        table.responsive th{background-color: #75327c;color: white;font-weight: bold;text-align:center}
+	.pinned table.responsive th:first-child,.pinned table.responsive td:first-child,.pinned table.responsive td:first-child,.pinned table.responsive.pinned td { display: none; }
+	
+	
+

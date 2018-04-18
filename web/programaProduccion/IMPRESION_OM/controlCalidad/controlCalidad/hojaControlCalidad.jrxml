@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2018-03-06T16:56:59 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaControlCalidad" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="34a95c68-1eaa-4b20-bc4c-bd6e53f596be">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="325"/>
+	<property name="ireport.y" value="27"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dataSetEspecificacionesFisicas" uuid="0dba4c11-e6ff-4d83-81f1-f5d930d7973c">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codVersion" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select efcc.COD_ESPECIFICACION,
+       efcc.NOMBRE_ESPECIFICACION,
+       case tra.COD_TIPO_RESULTADO_ANALISIS when 1 then efp.DESCRIPCION 
+       when 2 then cast(efp.LIMITE_INFERIOR as varchar )+' '+isnull(efcc.UNIDAD,'')+' - '+cast(efp.LIMITE_SUPERIOR as varchar)+' '+isnull(efcc.UNIDAD ,'')
+       else efcc.COEFICIENTE+' '+tra.SIMBOLO+' '+cast(efp.VALOR_EXACTO as varchar)+' '+isnull(efcc.UNIDAD ,'') end as especificacion
+		
+from ESPECIFICACIONES_FISICAS_PRODUCTO efp
+	 
+     inner join ESPECIFICACIONES_FISICAS_CC efcc on efp.COD_ESPECIFICACION =
+     efcc.COD_ESPECIFICACION
+     
+     inner join TIPOS_REFERENCIACC tr on tr.COD_REFERENCIACC =
+     efp.COD_REFERENCIA_CC
+     LEFT OUTER JOIN TIPOS_RESULTADOS_ANALISIS tra on
+     tra.COD_TIPO_RESULTADO_ANALISIS = efcc.COD_TIPO_RESULTADO_ANALISIS
+     left outer join TIPOS_ESPECIFICACIONES_FISICAS tef on
+     tef.COD_TIPO_ESPECIFICACION_FISICA = efp.COD_TIPO_ESPECIFICACION_FISICA
+where efp.ESTADO = 1 and
+      efp.COD_VERSION = $P{codVersion} 
+      and efcc.NOMBRE_ESPECIFICACION not like '%PESO%'
+order by isnull(tef.NOMBRE_TIPO_ESPECIFICACION_FISICA, ''),
+         efcc.NOMBRE_ESPECIFICACION]]>
+		</queryString>
+		<field name="COD_ESPECIFICACION" class="java.lang.Integer"/>
+		<field name="NOMBRE_ESPECIFICACION" class="java.lang.String"/>
+		<field name="especificacion" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetEspecificacionesQuimicas" uuid="3fbdc272-921b-42aa-ad53-4803c6f08e71">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160105"/>
+		<parameter name="codVersion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select DISTINCT eqc.COD_ESPECIFICACION,eqp.COD_VERSION,
+       eqc.NOMBRE_ESPECIFICACION,
+       eqc.COD_TIPO_RESULTADO_ANALISIS,
+       ISNULL(eqc.COEFICIENTE, '') as COEFICIENTE,
+       ISNULL(tra.SIMBOLO, '') as SIMBOLO,
+       ISNULL(eqc.UNIDAD, '') AS unidad
+from ESPECIFICACIONES_QUIMICAS_CC eqc
+     left outer join TIPOS_RESULTADOS_ANALISIS tra on
+     eqc.COD_TIPO_RESULTADO_ANALISIS = tra.COD_TIPO_RESULTADO_ANALISIS
+     inner join ESPECIFICACIONES_QUIMICAS_PRODUCTO eqp on eqp.COD_ESPECIFICACION=eqc.COD_ESPECIFICACION
+where eqp.COD_VERSION= $P{codVersion} 
+order by eqc.NOMBRE_ESPECIFICACION]]>
+		</queryString>
+		<field name="COD_ESPECIFICACION" class="java.lang.Integer"/>
+		<field name="COD_VERSION" class="java.lang.Integer"/>
+		<field name="NOMBRE_ESPECIFICACION" class="java.lang.String"/>
+		<field name="COD_TIPO_RESULTADO_ANALISIS" class="java.lang.Integer"/>
+		<field name="COEFICIENTE" class="java.lang.String"/>
+		<field name="SIMBOLO" class="java.lang.String"/>
+		<field name="unidad" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetEspecificacionesQuimicasDetalle" uuid="a7a9b4ee-08f0-4145-ba60-418d47716c46">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codVersion" class="java.lang.Integer"/>
+		<parameter name="codEspecificacion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select m.NOMBRE_CCC as nombreMaterial,(case eqc.COD_TIPO_RESULTADO_ANALISIS when 1 then eqp.DESCRIPCION 
+when 2 then cast(eqp.LIMITE_INFERIOR as varchar)+' '+isnull(eqc.UNIDAD,'')+' - '+cast(eqp.LIMITE_SUPERIOR as varchar)+' '+isnull(eqc.UNIDAD,'') 
+else ' ' end ) collate traditional_spanish_ci_ai+' ('+isnull(tr.NOMBRE_REFERENCIACC,'N.A.')+')' as especificacion
+from ESPECIFICACIONES_QUIMICAS_PRODUCTO eqp
+	 inner join ESPECIFICACIONES_QUIMICAS_CC eqc on eqc.COD_ESPECIFICACION=eqp.COD_ESPECIFICACION
+     inner join TIPOS_RESULTADOS_ANALISIS tra on tra.COD_TIPO_RESULTADO_ANALISIS=eqc.COD_TIPO_RESULTADO_ANALISIS
+     left outer join TIPOS_REFERENCIACC tr on tr.COD_REFERENCIACC =
+     eqp.COD_REFERENCIA_CC
+     left outer join MATERIALES m on eqp.COD_MATERIAL=m.COD_MATERIAL
+where eqp.COD_VERSION=  $P{codVersion} 
+and eqp.COD_ESPECIFICACION= $P{codEspecificacion} 
+order by m.NOMBRE_MATERIAL]]>
+		</queryString>
+		<field name="nombreMaterial" class="java.lang.String"/>
+		<field name="especificacion" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["H1738"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 isnull(ip.INDICACION_PROCESO,'') as indicacionLimpieza,
+pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+left outer join INDICACION_PROCESO ip on ip.COD_VERSION=pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO=17 and ip.COD_PROCESO_ORDEN_MANUFACTURA=28
+
+where pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and pp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="indicacionLimpieza" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="149" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="1" y="13" width="526" height="13" uuid="2a48bc1e-40d9-4030-9f36-6afa9ddd3fd7"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetEspecificacionesFisicas" uuid="eff8d80c-ddfa-463d-ae5e-f02d15653abe">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="130" uuid="3573822e-4465-433b-826c-1d6b30249a38">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:detailCell style="celdaBody" height="18">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="130" height="18" uuid="807dea05-1037-47b0-91ef-5d388190b410"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="125" uuid="7980e258-348a-4a23-b43f-5bac4cfc3d61">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:detailCell style="celdaBody" height="18">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="125" height="18" uuid="5ce48f98-bec9-46ce-a58e-991950a3daf0"/>
+								<textFieldExpression><![CDATA[$F{especificacion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="131" uuid="c334e809-3187-4349-857e-207c079528f0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:detailCell style="celdaBody" height="18">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="131" height="18" uuid="5e4ec772-22de-491d-b6da-ede794d6c8a9"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="403d84b0-bbf6-4fe1-9fb6-e206d7528797">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:detailCell style="celdaBody" height="18">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" x="1" y="1" width="526" height="12" uuid="ff8247ef-77bf-473a-a7c5-f485783c499c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[CONTROL DE CALIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="26" width="526" height="12" uuid="d6202cd1-d3dc-4eea-95b6-29f71ae76f9e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[ESPECIFICACIONES FISICOQUIMICAS DEL PRODUCTO]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="1" y="38" width="526" height="20" uuid="6a270e1b-7890-4a5b-8f89-e6d96f32fcfb"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetEspecificacionesQuimicas" uuid="9e9bdabd-6e89-4b29-99a2-dc7898e5b674">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="526">
+						<textField isStretchWithOverflow="true">
+							<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="129" height="20" uuid="2a8c262f-71e9-45a2-a39a-cfcc38197e4c">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACION}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true">
+							<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="255" y="0" width="131" height="20" uuid="280db133-6b20-4568-8408-f755e4f7dedd"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACION}]]></textFieldExpression>
+						</textField>
+						<componentElement>
+							<reportElement style="textoBody." x="131" y="1" width="394" height="19" uuid="6895d9e8-5664-40d4-81c2-fff020ded42b"/>
+							<jr:list printOrder="Vertical">
+								<datasetRun subDataset="dataSetEspecificacionesQuimicasDetalle" uuid="f23ab96f-9316-48d0-aa3a-733553be4144">
+									<datasetParameter name="codEspecificacion">
+										<datasetParameterExpression><![CDATA[$F{COD_ESPECIFICACION}]]></datasetParameterExpression>
+									</datasetParameter>
+									<datasetParameter name="codVersion">
+										<datasetParameterExpression><![CDATA[$F{COD_VERSION}]]></datasetParameterExpression>
+									</datasetParameter>
+									<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+								</datasetRun>
+								<jr:listContents height="19" width="394">
+									<textField>
+										<reportElement style="textoBody." stretchType="RelativeToTallestObject" x="0" y="0" width="123" height="19" uuid="006cd092-7c83-4d33-89af-8a12eb39d2a2"/>
+										<textFieldExpression><![CDATA[$F{nombreMaterial}+" : "+$F{especificacion}]]></textFieldExpression>
+									</textField>
+									<textField>
+										<reportElement style="textoBody." stretchType="RelativeToTallestObject" x="255" y="0" width="139" height="19" uuid="a4d79a5b-9bf8-4db9-b0b0-d2e242ec30ea"/>
+										<textFieldExpression><![CDATA[$F{nombreMaterial}+":"]]></textFieldExpression>
+									</textField>
+								</jr:listContents>
+							</jr:list>
+						</componentElement>
+						<staticText>
+							<reportElement x="398" y="0" width="127" height="20" uuid="d98721f7-0549-420c-babd-8e17e8148140"/>
+							<text><![CDATA[]]></text>
+						</staticText>
+						<staticText>
+							<reportElement stretchType="RelativeToBandHeight" x="398" y="0" width="127" height="20" uuid="dd86d515-2f56-4bc2-9b12-df7170a8e543"/>
+							<box>
+								<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<text><![CDATA[]]></text>
+						</staticText>
+						<staticText>
+							<reportElement stretchType="RelativeToBandHeight" x="387" y="0" width="139" height="20" uuid="1f9a00d6-1de2-41ec-b1ad-958b4412f1db"/>
+							<box>
+								<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<text><![CDATA[]]></text>
+						</staticText>
+						<staticText>
+							<reportElement stretchType="RelativeToBandHeight" x="130" y="0" width="125" height="20" uuid="1cd2ca2e-458c-4c04-bf7b-290539fda71c"/>
+							<box>
+								<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<text><![CDATA[]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="100" width="526" height="12" uuid="a2bada14-3db3-4e90-bacb-1434c777d800">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[CONTROL DE LIMPIEZA]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="5" y="114" width="514" height="2" uuid="5fef8832-b553-4324-885b-2586e8312a55"/>
+				<textFieldExpression><![CDATA[$F{indicacionLimpieza}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="400" y="58" width="127" height="12" uuid="d7fdd69c-b63a-43ad-b6ac-a5029c208a46">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[VoBo Q.F.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="256" y="58" width="144" height="12" uuid="27d35e2c-47e0-43c7-b38f-4a79a6e7537b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[DICTAMEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="58" width="255" height="12" uuid="bf7381f7-9e28-4714-af32-4944954a1361">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[RECEPCIÓN DE LA MUESTRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="1" y="70" width="255" height="10" isRemoveLineWhenBlank="true" uuid="a035a449-cdc8-48e9-8330-b9f529a8345a"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Cantidad de muestra:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="1" y="80" width="255" height="10" isRemoveLineWhenBlank="true" uuid="3af76d4f-4647-4b4d-a47a-f3b6312c5f5c"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Responsable de analisis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="1" y="90" width="255" height="10" isRemoveLineWhenBlank="true" uuid="6ff10fad-23ec-4751-9d29-59ca7b19efdd"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="256" y="70" width="144" height="30" isRemoveLineWhenBlank="true" uuid="3a897589-1702-42b7-8c65-c6e2112652aa"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="5" y="123" width="62" height="8" uuid="3b2eb698-ef42-4fd5-9b70-47b28bed7f56"/>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="5" y="136" width="395" height="1" uuid="ee1301b7-f1db-484f-8a5b-c1356ab21d54"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="5" y="146" width="395" height="1" uuid="7518b4da-d317-46c7-b25e-51c6d4fd7181"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

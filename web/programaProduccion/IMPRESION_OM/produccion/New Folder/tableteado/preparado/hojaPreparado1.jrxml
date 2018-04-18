@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a89a6e9f-7a6b-413f-ba61-4509bcf79d85">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="129"/>
+	<template><![CDATA["D:\\PRODUCCION OFICIAL\\PRODUCCION\\web\\programaProduccion\\IMPRESION_OM\\stylos\\StylosImpresionOM.jrtx"]]></template>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from DIAGRAMA_PREPARADO_PRODUCTO_PROCESO_VERSION]]>
+	</queryString>
+	<field name="COD_VERSION" class="java.lang.Integer"/>
+	<field name="COD_PROCESO_ORDEN_MANUFACTURA" class="java.lang.Integer"/>
+	<field name="DIAGRAMA" class="java.lang.Object"/>
+	<field name="ORDEN" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="635" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="3" width="523" height="629" uuid="1e4620ac-919f-4734-b186-0d89d88fce0c"/>
+				<imageExpression><![CDATA[JRImageRenderer.getInstance((byte [])$F{DIAGRAMA})]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

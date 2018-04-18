@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-11T16:24:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="graficoSeguimientoPersonal" pageWidth="481" pageHeight="170" orientation="Landscape" columnWidth="481" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a0a8685a-05d5-42b0-9d0e-f630c9b57862">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataGRafico" uuid="25906200-c65a-4e84-b622-222e6dc2f489">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="localPrueba"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codPersonal" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codSeguimientoProgramaProduccionProceso" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="volumenDosificado" class="java.lang.Double">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+		</parameter>
+		<queryString>
+			<![CDATA[select spppcl.VOLUMEN_AMPOLLA1 as volumenAmpolla,spppcl.FECHA_MUESTRA as fm,$P{volumenDosificado} as ideal
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN spppcl
+where spppcl.COD_PERSONAL=$P{codPersonal}
+and spppcl.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+union
+select spppcl.VOLUMEN_AMPOLLA2 as volumenAmpolla,(DATEADD([second],10,spppcl.FECHA_MUESTRA))  as fm,$P{volumenDosificado} as ideal
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN spppcl
+where spppcl.COD_PERSONAL=$P{codPersonal}
+and spppcl.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+union
+select spppcl.VOLUMEN_AMPOLLA3 as volumenAmpolla,(DATEADD([second],20,spppcl.FECHA_MUESTRA))  as fm,$P{volumenDosificado} as ideal
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN spppcl
+where spppcl.COD_PERSONAL=$P{codPersonal}
+and spppcl.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+union
+select spppcl.VOLUMEN_AMPOLLA4 as volumenAmpolla,(DATEADD([second],30,spppcl.FECHA_MUESTRA))  as fm,$P{volumenDosificado} as ideal
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN spppcl
+where spppcl.COD_PERSONAL=$P{codPersonal}
+and spppcl.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+union
+select spppcl.VOLUMEN_AMPOLLA5 as volumenAmpolla,(DATEADD([second],40,spppcl.FECHA_MUESTRA))  as fm,$P{volumenDosificado} as ideal
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN spppcl
+where spppcl.COD_PERSONAL=$P{codPersonal}
+and spppcl.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+union
+select spppcl.VOLUMEN_AMPOLLA6 as volumenAmpolla,(DATEADD([second],50,spppcl.FECHA_MUESTRA))  as fm,$P{volumenDosificado} as ideal
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN spppcl
+where spppcl.COD_PERSONAL=$P{codPersonal}
+and spppcl.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+order by 2]]>
+		</queryString>
+		<field name="volumenAmpolla" class="java.lang.Double"/>
+		<field name="fm" class="java.sql.Time"/>
+		<field name="ideal" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="codSeguimientoProgramaProduccionProceso" class="java.lang.Integer"/>
+	<parameter name="volumenDosificado" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[select DISTINCT s.COD_PERSONAL,isnull(p.AP_PATERNO_PERSONAL+' '+p.AP_MATERNO_PERSONAL+' '+p.NOMBRES_PERSONAL,pt.AP_PATERNO_PERSONAL+' '+pt.AP_MATERNO_PERSONAL+' '+pt.NOMBRES_PERSONAL) as nombrePersonal
+,s.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN s
+	left outer join PERSONAL p on p.COD_PERSONAL=s.COD_PERSONAL
+	left outer join PERSONAL_TEMPORAL pt on pt.COD_PERSONAL=s.COD_PERSONAL
+where s.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+order by 2]]>
+	</queryString>
+	<field name="COD_PERSONAL" class="java.lang.Integer"/>
+	<field name="nombrePersonal" class="java.lang.String"/>
+	<field name="COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="169" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<lineChart>
+				<chart isShowLegend="false">
+					<reportElement style="texto" isPrintRepeatedValues="false" x="0" y="0" width="481" height="169" uuid="0e97317c-b9af-45da-a263-db7f1c4b1f3b"/>
+					<chartTitle position="Top">
+						<font fontName="Arial" size="8" isBold="true"/>
+						<titleExpression><![CDATA["Personal: "+$F{nombrePersonal}]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="dataGRafico" uuid="0f81ee26-62e5-4983-9cba-6a0d5912ea2f">
+							<datasetParameter name="codPersonal">
+								<datasetParameterExpression><![CDATA[$F{COD_PERSONAL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="codSeguimientoProgramaProduccionProceso">
+								<datasetParameterExpression><![CDATA[$F{COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="volumenDosificado">
+								<datasetParameterExpression><![CDATA[$P{volumenDosificado}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{fm}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ideal}]]></valueExpression>
+						<itemHyperlink>
+							<hyperlinkTooltipExpression><![CDATA[$F{volumenAmpolla}.toString()]]></hyperlinkTooltipExpression>
+						</itemHyperlink>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 2"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{fm}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{volumenAmpolla}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowShapes="false">
+					<plot backcolor="#F5F5F5" backgroundAlpha="1.0" labelRotation="90.0">
+						<seriesColor seriesOrder="0" color="#11B82C"/>
+						<seriesColor seriesOrder="1" color="#FF0000"/>
+					</plot>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat tickLabelColor="#000000" verticalTickLabels="false">
+							<labelFont>
+								<font fontName="Arial" size="8"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Arial" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<tickLabelFont>
+								<font fontName="Arial" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

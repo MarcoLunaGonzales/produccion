@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaSecado" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9c7b3066-13a3-40ed-8b65-406f21485ed0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["D:\\PRODUCCION OFICIAL\\PRODUCCION\\web\\programaProduccion\\IMPRESION_OM\\stylos\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetMaquinarias" uuid="277a4e75-adfd-482c-9073-f6d9d7955824">
+		<parameter name="codVersion" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select cpvmp.COD_COMPPROD_VERSION_MAQUINARIA_PROCESO,m.COD_MAQUINA,m.NOMBRE_MAQUINA,m.CODIGO
+from COMPONENTES_PROD_VERSION_MAQUINARIA_PROCESO cpvmp
+inner join maquinarias m on m.COD_MAQUINA=cpvmp.COD_MAQUINA
+where cpvmp.COD_VERSION=$P{codVersion}
+and cpvmp.COD_PROCESO_ORDEN_MANUFACTURA=6
+order by m.NOMBRE_MAQUINA]]>
+		</queryString>
+		<field name="COD_COMPPROD_VERSION_MAQUINARIA_PROCESO" class="java.lang.Integer"/>
+		<field name="COD_MAQUINA" class="java.lang.Integer"/>
+		<field name="NOMBRE_MAQUINA" class="java.lang.String"/>
+		<field name="CODIGO" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="DataSetEspecificacionesMaquinaria" uuid="16f8911f-30bf-4bcf-81e3-cd9c80dbfbf9">
+		<parameter name="codCompProdVersionMaquinariaProceso" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[exec PAA_ESPECIFICACIONES_PROCESO_MAQUINARIA $P{codCompProdVersionMaquinariaProceso}]]>
+		</queryString>
+		<field name="NOMBRE_ESPECIFICACIONES_PROCESO" class="java.lang.String"/>
+		<field name="NOMBRE_UNIDAD_MEDIDA" class="java.lang.String"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+		<field name="RESULTADO_NUMERICO" class="java.lang.Integer"/>
+		<field name="PORCIENTO_TOLERANCIA" class="java.lang.Double"/>
+		<field name="VALOR_EXACTO" class="java.lang.Double"/>
+		<field name="VALOR_TEXTO" class="java.lang.String"/>
+		<field name="VALOR_MINIMO" class="java.lang.Double"/>
+		<field name="VALOR_MAXIMO" class="java.lang.Double"/>
+		<field name="RESULTADO_ESPERADO_LOTE" class="java.lang.Integer"/>
+		<field name="COD_TIPO_DESCRIPCION" class="java.lang.Integer"/>
+		<field name="NOMBRE_TIPO_DESCRIPCION" class="java.lang.String"/>
+		<field name="ESPECIFICACION" class="java.lang.String"/>
+		<field name="especificacionReporte" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as precauciones,ip1.INDICACION_PROCESO as CondicionesGenerales,
+pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+left outer join INDICACION_PROCESO ip on ip.COD_VERSION=pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO=1 and ip.COD_PROCESO_ORDEN_MANUFACTURA=6
+left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION=pp.COD_COMPPROD_VERSION and ip1.COD_TIPO_INDICACION_PROCESO=3 and ip1.COD_PROCESO_ORDEN_MANUFACTURA=6
+where pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and pp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="precauciones" class="java.lang.String"/>
+	<field name="CondicionesGenerales" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="392">
+			<componentElement>
+				<reportElement x="9" y="98" width="509" height="51" backcolor="#FFFFFF" uuid="a2d40d5d-1701-4463-b069-128021b389d1"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetMaquinarias" uuid="2b151571-7616-4e2f-8bb2-818143b59860">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="51" width="509">
+						<textField>
+							<reportElement style="textoBold" x="195" y="2" width="311" height="9" uuid="ea815ed1-8c5d-4f51-b789-8deec9de7815"/>
+							<textElement textAlignment="Left">
+								<font pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NOMBRE_MAQUINA}+'('+$F{CODIGO}+')']]></textFieldExpression>
+						</textField>
+						<rectangle>
+							<reportElement style="linea" x="185" y="4" width="5" height="5" uuid="19ead427-a91a-4a43-bf57-a2c15df88746"/>
+						</rectangle>
+						<componentElement>
+							<reportElement key="table" x="15" y="12" width="485" height="37" uuid="33e9f1bc-3d54-4824-8785-0421c058b591"/>
+							<jr:table>
+								<datasetRun subDataset="DataSetEspecificacionesMaquinaria" uuid="0a0244ae-bea6-40e4-876d-7eea1fd892eb">
+									<datasetParameter name="codCompProdVersionMaquinariaProceso">
+										<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION_MAQUINARIA_PROCESO}]]></datasetParameterExpression>
+									</datasetParameter>
+									<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+								</datasetRun>
+								<jr:column width="155" uuid="7a368da4-ada7-4023-9d4a-c4bb67083f04">
+									<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="155" height="12" uuid="c31b9fa9-a114-4abf-9387-f73998c5cee3"/>
+											<textElement textAlignment="Center">
+												<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+											</textElement>
+											<text><![CDATA[CONDICIONES DEL PROCESO]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="12" rowSpan="1">
+										<textField>
+											<reportElement style="texto" x="0" y="0" width="155" height="12" uuid="2f36865f-3a91-4146-afce-0870050c3ced"/>
+											<textElement>
+												<font size="6"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACIONES_PROCESO}]]></textFieldExpression>
+										</textField>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="90" uuid="8aaf99da-a73a-42f2-afb8-633c72279282">
+									<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="90" height="12" uuid="66b43438-3931-4f4f-8626-a512d679c4f1"/>
+											<textElement textAlignment="Center">
+												<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+											</textElement>
+											<text><![CDATA[ESPECIFICACIÓN]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="12" rowSpan="1">
+										<textField>
+											<reportElement style="textoBody." x="0" y="0" width="90" height="12" uuid="9a2e9af4-2e86-4d7d-a48a-f55446f0663e"/>
+											<textElement textAlignment="Center">
+												<font size="6"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{especificacionReporte}]]></textFieldExpression>
+										</textField>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="53" uuid="76f52524-7d12-498e-b31a-101070d2e5c5">
+									<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="53" height="12" uuid="841a8382-1f26-4221-a068-75f7c90b0e7a"/>
+											<textElement textAlignment="Center">
+												<font size="6" isBold="true"/>
+											</textElement>
+											<text><![CDATA[U.M.]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="12" rowSpan="1">
+										<textField>
+											<reportElement style="textoBody." x="0" y="0" width="53" height="12" uuid="45d2db96-d329-4519-8115-38180a1848f5"/>
+											<textElement textAlignment="Center">
+												<font size="6"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{ABREVIATURA}]]></textFieldExpression>
+										</textField>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="95" uuid="7d2497d8-4124-43c1-8501-c19bd50de0cc">
+									<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="95" height="12" uuid="de27ffb2-e859-4b39-bccc-5724ea0b7a4c"/>
+											<textElement textAlignment="Center">
+												<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+											</textElement>
+											<text><![CDATA[Fracción 1]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+								</jr:column>
+								<jr:column width="91" uuid="030510a3-3138-4688-842f-97c54f8f99da">
+									<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" mode="Transparent" x="0" y="0" width="91" height="12" uuid="5498243e-a57d-49ad-9089-c5ebdbed5036"/>
+											<textElement textAlignment="Center">
+												<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+											</textElement>
+											<text><![CDATA[Fracción 2]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+								</jr:column>
+							</jr:table>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoBold" x="8" y="5" width="78" height="13" uuid="19f0ce29-270e-4325-a835-e0eeef8f89a0"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Precauciones]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="8" y="18" width="512" height="20" uuid="7e2977fc-4949-4344-af8d-e801c0eb6615"/>
+				<textFieldExpression><![CDATA[$F{precauciones}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="9" y="37" width="131" height="12" uuid="53fb3d59-c5c2-443d-a73b-ff87b54b59a1"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Condiciones Generales]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="10" y="49" width="503" height="35" uuid="b970ca01-6291-4d82-a725-78ee0475327d"/>
+				<textFieldExpression><![CDATA[$F{CondicionesGenerales}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="191" y="85" width="175" height="9" uuid="f789e984-dd16-4a96-be87-f1672b123719"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CONDICIONES DE OPERACIÓN EQUIPO AMBIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="10" y="170" width="205" height="8" uuid="002b00cc-e6f8-40aa-af5d-f175e89c43a6"/>
+				<text><![CDATA[Los obreros responsables deben registrarse]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="10" y="180" width="85" height="8" uuid="0990de74-7e38-40e9-8b19-044fc066fdee"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Responsable de carga 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="11" y="190" width="84" height="8" uuid="05ac63b1-e9c3-400a-90b4-010bb1547aa1"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Responsable de carga 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="235" y="181" width="74" height="8" uuid="d98692b2-6b98-4c23-b3e6-09e69400022f"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Hora de inicio secado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="236" y="191" width="74" height="8" uuid="4430d481-5339-49d0-b17c-a649a19c5b37"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Hora de inicio secado]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="105" y="187" width="128" height="1" uuid="993c6b63-0454-4c43-983b-206e70300b9e"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="104" y="197" width="128" height="1" uuid="ce603f5f-2409-4667-9b1b-3376bd7707b3"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="314" y="198" width="73" height="1" uuid="495a76ea-f48e-43b1-a20f-87dda3c1a880"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="314" y="188" width="73" height="1" uuid="fdfbe1f7-b4b9-4204-bb0f-9c40d3f3fee2"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="394" y="182" width="22" height="8" uuid="4556b074-edfa-4b9f-a912-d2f74119dd96"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="395" y="192" width="22" height="8" uuid="16edc6ce-ea10-40a2-8564-7e5f11cfa42e"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="421" y="197" width="73" height="1" uuid="fba040a1-b52e-4331-b7b5-84a2f5e27ddd"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="421" y="188" width="73" height="1" uuid="f1f901d9-0813-46c7-a498-968b22793d61"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="11" y="201" width="84" height="8" uuid="45453c0e-b2d8-4bc7-b391-28fcfc71f2a6"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Supervisor]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="104" y="207" width="128" height="1" uuid="cd1655a3-adac-447b-ab54-03ba3b6a30ab"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="395" y="203" width="22" height="8" uuid="e575101d-90fe-492a-838c-ec1dd5400f38"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="422" y="207" width="73" height="1" uuid="3deae86a-3f11-4cdb-9ca4-a1bed54fb3d8"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="213" width="527" height="1" uuid="5ba7a6a8-3e2f-4b80-925e-82f35ce9deea"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="256" width="527" height="1" uuid="22a161c3-0ee7-464e-bd7c-540a5bb8d6a5"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="13" y="216" width="273" height="8" uuid="66062825-b5c2-44e8-8045-fb093a0e8432"/>
+				<text><![CDATA[3. Terminado el tiempo de granulado, enviar muestra a control de calidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="15" y="226" width="74" height="8" uuid="e498769e-94e7-4716-ae4f-e3215898b3cc"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="95" y="232" width="115" height="1" uuid="e81c280d-e21f-4422-94d8-1fae1dd50572"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="216" y="225" width="22" height="8" uuid="ff249011-7ac7-402b-9281-1a5a35e0897b"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="245" y="232" width="73" height="1" uuid="7907a736-3f7f-49c7-bddf-f6ec474e601e"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="322" y="224" width="22" height="8" uuid="71f13624-3fc1-4ed8-ba9f-6a83f52f5345"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="347" y="232" width="64" height="1" uuid="6f69e3e3-71f1-44eb-8014-d7e8557532cc"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="414" y="224" width="35" height="8" uuid="a316ac8a-6a4a-49fe-80d3-9c4884f1276d"/>
+				<text><![CDATA[Cantidad:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="450" y="231" width="64" height="1" uuid="c6ae2069-a649-449c-90fb-ef11f55764d9"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="414" y="234" width="35" height="8" uuid="34995fb1-92b8-4d75-bee2-a16caf01e7d7"/>
+				<text><![CDATA[Cantidad:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="245" y="242" width="73" height="1" uuid="d7f50160-098a-460e-acde-145b893a4fa9"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="347" y="242" width="64" height="1" uuid="96c81953-d5cd-4187-ab13-3b4e21b57b78"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="322" y="234" width="22" height="8" uuid="c7dec52e-a9e0-4e48-aace-939a0bd6be8e"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="450" y="241" width="64" height="1" uuid="625d3c72-0504-4eae-a7f2-c9c95d543621"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="216" y="235" width="22" height="8" uuid="1179b1af-74e3-4a5b-9f69-f81bb015b47a"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="95" y="242" width="115" height="1" uuid="95f9b49a-9a3c-44a7-a7e9-aac79df52e58"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="15" y="236" width="74" height="8" uuid="b636985f-eeff-4aa6-a319-8c7741aa1c44"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="245" y="252" width="73" height="1" uuid="c7260e82-833f-4a13-b261-95ab9cf6489a"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="216" y="245" width="22" height="8" uuid="1b143a02-7cd8-4387-9411-a430ba6f8753"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="414" y="244" width="35" height="8" uuid="df1e21d2-7523-4546-8268-9c822262c514"/>
+				<text><![CDATA[Cantidad:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="347" y="252" width="64" height="1" uuid="771aa5ef-bf74-4530-8797-7e7a32891f0a"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="15" y="246" width="74" height="8" uuid="200473bc-84c6-47b2-9216-e0e6982d593f"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="450" y="251" width="64" height="1" uuid="d4d0e36e-7486-44c9-ba12-03bfbb6d449b"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="322" y="244" width="22" height="8" uuid="7a48afc3-9c64-4a50-b3fa-20fbd35ed943"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="95" y="252" width="115" height="1" uuid="bed14566-b571-45a5-a240-e80805889193"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="301" width="527" height="1" uuid="39358f4f-85d4-412f-aec9-0ae093999f6a"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="14" y="260" width="53" height="8" uuid="a0ed6cbb-8d74-49af-8b38-66efa9b9d707"/>
+				<text><![CDATA[Analista]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="72" y="266" width="109" height="1" uuid="4e8691c9-973e-4c6b-8075-47c2e4a267a2"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="185" y="259" width="53" height="8" uuid="f66dac0c-46bc-4eea-81ac-05fa5e78714c"/>
+				<text><![CDATA[H% Resultado]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="242" y="266" width="74" height="1" uuid="dfc03942-f96e-4798-99ae-220d3ebb8a06"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="366" y="261" width="32" height="8" uuid="3a6f771c-9cb8-44a5-ac4f-f1a14fe2a76a"/>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="451" y="261" width="41" height="9" uuid="6db9353f-0096-4e49-8ac5-e2f916c566f6"/>
+				<text><![CDATA[Rechazado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="335" y="261" width="25" height="9" uuid="989ff328-81e0-4b8c-b760-148a02df1994"/>
+			</rectangle>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="420" y="261" width="25" height="9" uuid="9966b0b8-7283-4544-b0d7-3dda6ab5e9f8"/>
+			</rectangle>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="242" y="276" width="74" height="1" uuid="e6ddab94-a247-4157-8c93-692cee0b0fab"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="14" y="270" width="53" height="8" uuid="f4a64de5-991d-437a-96d1-0ace54602d12"/>
+				<text><![CDATA[Analista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="366" y="271" width="32" height="8" uuid="526dd825-9268-4dd9-a368-80de6411ac0e"/>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="72" y="276" width="109" height="1" uuid="8bd46a07-4783-4a7c-891c-027ac8add05e"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="185" y="269" width="53" height="8" uuid="3181dd7c-037d-4c83-95a8-618cf4d190f2"/>
+				<text><![CDATA[H% Resultado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="451" y="271" width="41" height="9" uuid="a4f30dff-234b-4e11-8315-366ea31ec24c"/>
+				<text><![CDATA[Rechazado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="420" y="271" width="25" height="9" uuid="70e46a6e-5df3-4a87-a2c8-e039984a7844"/>
+			</rectangle>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="335" y="271" width="25" height="9" uuid="4522ed65-f9fb-4e84-8005-c30fee5db82b"/>
+			</rectangle>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="242" y="286" width="74" height="1" uuid="c814cf1e-cde2-4a9f-91ff-9b467528e50f"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="14" y="280" width="53" height="8" uuid="30237fb1-dd7c-40d9-86bb-d634fd42702b"/>
+				<text><![CDATA[Analista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="366" y="281" width="32" height="8" uuid="f84274e1-2b73-444d-81a4-b4da89cede7c"/>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="72" y="286" width="109" height="1" uuid="a9ac5bad-1809-4cd9-9b6f-5e84c4b113e9"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="185" y="279" width="53" height="8" uuid="82c9f7f4-f067-42d9-8d37-de3697265789"/>
+				<text><![CDATA[H% Resultado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="451" y="281" width="41" height="9" uuid="a0bc7690-c22a-472e-b4bf-753c08cc2c00"/>
+				<text><![CDATA[Rechazado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="420" y="281" width="25" height="9" uuid="f9b3adad-9f45-4818-be79-c70290e224b9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="335" y="281" width="25" height="9" uuid="666eb5f1-6ddf-42a8-8759-246b86c9e4dc"/>
+			</rectangle>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="242" y="295" width="74" height="1" uuid="ca799477-b431-4de1-acd8-b3bdfbcdfb00"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="14" y="289" width="53" height="8" uuid="6b083ada-e38d-40ab-b8b5-00e461bd0ff9"/>
+				<text><![CDATA[Analista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="366" y="290" width="32" height="8" uuid="83c1c4e9-a98f-498e-9f3a-bdb0fe6e3efc"/>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="72" y="295" width="109" height="1" uuid="3ad869a6-dc7f-40d1-8e5c-f0d26b6470cd"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="185" y="288" width="53" height="8" uuid="2a7de4c2-3862-4a54-91c2-1faeb7d675bb"/>
+				<text><![CDATA[H% Resultado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="451" y="290" width="41" height="9" uuid="7e33f1f9-2f43-4d59-9d60-47dbbf3e4c43"/>
+				<text><![CDATA[Rechazado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="420" y="290" width="25" height="9" uuid="92e14426-d5ff-4153-a6bd-b0170b93b2c6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="335" y="290" width="25" height="9" uuid="cf84834e-9bd3-46ce-89c1-892a9a96277e"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="14" y="305" width="336" height="8" uuid="e3c71978-324d-407c-b109-1dbd7da9913f"/>
+				<text><![CDATA[4. Aprobado la humedad del gránulo seco, descargue el producto y registre el peso que corresponde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="43" y="314" width="84" height="8" uuid="5faabd0b-4cc5-43f8-b720-afbe6c3bed40"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Peso gránulo seco]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="128" y="320" width="109" height="1" uuid="3fbe7603-c349-456d-a5d7-88f92617d5dc"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="240" y="314" width="18" height="8" uuid="85b6bcb0-11ce-474d-a106-800208660446"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Kg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="269" y="314" width="54" height="8" uuid="ecb8e1f1-91f7-4e30-a421-1e064687c868"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Responsable]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="350" y="321" width="109" height="1" uuid="a3a7ea5a-b3de-4907-8894-f831f8317649"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="326" width="95" height="8" uuid="a21633f6-d1b2-4a6c-b8d2-194a65c28958"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Responsable de descarga 1]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="117" y="332" width="123" height="1" uuid="a365b1eb-3ebb-4446-a2fb-76a1bcb7184e"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="248" y="326" width="83" height="8" uuid="9e7c0de2-1671-47d2-9994-a20ade4b8a21"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Hora finalización secado]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="335" y="332" width="79" height="1" uuid="d5efe99a-a810-44be-9cb9-6978f89959b7"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="417" y="326" width="22" height="8" uuid="f489fdc5-20dd-4311-b38a-65b494856212"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="443" y="332" width="70" height="1" uuid="3d32c1bc-b5d1-4506-a1c8-17dffbf535eb"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="443" y="342" width="70" height="1" uuid="90f68fbe-79da-44e7-8836-478067afcf70"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="417" y="336" width="22" height="8" uuid="4083c09b-4ffc-458f-bf5f-4ade25c3f776"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="117" y="342" width="123" height="1" uuid="7ce55623-d3ff-45f8-9cd4-bc843320f7f6"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="248" y="336" width="83" height="8" uuid="3d3260ac-1ee4-4f6e-a86a-599fe58727cd"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Hora finalización secado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="336" width="95" height="8" uuid="a27653dd-49f8-44a6-b5b5-af1ba3b0f8df"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Responsable de descarga 2]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="335" y="342" width="79" height="1" uuid="a00c723a-7e5c-4cdd-b51d-117892936382"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="347" width="95" height="8" uuid="603e1158-0bb1-443a-bd60-40ad5dca2441"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[MERMA DEL PROCESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="356" width="95" height="8" uuid="d695d13c-6b77-4fc1-9241-39006f07f74c"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Supervisor]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="116" y="362" width="123" height="1" uuid="bc19b38b-f724-4169-a1f8-c644ae11fd85"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="367" width="92" height="8" uuid="10030939-3478-49eb-bfe4-7e5ea3406d71"/>
+				<textElement>
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="118" y="373" width="394" height="1" uuid="e4e4d6b3-49f2-42f8-b730-5182b2607956"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="119" y="385" width="394" height="1" uuid="69267347-60ec-4038-a339-7be564e56515"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="84" width="527" height="1" uuid="06c0b7e3-684a-4c3a-ac65-3e579906c600"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="95" width="527" height="1" uuid="018f8462-6263-4f29-ab86-976ab3065885"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteRap" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresion8px.jrtx"]]></template>
+	<subDataset name="dataSetRapRendimientoLoteProduccion" uuid="481d6c8d-1158-4504-9e1e-56b88def698f">
+		<parameter name="codCompProd" class="java.lang.Integer"/>
+		<parameter name="fechaInicio" class="java.sql.Timestamp"/>
+		<parameter name="fechaFinal" class="java.sql.Timestamp"/>
+		<queryString>
+			<![CDATA[exec PAA_RAP_RENDIMIENTO_LOTES_PRODUCCION $P{fechaInicio},$P{fechaFinal}]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="rendimientoProduccion" class="java.lang.Double"/>
+		<field name="rendimientoApt" class="java.lang.Double"/>
+		<field name="CANT_LOTE_PRODUCCION" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.sql.Timestamp"/>
+	<parameter name="fechaFinal" class="java.sql.Timestamp"/>
+	<queryString>
+		<![CDATA[select getdate() as feha]]>
+	</queryString>
+	<field name="feha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="273" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="57" y="26" width="360" height="9" uuid="6a6e703e-7af5-45b7-aff6-be5f3097f66a"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRapRendimientoLoteProduccion" uuid="6a9eec1f-6465-4b62-ad68-f5d965bcd0e1">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="54" uuid="e68c7a61-8de8-42b6-8736-89ccf4d9102f">
+						<jr:columnHeader style="celdaCabecera" height="30" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="54" height="30" uuid="fda0fe91-a9b0-4418-acd3-cfb8d9a5f7d9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="25" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="54" height="25" uuid="6cd9400b-624d-447a-903d-2e88ad581fbb"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="72" uuid="b68edc63-12a4-4b0e-a9e1-11a5bf83543e">
+						<jr:columnHeader style="celdaCabecera" height="30" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="72" height="30" uuid="321145ea-0303-4ece-9089-14667d1f413c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[FECHA DE ELABORACION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="25" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="73" uuid="04fbf00b-9438-46df-9dcb-b5c9d582a835">
+						<jr:columnHeader style="celdaCabecera" height="30" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="73" height="30" uuid="e9f18a3c-48f6-4da9-88a6-ae6680dd20f0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TAMAÑO DE LOTE TEORICO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="25" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="73" height="25" uuid="f876665f-82be-43e4-bbf1-5e983cc84305"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CANT_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="74" uuid="1c410206-1c5b-4629-a1c7-f7d4c17342bc">
+						<jr:columnHeader style="celdaCabecera" height="30" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="74" height="30" uuid="fe9eb36c-5670-499c-a004-3e66703c2ff3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[RENDIMIENTO DE PRODUCCION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="25" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement style="textoBody" x="0" y="0" width="74" height="25" uuid="b26e5b2b-ef79-48f3-963b-55dd5ee39ccf"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{rendimientoProduccion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="1080ae18-9880-4504-b113-09da4b774b23">
+						<jr:columnHeader style="celdaCabecera" height="30" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="76" height="30" uuid="ac3f5128-6689-4145-aa24-1daa26b08830"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[RENDIMIENTO FINAL (APT)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="25" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement style="textoBody" x="0" y="0" width="76" height="25" uuid="844ca4ee-e020-41b1-81e7-9d13a1386c62"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{rendimientoApt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="715560bb-32e3-42cc-9df4-44d47006a532">
+						<jr:columnHeader style="celdaCabecera" height="30" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="90" height="30" uuid="f13692d8-ac5d-462e-b38b-6f6cf015a9d9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CUMPLE/NO CUMPLE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="25" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<lineChart>
+				<chart>
+					<reportElement style="texto" positionType="Float" x="10" y="54" width="497" height="215" uuid="aacbe58d-2dab-4b83-b58a-9ce000bd8c03"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend position="Top"/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="dataSetRapRendimientoLoteProduccion" uuid="7e112a85-482e-463e-9e55-a7ab65ce17ed">
+							<datasetParameter name="fechaInicio">
+								<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaFinal">
+								<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["RENDIMIENTO DE PRODUCCION"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{rendimientoProduccion}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["RENDIMIENTO DE APT"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{rendimientoApt}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot labelRotation="90.0"/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="14" y="7" width="94" height="15" uuid="ad40952b-acb4-4a2d-ad6a-3bf785a79894"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3) Reporte de rendimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="13" y="38" width="94" height="15" uuid="6d6db013-fc4b-4a32-808a-40a7a50e1527"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Gráfica de rendimiento]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

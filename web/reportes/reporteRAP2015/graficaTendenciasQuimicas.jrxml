@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-06-23T16:39:51 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteEspecificacionesCCPeso" pageWidth="481" pageHeight="396" columnWidth="481" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<subDataset name="dataSetEspecificacionPesoLoteProduccion" uuid="ee81b93c-f5ad-4b0a-b60b-6005d343c6e6">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<scriptlet name="Scriptlet_1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+		<parameter name="codEspecificacion" class="java.lang.Integer"/>
+		<parameter name="fechaInicio" class="java.sql.Timestamp"/>
+		<parameter name="fechaFinal" class="java.sql.Timestamp"/>
+		<parameter name="codMaterial" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[exec [PAA_RAP_RESULTADOS_ESPECIFICACIONES_QUIMICAS_LOTES_PRODUCCION] $P{fechaInicio},$P{fechaFinal}, $P{codEspecificacion}, $P{codMaterial}]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="RESULTADO_NUMERICO" class="java.lang.Double"/>
+		<field name="LIMITE_INFERIOR" class="java.lang.Double"/>
+		<field name="LIMITE_SUPERIOR" class="java.lang.Double"/>
+		<field name="VALOR_EXACTO" class="java.lang.Double"/>
+		<field name="DESCRIPCION" class="java.lang.String"/>
+		<field name="UNIDAD" class="java.lang.String"/>
+		<variable name="sumaResultados" class="java.lang.Double" calculation="Average">
+			<variableExpression><![CDATA[$F{RESULTADO_NUMERICO}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="desviacionEstandar" class="java.lang.Double" calculation="StandardDeviation">
+			<variableExpression><![CDATA[$F{RESULTADO_NUMERICO}]]></variableExpression>
+		</variable>
+		<variable name="maximo" class="java.lang.Double" calculation="Highest">
+			<variableExpression><![CDATA[$F{RESULTADO_NUMERICO}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="minimo" class="java.lang.Double" calculation="Lowest">
+			<variableExpression><![CDATA[$F{RESULTADO_NUMERICO}]]></variableExpression>
+		</variable>
+		<variable name="LSE" class="java.lang.Double" calculation="Average">
+			<variableExpression><![CDATA[$F{LIMITE_SUPERIOR}]]></variableExpression>
+		</variable>
+		<variable name="LSI" class="java.lang.Double" calculation="Average">
+			<variableExpression><![CDATA[$F{LIMITE_INFERIOR}]]></variableExpression>
+		</variable>
+		<group name="valorExacto">
+			<groupExpression><![CDATA[$F{RESULTADO_NUMERICO}.toString()]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="dataSetGrupoDatos" uuid="1672db87-3520-49ac-b418-9906ea1d4516">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<parameter name="fechaInicio" class="java.util.Date"/>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<parameter name="codEspecificacion" class="java.lang.Integer"/>
+		<parameter name="codMaterial" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[exec [PAA_RAP_RESULTADOS_ESPECIFICACIONES_QUIMICAS_LOTES_PRODUCCION_GRUPO]  $P{fechaInicio}  ,$P{fechaFinal} , $P{codEspecificacion}, $P{codMaterial}]]>
+		</queryString>
+		<field name="RESULTADO_NUMERICO" class="java.lang.Double"/>
+		<field name="CANTIDAD_RESULTADOS" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[new Date("01/01/2014")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codEspecificacion" class="java.lang.Integer"/>
+	<parameter name="codMaterial" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select getdate() as fecha]]>
+	</queryString>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.equals(new Integer("1"))]]></printWhenExpression>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="197" splitType="Stretch">
+			<lineChart>
+				<chart evaluationTime="Page">
+					<reportElement positionType="Float" x="1" y="2" width="479" height="190" uuid="6caba1bd-77e7-49ea-b6f9-1f0b1c970ecc">
+						<printWhenExpression><![CDATA[$P{codEspecificacion}.equals(new Integer("2"))]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="dataSetEspecificacionPesoLoteProduccion" uuid="934e9722-e780-42c9-b299-f0aa05735133">
+							<datasetParameter name="codEspecificacion">
+								<datasetParameterExpression><![CDATA[$P{codEspecificacion}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="codMaterial">
+								<datasetParameterExpression><![CDATA[$P{codMaterial}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaFinal">
+								<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaInicio">
+								<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["LIMITE SUPERIOR"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{LIMITE_SUPERIOR}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["LIMITE INFERIOR"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{LIMITE_INFERIOR}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["TEORICO"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{LIMITE_INFERIOR}+(($F{LIMITE_SUPERIOR}-$F{LIMITE_INFERIOR})/2)]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["RESULTADO"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{RESULTADO_NUMERICO}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowShapes="true">
+					<plot labelRotation="90.0">
+						<seriesColor seriesOrder="0" color="#FF0040"/>
+						<seriesColor seriesOrder="1" color="#FF0400"/>
+						<seriesColor seriesOrder="2" color="#29B322"/>
+						<seriesColor seriesOrder="3" color="#5482CC"/>
+					</plot>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat>
+							<labelFont>
+								<font fontName="Arial_OM" size="6"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Arial_OM" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<lineChart>
+				<chart evaluationTime="Page">
+					<reportElement positionType="Float" x="1" y="2" width="479" height="190" uuid="499fdc82-dc15-4747-984b-67964e3a4994">
+						<printWhenExpression><![CDATA[!$P{codEspecificacion}.equals(new Integer("2"))]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="dataSetEspecificacionPesoLoteProduccion" uuid="8d391e87-3f14-4258-8608-cdbe979ce6cf">
+							<datasetParameter name="codEspecificacion">
+								<datasetParameterExpression><![CDATA[$P{codEspecificacion}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="codMaterial">
+								<datasetParameterExpression><![CDATA[$P{codMaterial}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaFinal">
+								<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fechaInicio">
+								<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["LIMITE SUPERIOR"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{VALOR_EXACTO}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["RESULTADO"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{RESULTADO_NUMERICO}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowShapes="true">
+					<plot labelRotation="90.0">
+						<seriesColor seriesOrder="0" color="#FF0040"/>
+						<seriesColor seriesOrder="1" color="#5482CC"/>
+					</plot>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat>
+							<labelFont>
+								<font fontName="Arial_OM" size="6"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Arial_OM" size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-05-23T09:12:22 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionEtiquetasOM" pageWidth="198" pageHeight="28" orientation="Landscape" columnWidth="198" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="301a2d1e-3972-4b75-91e3-59617737ae29">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="codProgramaProd" class="java.lang.String"/>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  pp.COD_LOTE_PRODUCCION
+from PROGRAMA_PRODUCCION pp where pp.COD_PROGRAMA_PROD= $P{codProgramaProd}
+and 
+(
+pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion} or pp.COD_LOTE_PRODUCCION in 
+(
+select lpc.COD_LOTE_PRODUCCION_ASOCIADO from LOTES_PRODUCCION_CONJUNTA lpc where lpc.COD_LOTE_PRODUCCION=$P{codLoteProduccion} and lpc.COD_PROGRAMA_PROD=$P{codProgramaProd}
+)
+)
+group by pp.COD_LOTE_PRODUCCION
+order by case when pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion} then 1 else 2 end,pp.COD_LOTE_PRODUCCION]]>
+	</queryString>
+	<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="1" width="190" height="9" isRemoveLineWhenBlank="true" uuid="57a3fec7-29fe-4b7a-b384-8a0200ba97ca"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

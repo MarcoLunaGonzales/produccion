@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-06T23:23:21 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapImpresionGeneral" pageWidth="527" pageHeight="693" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date("01/01/2015")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select COUNT(*) AS cantidadAprobados		
+    from PROGRAMA_PRODUCCION pp
+    	 inner join PROGRAMA_PRODUCCION_PERIODO ppp on ppp.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+    	 inner join COMPONENTES_PROD_VERSION cpv on cpv.COD_VERSION=pp.COD_COMPPROD_VERSION    
+         left join
+         (
+             select sum(iad.CANT_TOTAL_INGRESO) as cantidadIngreso,
+             		ppia.COD_PROGRAMA_PROD,ppia.COD_LOTE_PRODUCCION
+             from PROGRAMA_PRODUCCION_INGRESOS_ACOND ppia
+                   inner join INGRESOS_ACOND ia on ia.COD_INGRESO_ACOND=ppia.COD_INGRESO_ACOND
+                   inner join INGRESOS_DETALLEACOND iad on iad.COD_INGRESO_ACOND=ppia.COD_INGRESO_ACOND
+						and iad.COD_COMPPROD=ppia.COD_COMPPROD
+             where ppia.COD_COMPPROD in 
+				   (
+						select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+				   )
+                   and ia.COD_ESTADO_INGRESOACOND=4
+             group by ppia.COD_PROGRAMA_PROD,ppia.COD_LOTE_PRODUCCION,ppia.COD_COMPPROD
+         )	as ingresosAcond on ingresosAcond.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+         		and ingresosAcond.COD_LOTE_PRODUCCION=pp.COD_LOTE_PRODUCCION
+         inner join RESULTADO_ANALISIS ra on ra.COD_LOTE=pp.COD_LOTE_PRODUCCION
+         and ra.COD_COMPROD=pp.COD_COMPPROD
+    where cpv.COD_COMPPROD in 
+			(
+				select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+			)
+            and ingresosAcond.cantidadIngreso>0
+		    and ppp.FECHA_INICIO>= $P{fechaInicio} 
+		    and ppp.FECHA_FINAL<= $P{fechaFinal} ]]>
+	</queryString>
+	<field name="cantidadAprobados" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="180" splitType="Stretch">
+			<staticText>
+				<reportElement style="texto" x="13" y="5" width="88" height="10" uuid="adcdfccf-ea37-4a7a-9240-c8b5b6695fa6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[2) Reporte de Lotes]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="90" y="20" width="340" height="160" uuid="f779dffb-804e-4bd0-ad97-649e36aae357"/>
+				<line>
+					<reportElement style="linea" x="23" y="10" width="277" height="1" uuid="96a244e4-beca-4d10-ac1b-094ee0bcfb3f"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="24" y="38" width="277" height="1" uuid="5567e3ad-a025-4e34-8345-4c7e03e4ad1f"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="24" y="10" width="1" height="140" uuid="e7c9dbe3-f4b9-44ad-a89c-35e3172ad340"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="25" y="76" width="277" height="1" uuid="053fb690-6134-4d4f-996c-dd28354de219"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="25" y="57" width="277" height="1" uuid="d1375346-e3d7-496e-9f8d-dd1b09a88ad9"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="24" y="97" width="277" height="1" uuid="2775f055-74e2-4cc0-baf9-f626f62475a7"/>
+				</line>
+				<staticText>
+					<reportElement style="textoBody" x="25" y="39" width="104" height="18" uuid="73f13ab2-4c73-445b-a73d-97022ea85b10"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[APROBADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBody" x="25" y="58" width="104" height="18" uuid="b0a898b7-77d0-4cf6-b1d9-29ecb5d60e22"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[RECHAZADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBody" x="25" y="78" width="104" height="18" uuid="3910b74d-fc12-4852-9b6c-44f56d17033c"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[REPROCESADOS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBody" x="25" y="98" width="104" height="31" uuid="5a31ae3f-6b65-49cb-ac0f-883478f8709a"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[APROBADO CON DESVIACIÓN]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="25" y="129" width="277" height="1" uuid="ba102d3c-ddf4-43b6-a94f-f21960733cf8"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="24" y="150" width="277" height="1" uuid="2054c1ec-582c-44d4-8b86-7203027f44d8"/>
+				</line>
+				<staticText>
+					<reportElement style="textoBody" x="25" y="129" width="104" height="21" uuid="c06133f5-65a5-4986-8ed5-2b548ca38d55"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[TOTAL LOTES]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="300" y="10" width="1" height="140" uuid="56c3e48e-a7f1-4b30-8419-1dc5fc8cbe53"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="130" y="10" width="1" height="138" uuid="c5c6159a-450a-40eb-8248-2d29076a1d1b"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="220" y="11" width="1" height="138" uuid="508897d8-df02-4364-9124-8323640cfa3e"/>
+				</line>
+				<staticText>
+					<reportElement style="textoCabecera" x="25" y="10" width="104" height="28" uuid="ea5bf0a0-3320-42f2-80b8-69df33810bba"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[ESTADO DE LOTES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoCabecera" x="130" y="10" width="90" height="28" uuid="00da03b2-7c12-48be-8fc6-94723cbf32d9"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[NUMERO DE LOTES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoCabecera" x="220" y="10" width="81" height="28" uuid="74593733-11b0-4d98-af15-8e42b6f6df73"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBody" x="221" y="130" width="79" height="20" uuid="550cb450-d8e4-47a6-84b2-3d0953e3a530"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<text><![CDATA[100%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBody" x="221" y="58" width="79" height="19" uuid="638b67a5-39da-4764-88c3-3368abd3c08d"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<text><![CDATA[0%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBody" x="131" y="58" width="89" height="19" uuid="84cf8973-ee6b-46c9-b7f5-019ed90e475c"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<text><![CDATA[0]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="textoBody" x="130" y="39" width="90" height="18" uuid="348b98ec-310b-4007-9080-2df581e2b816"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cantidadAprobados}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="textoBody" x="130" y="131" width="90" height="18" uuid="5caabf63-ddf5-4f8c-9708-28694791e3bb"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cantidadAprobados}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

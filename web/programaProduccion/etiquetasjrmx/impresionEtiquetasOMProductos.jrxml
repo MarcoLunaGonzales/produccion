@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-05-23T09:12:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionEtiquetasOM" pageWidth="198" pageHeight="28" orientation="Landscape" columnWidth="198" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7e362739-bd7a-47e0-9387-cdc9d0d0714c">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="codProgramaProd" class="java.lang.String"/>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  p.nombre_prod
+from PROGRAMA_PRODUCCION pp inner join COMPONENTES_PROD_VERSION cpv on cpv.COD_VERSION=pp.COD_COMPPROD_VERSION
+	and cpv.COD_COMPPROD=pp.COD_COMPPROD
+	inner join productos p on p.cod_prod=cpv.cod_prod
+where pp.COD_PROGRAMA_PROD= $P{codProgramaProd}
+	and 
+	(
+		pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion} or pp.COD_LOTE_PRODUCCION in 
+		(
+			select lpc.COD_LOTE_PRODUCCION_ASOCIADO from LOTES_PRODUCCION_CONJUNTA lpc where lpc.COD_LOTE_PRODUCCION=$P{codLoteProduccion} and lpc.COD_PROGRAMA_PROD=$P{codProgramaProd}
+		)
+	)
+group by p.nombre_prod
+order by p.nombre_prod]]>
+	</queryString>
+	<field name="nombre_prod" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="1" width="188" height="9" isRemoveLineWhenBlank="true" uuid="9831036a-b161-4a6c-8cf8-b7ad45e8d952"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_prod}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

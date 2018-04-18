@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-11T16:24:46 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaControlLlenadoVolumen" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="localPrueba"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetPersonalRegistrado" uuid="fccb4cdf-5321-4e45-90f7-da19bfbc8f55">
+		<parameter name="codSeguimientoProgramaProduccionProceso" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select DISTINCT s.COD_PERSONAL,isnull(p.AP_PATERNO_PERSONAL+' '+p.AP_MATERNO_PERSONAL+' '+p.NOMBRES_PERSONAL,pt.AP_PATERNO_PERSONAL+' '+pt.AP_MATERNO_PERSONAL+' '+pt.NOMBRES_PERSONAL) as nombrePersonal
+,s.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN s
+	left outer join PERSONAL p on p.COD_PERSONAL=s.COD_PERSONAL
+	left outer join PERSONAL_TEMPORAL pt on pt.COD_PERSONAL=s.COD_PERSONAL
+where s.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+order by 2]]>
+		</queryString>
+		<field name="COD_PERSONAL" class="java.lang.Integer"/>
+		<field name="nombrePersonal" class="java.lang.String"/>
+		<field name="COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="dataSetVolumenAmpolla" uuid="39b97b9e-d25f-4846-b665-4899fedaefd4">
+		<parameter name="turno" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codSeguimientoProgramaProduccionProceso" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[exec PAA_APROBACION_CONTROL_LLENADO_VOLUMEN $P{turno},$P{codSeguimientoProgramaProduccionProceso}]]>
+		</queryString>
+		<field name="FECHA_MUESTRA" class="java.sql.Timestamp"/>
+		<field name="VOLUMEN_AMPOLLA1" class="java.lang.Double"/>
+		<field name="VOLUMEN_AMPOLLA2" class="java.lang.Double"/>
+		<field name="VOLUMEN_AMPOLLA3" class="java.lang.Double"/>
+		<field name="COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN" class="java.lang.Integer"/>
+		<field name="VOLUMEN_AMPOLLA4" class="java.lang.Double"/>
+		<field name="VOLUMEN_AMPOLLA5" class="java.lang.Double"/>
+		<field name="VOLUMEN_AMPOLLA6" class="java.lang.Double"/>
+		<field name="COD_PERSONAL" class="java.lang.Integer"/>
+		<field name="nombrePersonal" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetGraficoVolumenPersonal" uuid="621ec89e-a3ee-4fd9-9725-8384b53e7089">
+		<parameter name="codPersonal" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codSeguimientoProgramaProduccionProceso" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select spppcl.VOLUMEN_AMPOLLA1,spppcl.VOLUMEN_AMPOLLA2,spppcl.FECHA_MUESTRA
+from SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_CONTROL_LLENADO_VOLUMEN spppcl
+where spppcl.COD_PERSONAL=$P{codPersonal}
+and spppcl.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=$P{codSeguimientoProgramaProduccionProceso}
+order by spppcl.FECHA_MUESTRA]]>
+		</queryString>
+		<field name="VOLUMEN_AMPOLLA1" class="java.lang.Double"/>
+		<field name="VOLUMEN_AMPOLLA2" class="java.lang.Double"/>
+		<field name="FECHA_MUESTRA" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="Parameter2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as notaControlLlenado,
+ip1.INDICACION_PROCESO as frecuenciaMuestreo,cpv.CANTIDAD_VOLUMEN_DE_DOSIFICADO,
+       pp.COD_COMPPROD_VERSION,sppp.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO
+,isnull(p.AP_PATERNO_PERSONAL+' '+p.AP_MATERNO_PERSONAL+' '+p.NOMBRES_PERSONAL,'') as nombrePersonalAprueba,
+sppp.FECHA_CIERRE,isnull(sppp.OBSERVACIONES,'') as OBSERVACIONES
+from PROGRAMA_PRODUCCION pp
+ left outer join SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO sppp on sppp.COD_LOTE_PRODUCCION=pp.COD_LOTE_PRODUCCION
+        and sppp.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+        and sppp.COD_PROCESO_ORDEN_MANUFACTURA=20
+    left outer join PERSONAL p on p.COD_PERSONAL=sppp.COD_PERSONAL_APRUEBA
+
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO =5 and
+     ip.COD_PROCESO_ORDEN_MANUFACTURA = 20
+left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip1.COD_TIPO_INDICACION_PROCESO = 16 and
+     ip1.COD_PROCESO_ORDEN_MANUFACTURA = 20
+inner join componentes_prod_Version cpv on cpv.cod_version=pp.cod_compprod_version
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion}
+ and  pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by case when pp.cod_compprod=pp.cod_compprod_padre then 1 else 2 end,
+pp.cod_tipo_programa_prod]]>
+	</queryString>
+	<field name="notaControlLlenado" class="java.lang.String"/>
+	<field name="frecuenciaMuestreo" class="java.lang.String"/>
+	<field name="CANTIDAD_VOLUMEN_DE_DOSIFICADO" class="java.lang.Double"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<field name="COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO" class="java.lang.Integer"/>
+	<field name="nombrePersonalAprueba" class="java.lang.String"/>
+	<field name="FECHA_CIERRE" class="java.sql.Timestamp"/>
+	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="387" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoBold" x="5" y="2" width="21" height="8" uuid="1dcb3b9c-e42d-4af1-8c5b-689177aa2141"/>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="25" y="2" width="460" height="17" uuid="1fd93caf-efac-45ae-8699-871147f0b6b1"/>
+				<textFieldExpression><![CDATA[$F{notaControlLlenado}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="125" y="23" width="302" height="20" uuid="466f9d6e-ba5a-4104-b6c3-711d9855350c"/>
+				<rectangle>
+					<reportElement style="linea" x="9" y="5" width="280" height="11" uuid="4c6041d7-8b40-4103-8cd6-98200598dbce"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="textoBold" x="16" y="6" width="98" height="8" uuid="884d1d5f-5e1e-4f73-89f2-1d78f6ec94bc"/>
+					<text><![CDATA[Limites de aceptación]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="texto" x="168" y="6" width="111" height="8" uuid="26b04704-5125-4342-835a-4d8202ea9ce7"/>
+					<textFieldExpression><![CDATA["No < "+$F{CANTIDAD_VOLUMEN_DE_DOSIFICADO}.toString()+" ml"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement style="textoBold" x="11" y="47" width="82" height="20" uuid="e93e54e9-0702-4a22-8aa7-0f73de874916"/>
+				<text><![CDATA[Frecuencia de muestreo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="93" y="47" width="424" height="20" uuid="b889e690-518a-40b8-b317-1d9151776a95"/>
+				<textFieldExpression><![CDATA[$F{frecuenciaMuestreo}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="table" style="textoBody." positionType="Float" x="54" y="255" width="447" height="25" uuid="95d185dc-dfaa-4187-92c9-83d7745d6c1a"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetVolumenAmpolla" uuid="76c8bec4-c015-4b52-95a4-b0e85f45a5ad">
+						<datasetParameter name="turno">
+							<datasetParameterExpression><![CDATA[new Integer("1")]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codSeguimientoProgramaProduccionProceso">
+							<datasetParameterExpression><![CDATA[$F{COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="444" uuid="6d29f9b6-6a98-48b7-897d-658847c5a572">
+						<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="443" height="12" uuid="09bbd5ff-93ef-496d-8eaa-7483dede2b8a"/>
+								<textElement>
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Volumen de Ampollas (1 er Turno)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="38" uuid="9d41a91c-11ad-4dcc-b61d-3829bed902a9">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="38" height="12" uuid="88f645d1-c554-40f5-a1ce-178061a12c7b"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Hora]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="dd/MM/yyyy HH:mm">
+									<reportElement style="textoBody." x="0" y="0" width="38" height="16" uuid="15813c87-bcc5-4095-a952-c7cd9466f3c3"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FECHA_MUESTRA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="54" uuid="648e74ad-9993-43b0-90bb-7d7cb2d7d8c2">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="54" height="12" uuid="f7755a48-8222-4a81-b560-9b93a6b6afec"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 1]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="54" height="16" uuid="3e760aaa-8a48-4e99-a872-93993b5452d2"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA1}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="0e85aec5-cda9-4b15-baef-74cbff47370a">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="9b0ceffb-3ff4-4f08-a7b0-0407c5e6a635"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 2]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="d291c3ae-da3e-4981-a9b4-0566c76f237a"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA2}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="dae00e0f-1f6b-4a70-9e7b-52b9f20e0fd7">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="2ee55cf2-5be0-494f-95b2-6435a3f9f50e"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 3]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="065ae914-2c0d-43d4-9319-d92228f37b9c"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="f4df5293-c5e0-401b-9743-728d6d88ee49">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="55" height="12" uuid="905f92da-e545-45ba-b169-83b0faaf7f88"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 4]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="55" height="16" uuid="3af5a77c-cb4e-43bc-8282-d3c4a34a0c5c"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA4}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="918d0f03-7c1e-480b-8241-5ba1bafab62f">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="5bf039d5-089f-4501-95ee-621018a267bc"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 5]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="c0d8dd36-716d-48b3-83ac-c1c7dc6e6d0f"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA5}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="58" uuid="a5367200-42de-4bfc-81e6-6de116cc0f88">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="58" height="12" uuid="72606dd3-8e34-4512-bcdc-6eba09e33791"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 6]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="58" height="16" uuid="8955aba4-5535-4efd-9c9e-61176f13b2b1"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA6}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="68" uuid="14bb38b5-27f6-4280-8f3a-3b86bd388ae8">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="68" height="12" uuid="78fd40a7-e484-4b57-8b9c-0a3778cf1558"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Operario]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="68" height="16" uuid="b2fa8fa2-88a7-4630-bcce-a59d0d4781ab"/>
+									<textFieldExpression><![CDATA[$F{nombrePersonal}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<frame>
+				<reportElement positionType="Float" x="7" y="340" width="353" height="44" uuid="371fca1d-d7b8-4c82-95bd-482ea2f13911"/>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="3" width="93" height="8" uuid="80357600-cea5-47f3-b7d8-15c4ff72e926"/>
+					<text><![CDATA[NOMBRE DEL SUPERVISOR:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="12" width="24" height="8" uuid="cd33e384-06e5-4d8b-ab8d-1f0acfdb7c5c"/>
+					<text><![CDATA[Fecha: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="22" width="45" height="8" uuid="27d6d2c0-5e91-4d6e-9753-ff1d02bc9484"/>
+					<text><![CDATA[Observacion:]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="texto" x="98" y="3" width="239" height="8" uuid="1354ffd6-3325-4bed-bfa8-311cb1900660"/>
+					<textFieldExpression><![CDATA[$F{nombrePersonalAprueba}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+					<reportElement style="texto" x="28" y="12" width="60" height="8" uuid="2939d2b3-0b38-405d-b7b1-9257675ae6ac"/>
+					<textFieldExpression><![CDATA[$F{FECHA_CIERRE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="texto" x="4" y="31" width="329" height="10" uuid="fe8bd879-ebd5-4974-86ad-2b782e68c236"/>
+					<textFieldExpression><![CDATA[$F{OBSERVACIONES}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<componentElement>
+				<reportElement key="table" style="textoBody." positionType="Float" x="54" y="284" width="447" height="25" uuid="24c6e75e-5ba0-4358-9011-d3832cd2e23a"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetVolumenAmpolla" uuid="bb132f44-2579-44d4-ad44-808845ecc75f">
+						<datasetParameter name="turno">
+							<datasetParameterExpression><![CDATA[new Integer("2")]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codSeguimientoProgramaProduccionProceso">
+							<datasetParameterExpression><![CDATA[$F{COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="444" uuid="3e349bae-76da-4680-9b62-7d56ec284720">
+						<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="443" height="12" uuid="7cc4580b-9302-46b6-94c4-982b62fb88fd"/>
+								<textElement>
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Volumen de Ampollas (2 do Turno)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="38" uuid="d820449f-47cd-465b-a459-939f39c99739">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="38" height="12" uuid="93b27e81-ff7d-4c34-877a-26e3113075e9"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Hora]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="dd/MM/yyyy HH:mm">
+									<reportElement style="textoBody." x="0" y="0" width="38" height="16" uuid="7c50c735-cfd7-485d-acaa-3f6d86bcebf6"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FECHA_MUESTRA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="54" uuid="e68bbda9-aaa5-4b89-9a2a-27e26f6f3734">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="54" height="12" uuid="d0955a2b-dbf5-460d-be18-5c842244f2dc"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 1]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="54" height="16" uuid="78b47482-8a4f-4db8-81fa-33c2dea659ae"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA1}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="34158f0c-15aa-4332-805a-a57b0f4cbf06">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="67cefafb-7583-4891-89dd-2859f00414d6"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 2]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="1c5ce0ac-009b-48f1-bc15-c68ea90b997c"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA2}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="91c84671-edaf-4a84-8fec-647b509a66aa">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="374fbece-df48-4451-b0b2-12f0cb3cd596"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 3]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="32c9251c-f1f7-4063-8c3f-f07b61f80963"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="eb4780e2-f2de-41b8-8991-90032ea7a1e0">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="55" height="12" uuid="3ffbd06c-7638-47c1-9dfc-e0ce1242c4ec"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 4]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="55" height="16" uuid="b41d064d-624b-455b-97e9-5bc1868d8ce9"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA4}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="bf773f1e-517b-44f2-bb16-0a9b40d2c3ec">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="2c2c5945-9c0b-4d4b-83b1-359522027b19"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 5]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="766954fb-bb4f-4d33-9d92-5b619d9feadd"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA5}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="58" uuid="38314b26-12e1-4593-8832-5c6d807bdc5a">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="58" height="12" uuid="bf3fa83d-96dc-4357-851a-cd3ba97a0224"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 6]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="58" height="16" uuid="b39273c4-c426-4dd2-87b0-a0ab46a6fa0a"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA6}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="68" uuid="a00ac207-3b6c-4e29-bb62-bf33f7aaf935">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="68" height="12" uuid="4f2485aa-b781-4e30-a77b-022758afb79c"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Operario]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="68" height="16" uuid="5ae9565e-b312-45b0-85c0-140876e7f67a"/>
+									<textFieldExpression><![CDATA[$F{nombrePersonal}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table" style="textoBody." positionType="Float" x="55" y="313" width="447" height="25" uuid="1e6845b8-dfd8-4d17-b602-1f04a6ff9fb8"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetVolumenAmpolla" uuid="43cd5d2e-fefe-4f6f-b57f-e49f7c2183f8">
+						<datasetParameter name="turno">
+							<datasetParameterExpression><![CDATA[new Integer("3")]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codSeguimientoProgramaProduccionProceso">
+							<datasetParameterExpression><![CDATA[$F{COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="444" uuid="a240c10f-d5d0-4bea-b3d2-6e8195cb5530">
+						<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="443" height="12" uuid="1876ea1c-db7a-4be8-9d3c-c69ba63656ea"/>
+								<textElement>
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Volumen de Ampollas (3 er Turno)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="38" uuid="26c49934-9c7e-4411-bf18-ecf5a77469c1">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="38" height="12" uuid="c00c9f2b-7d50-4e53-92e2-10c396fec3e3"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Hora]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="dd/MM/yyyy HH:mm">
+									<reportElement style="textoBody." x="0" y="0" width="38" height="16" uuid="c6c2d8c8-77c5-492f-8ab0-73510aa22258"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{FECHA_MUESTRA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="54" uuid="36b37648-bb2a-46fe-8251-ada3371f7e33">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="54" height="12" uuid="586fafa8-08bb-4d7b-b6c9-1874d605d711"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 1]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="54" height="16" uuid="9ddcbf1d-da39-479e-b87f-211ac38a1b86"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA1}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="710ff3bb-0c32-40ac-8661-f7d656aaf21e">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="61b0d7d9-6959-44ca-8005-738d8c04c4a3"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 2]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="94005141-0a98-41fd-97c0-17e136056286"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA2}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="c91153a2-dc0c-4296-b0c7-214031fbcd61">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="4d091847-3135-46cc-a17e-81aae4d4e191"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 3]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="6654f636-f78f-4eed-9f55-56a5b41e2fda"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="2d5c3706-773d-4c71-8f2c-e97c98b11957">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="55" height="12" uuid="0b5e43bf-8002-41e9-85e5-c807499cc725"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 4]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="55" height="16" uuid="afa44538-02fb-4f8a-bdcb-0fd61726c104"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA4}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="57" uuid="8558989c-da97-45e9-a7d3-246866abedd2">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="57" height="12" uuid="71c2e20b-af80-412c-a958-aadc267788c1"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 5]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="57" height="16" uuid="161507e0-ff4a-4476-9304-02b715061f7e"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA5}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="58" uuid="48152392-4fd1-495e-aaec-67a6c3550dac">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="58" height="12" uuid="e2333f02-351a-4a62-98a4-eb000d944f91"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Ampolla 6]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement style="textoBody." x="0" y="0" width="58" height="16" uuid="e15bf375-ed4e-4d94-9091-8ff0f1d7c5bf"/>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{VOLUMEN_AMPOLLA6}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="68" uuid="1bb9a454-3d7b-4142-9a5d-617d8d3fdb05">
+							<jr:columnHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="68" height="12" uuid="0f0fa774-7929-4d42-aca3-b501fd53f2d3"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Operario]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="68" height="16" uuid="16767336-a5e4-4534-8522-b2d65499cfe4"/>
+									<textFieldExpression><![CDATA[$F{nombrePersonal}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<subreport>
+				<reportElement x="11" y="70" width="505" height="150" uuid="bae2fcc9-8d91-4494-b80f-511303b4bdce"/>
+				<subreportParameter name="codSeguimientoProgramaProduccionProceso">
+					<subreportParameterExpression><![CDATA[$F{COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="volumenDosificado">
+					<subreportParameterExpression><![CDATA[new Double("2")]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["graficoSeguimientoPersonal.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

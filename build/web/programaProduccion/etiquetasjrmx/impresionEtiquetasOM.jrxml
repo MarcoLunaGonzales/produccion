@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-09-07T10:21:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionEtiquetasOM" pageWidth="297" pageHeight="209" orientation="Landscape" columnWidth="275" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" uuid="5f3dbe94-6257-46b4-bf23-580a93267105">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="codProgramaProd" class="java.lang.String"/>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="FECHA_PESAJE" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[exec PAA_CANTIDAD_MP_LOTE  $P{codLoteProduccion} , $P{codProgramaProd}]]>
+	</queryString>
+	<field name="COD_MATERIAL" class="java.lang.Integer"/>
+	<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+	<field name="ABREVIATURA" class="java.lang.String"/>
+	<field name="cantidadFraccion" class="java.math.BigDecimal"/>
+	<field name="COD_FORMULA_MAESTRA_FRACCIONES" class="java.lang.Integer"/>
+	<field name="lote_proveedor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="187" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="-1" width="274" height="187" forecolor="#000000" backcolor="#FFFFFF" uuid="7b5b0d60-d27f-41a1-ba02-a8b775d9de85"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement key="line-5" x="0" y="20" width="273" height="1" forecolor="#000000" uuid="f43c375a-9fa9-4d9c-8354-c1b59233f2bf"/>
+			</line>
+			<line>
+				<reportElement key="line-6" x="0" y="45" width="273" height="1" forecolor="#000000" uuid="935a4e64-d059-4e46-b643-3e6aca226b16"/>
+			</line>
+			<line>
+				<reportElement key="line-7" x="0" y="73" width="273" height="1" forecolor="#000000" uuid="98fb4957-8efc-4d3d-9142-cd76e5d19852"/>
+			</line>
+			<line>
+				<reportElement key="line-8" x="0" y="99" width="273" height="1" forecolor="#000000" uuid="b75540ad-addb-46bb-a830-94830b6cf505"/>
+			</line>
+			<line>
+				<reportElement key="line-9" x="0" y="106" width="273" height="1" forecolor="#000000" uuid="f692939b-3ea0-43ab-ab8d-60ea6d08c7c1"/>
+			</line>
+			<line>
+				<reportElement key="line-10" x="0" y="130" width="274" height="1" forecolor="#000000" uuid="77756dd9-079b-4a5a-80f4-cb84d1119f35"/>
+			</line>
+			<line>
+				<reportElement key="line-11" x="0" y="154" width="273" height="1" forecolor="#000000" uuid="36dac659-6d12-48de-bb31-8965a0b307a8"/>
+			</line>
+			<line>
+				<reportElement key="line-12" x="65" y="-2" width="1" height="132" uuid="6bd88b27-ed5e-44b7-989f-23fce77e7d95"/>
+			</line>
+			<line>
+				<reportElement key="line-13" x="188" y="108" width="1" height="22" uuid="036e3642-38bb-4844-80a4-563f3ba02c26"/>
+			</line>
+			<line>
+				<reportElement key="line-14" x="189" y="154" width="1" height="32" uuid="78e9ca21-019f-4b6f-9868-9f5fbf9b1e17"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-1" x="4" y="4" width="56" height="15" uuid="06b8985b-605c-49d7-aca3-71b583d9791d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial_OM" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="110" y="2" width="108" height="17" uuid="0423b64a-e158-47ef-8675-117072068774"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial_OM" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATERIA PRIMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="7" y="50" width="53" height="11" uuid="702f636a-31e2-4ea2-a53e-5b29cee5ea46"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="7" y="78" width="30" height="11" uuid="8abe5a6f-f922-4011-af00-162fea5d6005"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="7" y="112" width="30" height="11" uuid="66705cf9-2080-4901-a0d8-5314cf17b8e8"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TARA:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="68" y="23" width="199" height="19" uuid="b295c6d5-8fae-4a64-9892-f7f1375264ac"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" x="68" y="112" width="30" height="11" uuid="3396612e-d160-4815-bec4-0e75d66caa88"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NETO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="193" y="112" width="36" height="11" uuid="447b2ac0-4ae0-4529-ba05-db5b84f27633"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRUTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" x="7" y="136" width="91" height="11" uuid="62e4cc9b-4f20-4745-9d94-a9eac0f0b26f"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOTE PROVEEDOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" x="6" y="159" width="134" height="11" uuid="5c7d76f4-5826-4e69-8afc-8407c985a92b"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre responsable de pesaje:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" x="192" y="158" width="27" height="11" uuid="bdfbc1cb-2e3a-4dec-90c2-db8ceafaab02"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="###.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="99" y="113" width="60" height="9" uuid="bc1a7033-ecd9-46e7-a43f-04f2ac08371b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidadFraccion}.setScale(2, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a" isBlankWhenNull="false">
+				<reportElement key="textField" x="221" y="169" width="45" height="9" uuid="57acc0b6-ec13-44fc-a4f4-a561f23b1681">
+					<printWhenExpression><![CDATA[!$P{codLoteProduccion}.contains("H")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="220" y="158" width="46" height="9" uuid="aa669882-d7da-45f7-b01e-c72a2da40bbe">
+					<printWhenExpression><![CDATA[!$P{codLoteProduccion}.contains("H")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA_PESAJE}]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" x="68" y="77" width="202" height="20" uuid="f08465e2-dec8-4d75-82e0-6f48d46723bc">
+					<printWhenExpression><![CDATA[!$P{codLoteProduccion}.contains("H")]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="codProgramaProd">
+					<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codLoteProduccion">
+					<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./impresionEtiquetasOMLotes.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" x="69" y="50" width="199" height="22" uuid="5257f1d8-0c17-4379-8096-9fadb5ff9d90"/>
+				<subreportParameter name="codProgramaProd">
+					<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codLoteProduccion">
+					<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./impresionEtiquetasOMProductos.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="98" y="136" width="168" height="18" uuid="1351ac40-cb49-4622-8e62-9bfd0f179c3e"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lote_proveedor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="162" y="113" width="9" height="11" uuid="1ba0b18a-6d82-47a8-a494-776aa590d8a4"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[g]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

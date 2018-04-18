@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-09-29T16:08:40 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionEtiquetasOMDesv" pageWidth="294" pageHeight="223" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="266" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="086bc559-a2c1-4adc-8c33-101204816f8f">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="fechaEtiqueta" class="java.util.Date"/>
+	<parameter name="codSalidaAlmacen" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select m.COD_MATERIAL,m.NOMBRE_MATERIAL,g.NOMBRE_GRUPO,sad.CANTIDAD_SALIDA_ALMACEN,
+	um.ABREVIATURA,ae.NOMBRE_AREA_EMPRESA,sa.NRO_SALIDA_ALMACEN
+from SALIDAS_ALMACEN sa 
+    inner join SALIDAS_ALMACEN_DETALLE sad on sa.COD_SALIDA_ALMACEN=sad.COD_SALIDA_ALMACEN
+    inner join MATERIALES m on m.COD_MATERIAL=sad.COD_MATERIAL
+    inner join grupos g on g.COD_GRUPO=m.COD_GRUPO
+    inner join UNIDADES_MEDIDA um on um.COD_UNIDAD_MEDIDA=sad.COD_UNIDAD_MEDIDA
+    inner join AREAS_EMPRESA ae on ae.COD_AREA_EMPRESA=sa.COD_AREA_EMPRESA
+where sa.COD_SALIDA_ALMACEN= $P{codSalidaAlmacen} 
+order by m.NOMBRE_MATERIAL]]>
+	</queryString>
+	<field name="COD_MATERIAL" class="java.lang.Integer"/>
+	<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+	<field name="NOMBRE_GRUPO" class="java.lang.String"/>
+	<field name="CANTIDAD_SALIDA_ALMACEN" class="java.lang.Double"/>
+	<field name="ABREVIATURA" class="java.lang.String"/>
+	<field name="NOMBRE_AREA_EMPRESA" class="java.lang.String"/>
+	<field name="NRO_SALIDA_ALMACEN" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="195" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="1" width="266" height="194" forecolor="#000000" backcolor="#FFFFFF" uuid="5977adb5-4eb8-4695-8012-aaf169d7d5dc"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement key="line-12" x="65" y="1" width="1" height="125" uuid="4cfa8a02-3d54-4e11-86e8-235f2982cee0"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-9" x="4" y="35" width="51" height="30" uuid="a55466f5-faeb-4594-9aeb-d5a41cf35d43"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-13" x="0" y="31" width="266" height="1" uuid="e84f28c9-1ad4-4acf-b248-bdc1c6f0c929"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-10" x="79" y="7" width="156" height="18" uuid="8ad88834-3565-460e-ad93-6526db46c54c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATERIA PRIMA]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-14" x="0" y="67" width="266" height="1" uuid="d274dfba-cb74-499b-be44-a093c18b9126"/>
+			</line>
+			<line>
+				<reportElement key="line-15" x="0" y="104" width="266" height="1" uuid="0c7dc4c0-b3ea-45a6-9c90-9e6345574285"/>
+			</line>
+			<line>
+				<reportElement key="line-16" x="0" y="151" width="266" height="1" uuid="efd85a2c-870b-4829-b516-bc8857403f82"/>
+			</line>
+			<line>
+				<reportElement key="line-17" x="78" y="126" width="1" height="26" uuid="3bb46eae-e621-467c-a42d-17887d0fd5fd"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-11" x="5" y="71" width="57" height="30" uuid="96046dae-20c9-40db-9096-e716b30c9c2d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AREA DESTINO]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-18" x="169" y="126" width="1" height="67" uuid="17d4a987-d9dd-4ffa-a194-cabc8515807a"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-12" x="2" y="130" width="67" height="17" uuid="0b1e0d14-da46-4601-a9b4-06fef8cfc65b"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TARA:..........]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" x="81" y="129" width="35" height="16" uuid="134dc7eb-7aef-4294-9c12-3d060a0bd794"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NETO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-14" x="173" y="130" width="82" height="16" uuid="7523f08e-e37b-49bc-9087-969e79d1be76"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRUTO:............]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-15" x="4" y="158" width="161" height="27" uuid="87cdfedb-870b-4cdd-a110-a62099f0e108"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Responsable de pesaje:..................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="172" y="160" width="34" height="12" uuid="52792b1b-cdfb-4296-a594-1643a5ae1081"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" x="207" y="160" width="56" height="12" uuid="8607cd22-9d0d-40eb-a619-3ce0398c9667"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaEtiqueta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="207" y="173" width="56" height="12" uuid="0105005c-00dc-4b8a-9817-e817c737c500"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaEtiqueta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="35" width="193" height="30" uuid="d98fa7ea-ceb5-4100-b1ba-b763b317b7e7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="71" width="193" height="30" uuid="6c4b6ce9-5dfb-4d49-9389-b76089a5458b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_AREA_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="128" width="34" height="16" uuid="3e9774e4-c58b-46eb-a1f6-d570fdad49e4"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD_SALIDA_ALMACEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="128" width="19" height="16" uuid="4b4ec0d3-60c9-4f72-a1ab-72f98b1cfd36"/>
+				<textFieldExpression><![CDATA[$F{ABREVIATURA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-15" x="1" y="125" width="266" height="1" uuid="3f253800-af18-4c3f-abd4-46e6f6bf1055"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-11" x="5" y="105" width="57" height="21" uuid="23041b86-31ed-4ba4-a874-7b59ea3999a0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° SALIDA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="105" width="193" height="20" uuid="7f4827ab-09d2-40b3-b81d-983acae26f44"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NRO_SALIDA_ALMACEN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

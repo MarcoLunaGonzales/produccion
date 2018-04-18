@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaObservaciones" pageWidth="527" pageHeight="623" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetParadaMaquina" uuid="fd3d7589-cc6f-4003-9627-3f0869fa8d4a">
+		<parameter name="codLoteProduccion" class="java.lang.String"/>
+		<parameter name="codProgramaProd" class="java.lang.String"/>
+		<parameter name="codTipoMaterial" class="java.lang.String"/>
+		<parameter name="cantidadLoteProduccion" class="java.lang.Double"/>
+		<parameter name="unidadMedidaOm" class="java.lang.String"/>
+		<parameter name="cantidadUnitariaLote" class="java.lang.Double"/>
+		<parameter name="textoPeso" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select 1 as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro
+union
+select 6 as nro
+union
+select 7 as nro
+union
+select 8 as nro
+union
+select 9 as nro
+union
+select 10 as nro
+union
+select 11 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+		<variable name="cantidadUnidadProducto" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+		<variable name="cantidadTotal" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="codProgramaProd" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as indicacionProceso
+	,ip1.INDICACION_PROCESO as indicacionParadaMaquina
+	,pp.COD_COMPPROD_VERSION
+
+from PROGRAMA_PRODUCCION pp
+     inner join COMPONENTES_PROD_VERSION cpv on cpv.COD_VERSION =pp.COD_COMPPROD_VERSION
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =pp.COD_COMPPROD_VERSION
+	 and ip.COD_TIPO_INDICACION_PROCESO = 2-- tipos de indicacio:indicaciones
+	 and ip.COD_PROCESO_ORDEN_MANUFACTURA = 37 --hoja observaciones
+     left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION =pp.COD_COMPPROD_VERSION
+	 and ip1.COD_TIPO_INDICACION_PROCESO = 20-- tipos de indicacio:indicaciones
+	 and ip1.COD_PROCESO_ORDEN_MANUFACTURA = 37 --hoja observaciones
+
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion} and
+      pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="indicacionProceso" class="java.lang.String"/>
+	<field name="indicacionParadaMaquina" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="168" splitType="Stretch">
+			<textField>
+				<reportElement style="texto" x="3" y="12" width="497" height="9" uuid="e6e8c1be-e52f-4586-92dc-63cd812cbf63"/>
+				<textFieldExpression><![CDATA[$F{indicacionProceso}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement style="celdaCabecera" x="0" y="0" width="526" height="8" uuid="67e7a944-cf65-4e59-81fc-076b4e48df00"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="textoBold" x="196" y="1" width="100" height="8" uuid="fdf7b9b2-2302-4a8d-9316-3104d1df149c"/>
+				<text><![CDATA[HOJA DE OBSERVACIONES]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="0" y="8" width="526" height="1" uuid="2955f7fe-ccd3-4865-b284-347a27d72522"/>
+			</line>
+			<rectangle>
+				<reportElement style="celdaCabecera" x="1" y="111" width="526" height="8" uuid="f34e36a5-d8c0-4f92-9ae0-b68c52be64de"/>
+			</rectangle>
+			<line>
+				<reportElement style="linea" x="0" y="110" width="526" height="1" uuid="b36b2bc1-6183-4325-a451-7e2145a47a8d"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="119" width="526" height="1" uuid="d0eed057-fecf-451b-9160-352788738be9"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" x="184" y="111" width="124" height="8" uuid="33a60c5c-2bac-4b89-8dba-d445fd07e478"/>
+				<text><![CDATA[TIEMPOS DE PARADA DE MAQUINA]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" x="73" y="137" width="434" height="27" uuid="3b952b00-522e-48eb-a563-06687e7407fb"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetParadaMaquina" uuid="100ad6bf-709b-4cb7-becf-d7b875152c70">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="85" uuid="4572ee75-70cb-44fe-93e2-35833c4b784d">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="85" height="13" uuid="22690f8c-d1ad-422b-bddc-4205907b7be6"/>
+								<text><![CDATA[OPERARIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="85" height="14" forecolor="#FFFFFF" uuid="ef9dbd51-70a4-46a4-bb68-b716eb58d813"/>
+								<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="57" uuid="d5bf6ce2-45e0-4f86-8d80-a127208d08fa">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="57" height="13" uuid="b568a91a-885c-4c32-8e00-151ba1178050"/>
+								<text><![CDATA[HORA INICIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="57" uuid="ab5677ae-a045-40b4-bb99-7d5b48674726">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="57" height="13" uuid="9877951f-8782-42bc-9ed6-58df141e4445"/>
+								<text><![CDATA[HORA FINAL]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="71" uuid="a90ecb0f-aafb-4d27-bc5e-929b55d60d09">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="71" height="13" uuid="08c951bf-f3a9-466f-94b1-793513c86a39"/>
+								<text><![CDATA[MAQUINARIA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="70" uuid="5456c56b-1cf2-46e2-81b8-f7e780ec5f8c">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="13" uuid="49e3fe7d-f56c-4ce7-bb9a-8f46d5b625c6"/>
+								<text><![CDATA[OBSERVACIONES]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="71" uuid="fa956d81-deb6-46a0-ac24-4b1113bfc15b">
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="71" height="13" uuid="587c7910-ae8a-4a14-a813-b3f7d09b717c"/>
+								<text><![CDATA[SUPERVISOR]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement style="texto" x="5" y="124" width="497" height="9" uuid="e2fbd678-6d47-4962-9254-d107e7024e62"/>
+				<textFieldExpression><![CDATA[$F{indicacionParadaMaquina}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

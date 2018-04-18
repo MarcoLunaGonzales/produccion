@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-07-31T09:25:20 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportePorCapasAsociadas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="750" leftMargin="21" rightMargin="21" topMargin="21" bottomMargin="21" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetDesviacion" uuid="2260ef2a-4ab5-427f-9dcf-21ef6a7da5b5">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codCapaAseguramientoCalidad" class="java.lang.Integer"/>
+		<parameter name="codEstadoCapaAseguramientoCalidad" class="java.lang.Integer"/>
+		<parameter name="codDesviacionGenerica" class="java.lang.Integer"/>
+		<parameter name="codClasificacionRiesgoDesviacion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select cac.DESCRIPCION_CAPA_ASEGURAMIENTO_CALIDAD,ecac.NOMBRE_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD,
+	dg.NOMBRE_DESVIACION_GENERICA,crd.NOMBRE_CLASIFICACION_RIESGO_DESVIACION,
+    d.CODIGO,agd.NOMBRE_AREA_GENERADORA_DESVIACION,d.DESCRIPCION_DESVIACION,
+    dpp.COD_LOTE_PRODUCCION,d.DESCRIPCION_INVESTIGACION
+from desviacion d
+	inner join AREAS_GENERADORAS_DESVIACION agd on agd.COD_AREA_GENERADORA_DESVIACION = d.COD_AREA_GENERADORA_DESVIACION
+    left outer join DESVIACIONES_GENERICAS dg on dg.COD_DESVIACION_GENERICA = d.COD_DESVIACION_GENERICA
+    left outer join CLASIFICACION_RIESGO_DESVIACION crd on crd.COD_CLASIFICACION_RIESGO_DESVIACION = d.COD_CLASIFICACION_RIESGO_DESVIACION
+    left outer join DESVIACION_PROGRAMA_PRODUCCION dpp on dpp.COD_DESVIACION = d.COD_DESVIACION
+    inner join CAPAS_ASEGURAMIENTO_CALIDAD_DESVIACION cacd on cacd.COD_DESVIACION = d.COD_DESVIACION
+    inner join CAPAS_ASEGURAMIENTO_CALIDAD cac on cac.COD_CAPA_ASEGURAMIENTO_CALIDAD = cacd.COD_CAPA_ASEGURAMIENTO_CALIDAD
+    inner join ESTADOS_CAPAS_ASEGURAMIENTO_CALIDAD ecac on ecac.COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD = cac.COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD
+
+where (d.COD_DESVIACION_GENERICA =   $P{codDesviacionGenerica}  or   $P{codDesviacionGenerica}  = 0)
+	and (d.COD_CLASIFICACION_RIESGO_DESVIACION =  $P{codClasificacionRiesgoDesviacion}  or $P{codClasificacionRiesgoDesviacion}  = 0)
+	and (cac.COD_CAPA_ASEGURAMIENTO_CALIDAD =   $P{codCapaAseguramientoCalidad}   or  $P{codCapaAseguramientoCalidad}= 0)
+	and (cac.COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD =  $P{codEstadoCapaAseguramientoCalidad}    or $P{codEstadoCapaAseguramientoCalidad}  = 0)
+order by d.FECHA_ENVIO_ASEGURAMIENTO]]>
+		</queryString>
+		<field name="DESCRIPCION_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.String"/>
+		<field name="NOMBRE_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.String"/>
+		<field name="NOMBRE_DESVIACION_GENERICA" class="java.lang.String"/>
+		<field name="NOMBRE_CLASIFICACION_RIESGO_DESVIACION" class="java.lang.String"/>
+		<field name="CODIGO" class="java.lang.String"/>
+		<field name="NOMBRE_AREA_GENERADORA_DESVIACION" class="java.lang.String"/>
+		<field name="DESCRIPCION_DESVIACION" class="java.lang.String"/>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="DESCRIPCION_INVESTIGACION" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="dirLogoCofar" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["D:\\PROYECTOS\\PRODUCCION\\web\\img\\cofar.gif"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codCapaAseguramientoCalidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codEstadoCapaAseguramientoCalidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codDesviacionGenerica" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codClasificacionRiesgoDesviacion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 
+ISNULL((select crd.NOMBRE_CLASIFICACION_RIESGO_DESVIACION 
+from clasificacion_riesgo_desviacion crd where crd.COD_CLASIFICACION_RIESGO_DESVIACION =   $P{codClasificacionRiesgoDesviacion} ),'--TODOS--') as nombreClasificacion,
+ISNULL((select cac.DESCRIPCION_CAPA_ASEGURAMIENTO_CALIDAD from CAPAS_ASEGURAMIENTO_CALIDAD cac 
+where cac.COD_CAPA_ASEGURAMIENTO_CALIDAD =  $P{codCapaAseguramientoCalidad} ),'--TODOS--') as nombreCapaAseguramientoCalidad,
+ISNULL((select ecac.NOMBRE_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD from ESTADOS_CAPAS_ASEGURAMIENTO_CALIDAD ecac
+where ecac.COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD =   $P{codEstadoCapaAseguramientoCalidad} ),'--TODOS--') as nombreEstadoCapa,
+ISNULL((select dg.NOMBRE_DESVIACION_GENERICA from DESVIACIONES_GENERICAS dg
+where dg.COD_DESVIACION_GENERICA =  $P{codDesviacionGenerica} ),'--TODOS--') as nombreDesviacionGenerica]]>
+	</queryString>
+	<field name="nombreClasificacion" class="java.lang.String"/>
+	<field name="nombreCapaAseguramientoCalidad" class="java.lang.String"/>
+	<field name="nombreEstadoCapa" class="java.lang.String"/>
+	<field name="nombreDesviacionGenerica" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="92" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoCabecera" x="2" y="0" width="748" height="16" uuid="2013cd69-8f52-4194-989b-35e0f33fb72c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Reporte De Desviaciones por Capas Asociadas]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="2" y="43" width="748" height="47" uuid="297c71c3-9e85-4586-9d0f-84da19dcf2ad">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetDesviacion" uuid="d2b7768a-ae57-4e32-8972-3efdd787fe4b">
+						<datasetParameter name="codCapaAseguramientoCalidad">
+							<datasetParameterExpression><![CDATA[$P{codCapaAseguramientoCalidad}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codClasificacionRiesgoDesviacion">
+							<datasetParameterExpression><![CDATA[$P{codClasificacionRiesgoDesviacion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codDesviacionGenerica">
+							<datasetParameterExpression><![CDATA[$P{codDesviacionGenerica}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codEstadoCapaAseguramientoCalidad">
+							<datasetParameterExpression><![CDATA[$P{codEstadoCapaAseguramientoCalidad}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="70" uuid="c0bc9e2d-8e89-49d3-b6f6-e3d1b17c9743">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="19" uuid="ce2027c1-3890-4352-a3ab-68b7c0d14988"/>
+								<text><![CDATA[Capa]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="30" uuid="91fc8e91-16fd-45b0-a9dc-1b74a1e61a17"/>
+								<textElement markup="html"/>
+								<textFieldExpression><![CDATA[$F{DESCRIPCION_CAPA_ASEGURAMIENTO_CALIDAD}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="39" uuid="8cec7f4e-2101-4ea1-a775-9080d4da29d2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="39" height="19" uuid="3458240b-998c-497a-aabc-a0a91c158eb7"/>
+								<text><![CDATA[Estado del capa]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="39" height="30" uuid="69208d6c-a0ce-4029-9c35-ea0e1a91ec29"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="6a3cba50-a364-4884-8585-6a5ddc6abc94">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="55" height="19" uuid="fd7d7873-4803-4a5c-8480-10ee1bb40cbe"/>
+								<text><![CDATA[Desviación Genérica]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="30" uuid="0d94662d-3c43-4cab-afd5-18bc1fd6733a"/>
+								<textElement markup="html"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_DESVIACION_GENERICA}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="45" uuid="d496c884-d4bd-4f5d-b620-df41fafb6572">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="45" height="19" uuid="fe8c520f-c4f4-4b71-b2c4-c39291252c08"/>
+								<text><![CDATA[Tipo de desviación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="45" height="30" uuid="f25df709-88d4-46df-ae0f-6f0cba98d100"/>
+								<textElement markup="html"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_CLASIFICACION_RIESGO_DESVIACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="41" uuid="e849d3e1-2f70-4198-a673-cee7e60e05a2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="41" height="19" uuid="f5f541fb-15e3-4281-84f7-bf51cf5e53a2"/>
+								<text><![CDATA[Código desviación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="41" height="30" uuid="386d3a69-eab1-43c1-a212-e4acf5301e43"/>
+								<textElement markup="html"/>
+								<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="63c564d1-ac55-4a6b-821e-afa38e963b21">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="50" height="19" uuid="83717c2f-995b-43cd-88dd-5df784d361cf"/>
+								<text><![CDATA[Area Generadora]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="30" uuid="3784c9bc-3ff5-4d76-b9bc-6e4e2bb4ef20"/>
+								<textElement markup="html"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_AREA_GENERADORA_DESVIACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="6d037a66-1656-4d84-a6a7-e38339490e24">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="90" height="19" uuid="c56e507b-2938-4bc8-8d72-3337d30b6076"/>
+								<text><![CDATA[Descripción de la desviación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="30" uuid="62d00b39-36ba-44e5-8bcb-c874cc73c5ff"/>
+								<textElement markup="html"/>
+								<textFieldExpression><![CDATA[$F{DESCRIPCION_DESVIACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="df91ca5f-4b76-47d7-8c9b-e526dc9c8c7a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="40" height="19" uuid="dab55173-d99f-417e-8567-83674d1db6fa"/>
+								<text><![CDATA[Lote]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="30" uuid="ab294ab9-b1f5-4760-95c1-4b230f9e45de"/>
+								<textElement markup="html"/>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="317" uuid="27b034a3-04eb-42cf-b22a-4f66e26da5f2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:columnHeader style="celdaCabecera" height="19">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="317" height="19" uuid="65e373a5-8ae3-4b6b-bd6a-850cfe8ccc34"/>
+								<text><![CDATA[Investigación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." stretchType="RelativeToBandHeight" x="0" y="0" width="317" height="30" uuid="b14027df-4734-4430-9325-65078fa9bb1e"/>
+								<textElement markup="html">
+									<font size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESCRIPCION_INVESTIGACION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement style="texto" x="181" y="18" width="149" height="10" uuid="8070c645-53b6-49f0-8763-add27a36b3b8"/>
+				<textFieldExpression><![CDATA[$F{nombreCapaAseguramientoCalidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="100" y="18" width="80" height="10" uuid="a8d3e8a7-20af-4ac7-b2ba-e7ea7fac1647"/>
+				<text><![CDATA[Capa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="101" y="31" width="80" height="10" uuid="d12066e4-cabe-4df2-88f1-f5b5e9789d6e"/>
+				<text><![CDATA[Desviación Genérica:]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="3" y="0" width="80" height="41" uuid="e4a74617-a8a3-4229-a6bb-9ad497c4269e"/>
+				<imageExpression><![CDATA[$P{dirLogoCofar}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="texto" x="181" y="31" width="149" height="10" uuid="badaddaf-b45d-4f61-81ff-f76fbfd4353c"/>
+				<textFieldExpression><![CDATA[$F{nombreDesviacionGenerica}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="420" y="18" width="149" height="10" uuid="2dcf49a1-e2fd-4878-bd31-48fb36080460"/>
+				<textFieldExpression><![CDATA[$F{nombreEstadoCapa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="339" y="18" width="80" height="10" uuid="5ff2e1ed-4774-4b60-b591-e13e3d19b0f0"/>
+				<text><![CDATA[Estado del capa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="340" y="31" width="80" height="10" uuid="ba85900c-c4d9-4291-bd77-9a163d871ab8"/>
+				<text><![CDATA[Tipo Desviación:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="420" y="31" width="149" height="10" uuid="53357740-2682-4e3e-971d-1ea1ae9d61c4"/>
+				<textFieldExpression><![CDATA[$F{nombreClasificacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="texto" x="0" y="0" width="70" height="10" uuid="0d25d4ef-a52f-40cb-9ae7-429be6231425"/>
+				<textFieldExpression><![CDATA[(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="610" y="0" width="100" height="10" uuid="fba2a61e-ced9-46a4-ab87-46a1927e6619"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="texto" x="710" y="0" width="40" height="10" uuid="35a66d51-379c-4c17-b0aa-22c88b5fcb08"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="11" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="texto" x="0" y="0" width="70" height="10" uuid="80b97c9f-bb9d-49e8-a3d2-45d6ed9ffcba"/>
+				<textFieldExpression><![CDATA[(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="610" y="0" width="100" height="10" uuid="17bca161-e4df-4441-9cfc-d3a8a178ac10"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="texto" x="710" y="0" width="40" height="10" uuid="c73f81bb-e122-4d88-a2bb-3bea28ccf93a"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-05T15:48:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteEspecificacionesProcesoInyectables" pageWidth="979" pageHeight="498" orientation="Landscape" columnWidth="979" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="localPrueba"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<queryString>
+		<![CDATA[exec PAA_ESPECIFICACIONES_PRODUCTO_FF_LIQUIDOS_NO_ESTERILES]]>
+	</queryString>
+	<field name="nombre_prod" class="java.lang.String"/>
+	<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+	<field name="CONCENTRACION_ENVASE_PRIMARIO" class="java.lang.String"/>
+	<field name="nombre_forma" class="java.lang.String"/>
+	<field name="volumen" class="java.lang.String"/>
+	<field name="volumenPromedio" class="java.lang.String"/>
+	<field name="aspectoColor" class="java.lang.String"/>
+	<field name="saborOlor" class="java.lang.String"/>
+	<field name="residuoSeco" class="java.lang.String"/>
+	<field name="indiceRefraccion" class="java.lang.String"/>
+	<field name="densidad" class="java.lang.String"/>
+	<field name="ph" class="java.lang.String"/>
+	<field name="cuantificacion" class="java.lang.String"/>
+	<field name="NOMBRE_COLORPRESPRIMARIA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement style="celdaCabecera" x="0" y="0" width="977" height="39" uuid="2729bfa1-92db-45a4-af92-d09b6b4ec95f"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="textoCabecera" x="0" y="0" width="86" height="38" uuid="b1f860bb-2f75-41c7-9453-d144456af8c8"/>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="86" y="0" width="1" height="39" uuid="68e63a55-ae6e-4a45-8664-5cf02e0fa568"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="169" y="0" width="1" height="39" uuid="51c44cb5-dd55-493a-9231-18dfb75f9ded"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="86" y="0" width="82" height="38" uuid="a67e08ba-d8cc-4eaf-ac2c-c791d4aac0f1"/>
+				<text><![CDATA[NOMBRE GENERICO/ CONCENTRACIÓN]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="228" y="11" width="677" height="1" uuid="4b153a63-99f8-41e7-bcf5-45763ea608a9"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="173" y="1" width="50" height="38" uuid="a8953fa8-5218-4a55-95d6-bd7a49edef20"/>
+				<text><![CDATA[FORMA FARMACEUTICA]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="228" y="0" width="1" height="39" uuid="b9a210b6-8f24-46cd-afb7-5e2008b0acb3"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="619" y="11" width="1" height="27" uuid="8307715f-da5c-4d30-bb01-95c93027c7a0"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="621" y="12" width="68" height="26" uuid="85efda47-e8b5-4642-a4dd-cb70f4a7473d"/>
+				<text><![CDATA[DENSIDAD]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="425" y="11" width="1" height="27" uuid="dd13fd14-04ce-4aa7-bfe1-1596fa42fee7"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="283" y="11" width="70" height="26" uuid="90b316c3-2dfa-4f07-884a-600fbd9c340e"/>
+				<text><![CDATA[VOLUMEN PROMEDIO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="283" y="11" width="1" height="27" uuid="fecf5270-8482-41fc-a429-28de34ed2566"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="691" y="11" width="58" height="28" uuid="b3841976-88db-44d5-9c8e-590466057f0c"/>
+				<text><![CDATA[PH]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="354" y="11" width="1" height="27" uuid="55b90301-c0ac-41d9-bb32-472deffb9f05"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="425" y="11" width="64" height="26" uuid="7e905b3f-651f-4f30-8d28-3a9c0cf5e878"/>
+				<text><![CDATA[SABOR/OLOR]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="551" y="11" width="1" height="27" uuid="d5a034df-ab22-477e-a3c5-c9fa449c2b3a"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="906" y="0" width="1" height="38" uuid="d78560db-ae46-4d64-ba21-6de31fe56e0d"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="751" y="11" width="154" height="28" uuid="e845e8a8-8cde-40ea-8510-205efef44c48"/>
+				<text><![CDATA[CUANTIFICACIÓN DEL PRINCIPIO ACTIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="229" y="12" width="54" height="26" uuid="8d35fab1-348b-4b55-9051-0de5610d23b4"/>
+				<text><![CDATA[VOLUMEN DE ENVASE PRIMARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="751" y="0" width="154" height="10" uuid="de491b09-04b7-407a-8c81-f4ca50274394"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PARAMETROS FISICOQUIMICOS]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="0" y="38" width="979" height="1" uuid="908ad11b-b930-4ff8-a821-42cdb091be07"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="228" y="0" width="524" height="10" uuid="ce28843c-c835-4456-9314-061f6c3dad7d"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PARAMETROS FISICOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="553" y="12" width="66" height="26" uuid="a2588e0b-b97f-471d-a24f-b514544b47ac"/>
+				<text><![CDATA[INDICE DE REFRACCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="490" y="11" width="60" height="26" uuid="b398e15b-12de-4e81-90d5-617c83e6e18d"/>
+				<text><![CDATA[SECO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="489" y="11" width="1" height="27" uuid="e2df9a87-7290-49bd-b947-3a9129174fab"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="354" y="11" width="70" height="26" uuid="55895574-36b3-4c4c-b8df-9d3f101b36fa"/>
+				<text><![CDATA[ASPECTO / COLOR]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="689" y="11" width="1" height="27" uuid="c9d71821-9ffc-4d12-8ff5-7b9be5ccddf2"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="749" y="0" width="1" height="39" uuid="8cf42d36-9fce-473c-a805-fa9d67ee9d2a"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="908" y="2" width="70" height="34" uuid="8bfae784-4787-4986-9fe1-f3b3f5b6ffec"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[COLOR DEL FRASCO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement key="" style="textoBody" x="0" y="0" width="86" height="38" uuid="32fbd14b-f09a-4598-a764-8fdc48942864"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_prod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="86" y="0" width="82" height="38" uuid="560bd5a4-e298-4186-a5e2-46844fe2397d"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONCENTRACION_ENVASE_PRIMARIO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" x="86" y="0" width="1" height="38" uuid="4368c90c-570e-4b6a-8987-3d2b5cf20f57"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="169" y="0" width="1" height="38" uuid="eb96a0cf-ff44-4e2c-a4d1-d5be0851e54e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="228" y="0" width="1" height="38" uuid="8c3d2ae3-4ea0-470f-90f5-6b5b83fac9a2"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="283" y="0" width="1" height="38" uuid="57ee9445-955a-42df-b465-5eb2415c3b75"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="354" y="0" width="1" height="38" uuid="0e8d04bf-bde5-4f23-8a49-a9ece726ddbe"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="425" y="0" width="1" height="38" uuid="dd9b957d-6f97-44f5-9058-c9fb1fd1bbaa"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="489" y="0" width="1" height="38" uuid="6bcf3c94-92cb-40fe-b1f8-8cd57041a7ee"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="551" y="0" width="1" height="38" uuid="971ac818-cddd-419d-b062-7bbe5ec49830"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="619" y="0" width="1" height="38" uuid="176941bc-5bca-448a-914d-df775c1c3d09"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="689" y="0" width="1" height="38" uuid="4ff89008-dd83-44b7-a997-bfcb5689d198"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="38" width="979" height="1" uuid="c69a195b-6de2-400b-8586-e81047de4979"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="749" y="-1" width="1" height="39" uuid="cb69a6fd-b45e-4221-8ee9-877a26bf07e8"/>
+			</line>
+			<textField>
+				<reportElement style="textoBody" x="751" y="0" width="154" height="37" uuid="31cbfdc1-ad94-4812-81f5-198973d3f70c"/>
+				<textFieldExpression><![CDATA[$F{cuantificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="171" y="1" width="56" height="36" uuid="2df33111-69ae-4583-bc4f-75f06e796b3e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombre_forma}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" x="906" y="-1" width="1" height="39" uuid="a1eb38cf-71ec-4422-a2a1-f5073be753b5"/>
+			</line>
+			<textField>
+				<reportElement style="textoBody" x="229" y="-1" width="54" height="38" uuid="22de2d6d-139d-454e-8b3a-92afc9465939"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{volumen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="283" y="1" width="70" height="36" uuid="b32ab691-6974-401f-948d-b24e661af30f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{volumenPromedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="355" y="1" width="70" height="36" uuid="59e6d4d4-79a8-4825-9424-6941e4ba4673"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{aspectoColor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="425" y="1" width="64" height="36" uuid="7eb65a5c-6a1d-4cbf-83c5-b975952fd550"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{saborOlor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="490" y="-1" width="60" height="38" uuid="b41d89a5-d8bb-43e4-a9c8-4031832b03ed"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{residuoSeco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="553" y="1" width="66" height="36" uuid="dcd26c3d-92af-4260-97bf-05f63f0bc47d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{indiceRefraccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" style="textoBody" x="621" y="1" width="68" height="36" uuid="22c98fa5-bf07-43ad-b716-25f959616b06"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{densidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="691" y="-1" width="58" height="38" uuid="08128a25-95a0-416f-aa1e-1b04ab83542e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ph}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="908" y="0" width="69" height="38" uuid="28064c0f-b8b7-4102-98c3-647219571272"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_COLORPRESPRIMARIA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

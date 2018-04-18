@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-04-19T14:28:24 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaPesajeMateriaPrima" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="34a95c68-1eaa-4b20-bc4c-bd6e53f596be">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="325"/>
+	<property name="ireport.y" value="27"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetDocumentacion" uuid="0dba4c11-e6ff-4d83-81f1-f5d930d7973c">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codVersion" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codTipoAsignacionDocumento" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select d.NOMBRE_DOCUMENTO,d.CODIGO_DOCUMENTO 
+from COMPONENTES_PROD_VERSION_DOCUMENTACION_APLICADA cpvda 
+inner join DOCUMENTACION d on d.COD_DOCUMENTO=cpvda.COD_DOCUMENTO 
+where cpvda.COD_VERSION= $P{codVersion} 
+and cpvda.COD_TIPO_ASIGNACION_DOCUMENTO_OM= $P{codTipoAsignacionDocumento} 
+order by d.NOMBRE_DOCUMENTO]]>
+		</queryString>
+		<field name="NOMBRE_DOCUMENTO" class="java.lang.String"/>
+		<field name="CODIGO_DOCUMENTO" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["H2109"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 isnull(ip.INDICACION_PROCESO,'') as indicaciones,
+pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+	inner join TIPOS_PROGRAMA_PRODUCCION tpp on tpp.COD_TIPO_PROGRAMA_PROD=pp.COD_TIPO_PROGRAMA_PROD
+left outer join INDICACION_PROCESO ip on ip.COD_VERSION=pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO=2 and ip.COD_PROCESO_ORDEN_MANUFACTURA=27
+where pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and pp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+order by tpp.PRIORIDAD_PROCESOS_PRODUCCION]]>
+	</queryString>
+	<field name="indicaciones" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="75" splitType="Stretch">
+			<componentElement>
+				<reportElement positionType="Float" x="90" y="26" width="340" height="11" uuid="a5659a93-9d44-4a9d-b3fc-c7b58ccd981e">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetDocumentacion" uuid="f0dac80d-a69e-4229-b149-012ae55e11f2">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codTipoAsignacionDocumento">
+							<datasetParameterExpression><![CDATA[new Integer("2")]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="60" uuid="0a1c1625-527d-4b00-8f24-786d3b2cde11">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="15" uuid="dc931866-3274-4102-b344-50abf42d7dfd"/>
+								<text><![CDATA[Código]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="15">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="60" height="15" uuid="44418859-ef10-428d-8321-cb8fd6d9f599"/>
+								<textFieldExpression><![CDATA[$F{CODIGO_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="278" uuid="a6a5df4c-75fc-4e69-8848-bb87e1dfb46a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="278" height="15" uuid="44dc0991-dc9c-4664-8d94-2d7eccf16d85"/>
+								<text><![CDATA[Procedimiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="15">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." x="0" y="0" width="278" height="15" uuid="00826d0c-0481-491d-9f77-a4ea604217e4"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" x="1" y="0" width="526" height="11" uuid="b56e1c89-b756-494d-b7d1-addb1baa2549">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Documentación Aplicada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="41" width="526" height="11" uuid="6433afb9-962c-4a9b-9c8c-f97b97ba80ba">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Documentación Aplicada a la Limpieza de Áreas - Otros]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="92" y="60" width="340" height="9" uuid="d9153c9f-9776-4c7f-982f-36a344c9a7f6">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetDocumentacion" uuid="d1612284-c39e-4c72-8410-75e80b9353a9">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codTipoAsignacionDocumento">
+							<datasetParameterExpression><![CDATA[new Integer("3")]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="60" uuid="9d133a4e-2672-4e50-9b6e-8e8b1a3a77c2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="15" uuid="a5fa6ca8-12c5-4172-b6ed-bde790f7c588"/>
+								<text><![CDATA[Código]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="15">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="60" height="15" uuid="d623b483-05c6-4571-a2b5-1aef9d4522a0"/>
+								<textFieldExpression><![CDATA[$F{CODIGO_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="278" uuid="6a6ad0d6-0226-43ce-8c42-42acc0cc823f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="278" height="15" uuid="953e984b-beba-465e-9832-e18ccfc6e296"/>
+								<text><![CDATA[Procedimiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="15">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="textoBody." x="0" y="0" width="278" height="15" uuid="b6d0b634-5c3f-44d6-bd2a-bb05b0d0b9d4"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_DOCUMENTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoBold" x="3" y="12" width="46" height="8" uuid="f36166e1-11d9-4742-b9db-0984dc1e5e08">
+					<printWhenExpression><![CDATA[$F{indicaciones}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[Indicaciones:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" x="4" y="20" width="512" height="2" uuid="b6c6adf2-1714-437a-87a3-b185eb645818">
+					<printWhenExpression><![CDATA[$F{indicaciones}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{indicaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

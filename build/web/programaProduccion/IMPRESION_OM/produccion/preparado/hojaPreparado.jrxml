@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-04-12T12:52:10 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaPreparado" pageWidth="527" pageHeight="623" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="codProgramaProd" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select * from PROGRAMA_PRODUCCION_DIAGRAMA_PREPARADO_PRODUCTO ppppp
+where ppppp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+and ppppp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and ppppp.COD_PROCESO_ORDEN_MANUFACTURA=10
+order by ppppp.orden]]>
+	</queryString>
+	<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+	<field name="COD_PROGRAMA_PROD" class="java.lang.Integer"/>
+	<field name="COD_PROCESO_ORDEN_MANUFACTURA" class="java.lang.Integer"/>
+	<field name="DIAGRAMA" class="java.lang.Object"/>
+	<field name="ORDEN" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="620" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="1" width="523" height="617" uuid="ac5d90ae-5f9c-46a8-baac-39e4d99fd481"/>
+				<imageExpression><![CDATA[JRImageRenderer.getInstance((byte [])$F{DIAGRAMA})]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

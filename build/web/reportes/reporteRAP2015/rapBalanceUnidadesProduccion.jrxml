@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-06-02T15:38:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteRap" pageWidth="527" pageHeight="637" whenNoDataType="AllSectionsNoDetail" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOm.jrtx"]]></template>
+	<subDataset name="dataSetRapRendimientoLoteProduccion" uuid="481d6c8d-1158-4504-9e1e-56b88def698f">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160105"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codCompProd" class="java.lang.Integer"/>
+		<parameter name="fechaInicio" class="java.sql.Timestamp"/>
+		<parameter name="fechaFinal" class="java.sql.Timestamp"/>
+		<queryString>
+			<![CDATA[exec PAA_RAP_BALANCE_UNIDADES_PRODUCCION $P{fechaInicio},$P{fechaFinal}]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="cantidadAcond" class="java.lang.Double"/>
+		<field name="cantidadCC" class="java.lang.Double"/>
+		<field name="cantidadGlobos" class="java.lang.Double"/>
+		<field name="cantidadRotas" class="java.lang.Double"/>
+		<field name="cantidadUnidadesControlPeso" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="dataCantidadFrv" uuid="a5b44719-ab8a-4124-8d22-6f8cc1ebc6d5">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codActividad" class="java.lang.Integer"/>
+		<parameter name="codProcesoOM" class="java.lang.Integer"/>
+		<parameter name="fechaInicio" class="java.sql.Date"/>
+		<parameter name="fechaFinal" class="java.sql.Date"/>
+		<queryString>
+			<![CDATA[select pp.COD_LOTE_PRODUCCION,
+           sum(sp.CANTIDAD_PRODUCIDA) as  CANTIDAD_PRODUCIDA,sum(sp.CANTIDAD_FRV) as cantidadFrv
+    from PROGRAMA_PRODUCCION pp
+    	 INNER JOIN PROGRAMA_PRODUCCION_PERIODO ppp on ppp.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+         left outer join SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO s on s.COD_LOTE_PRODUCCION=pp.COD_LOTE_PRODUCCION
+         		and s.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+                and s.COD_PROCESO_ORDEN_MANUFACTURA= $P{codProcesoOM} 
+         left outer join SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO_PERSONAL sp on sp.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO=s.COD_SEGUIMIENTO_PROGRAMA_PRODUCCION_PROCESO       
+         		and sp.COD_ACTIVIDAD= $P{codActividad} 
+    where  pp.COD_COMPPROD in 
+			(
+				select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+			)
+		    and ppp.FECHA_INICIO>= $P{fechaInicio} 
+		    and ppp.FECHA_FINAL<= $P{fechaFinal} 
+    group by pp.COD_LOTE_PRODUCCION
+    order by pp.COD_LOTE_PRODUCCION]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="CANTIDAD_PRODUCIDA" class="java.lang.Double"/>
+		<field name="cantidadFrv" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[new Date("01/01/2015")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="194" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="39" y="25" width="434" height="46" uuid="6a6e703e-7af5-45b7-aff6-be5f3097f66a"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRapRendimientoLoteProduccion" uuid="6a9eec1f-6465-4b62-ad68-f5d965bcd0e1">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="425" uuid="fd01ef47-a40b-43b0-a051-e3a221e6a88c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [3]"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="425" height="14" uuid="1ae0e88a-1095-4813-9a20-c118fefcdf3d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[DOSIFICADO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="85" uuid="e68c7a61-8de8-42b6-8736-89ccf4d9102f">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="84" height="28" uuid="fda0fe91-a9b0-4418-acd3-cfb8d9a5f7d9"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[LOTE]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody" x="0" y="0" width="84" height="16" uuid="6cd9400b-624d-447a-903d-2e88ad581fbb"/>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="86" uuid="b68edc63-12a4-4b0e-a9e1-11a5bf83543e">
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="86" height="28" uuid="321145ea-0303-4ece-9089-14667d1f413c"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[AMPOLLAS C.C]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="86" height="16" uuid="50554327-89af-44c7-b531-7473a03b3631"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cantidadCC}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="83" uuid="04fbf00b-9438-46df-9dcb-b5c9d582a835">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="83" height="28" uuid="e9f18a3c-48f6-4da9-88a6-ae6680dd20f0"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[AMPOLLAS CONTROL VOLUMEN]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="83" height="16" uuid="ce392db3-d0b4-4333-935b-fa6682fee996"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cantidadUnidadesControlPeso}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="86" uuid="1c410206-1c5b-4629-a1c7-f7d4c17342bc">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column0"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="86" height="28" uuid="fe9eb36c-5670-499c-a004-3e66703c2ff3"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[GLOBOS, NEGRAS, CARBONES]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="86" height="16" uuid="e12839d6-c2c3-4806-80cf-09ff4cbdcfe0"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cantidadGlobos}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="85" uuid="1080ae18-9880-4504-b113-09da4b774b23">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column0"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="85" height="28" uuid="ac3f5128-6689-4145-aa24-1daa26b08830"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[ROTAS]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="85" height="16" uuid="fa4f6a13-c1c9-453c-9bcc-5c3245f30023"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cantidadRotas}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="10" y="7" width="140" height="15" uuid="ad40952b-acb4-4a2d-ad6a-3bf785a79894"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[5) Balance de unidades de producción]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="130" y="80" width="261" height="46" uuid="6fd48521-6ee7-4443-9a03-169164e12096"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataCantidadFrv" uuid="f24a2921-3809-43b6-96ff-2370c88f5920">
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codActividad">
+							<datasetParameterExpression><![CDATA[50]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codProcesoOM">
+							<datasetParameterExpression><![CDATA[2]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="254" uuid="33a81918-5909-4890-8b2c-718b2627882a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [3]"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="254" height="14" uuid="e11d0d8d-dcfa-41d1-822f-19beadd5e25c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[LAVADO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="85" uuid="5ee512a1-bd18-4691-9062-2b0f0c0f21c2">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="84" height="28" uuid="f6088817-cea7-4f9d-adf7-3d0b2f1619be"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[LOTE]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody" x="0" y="0" width="84" height="16" uuid="3fe0f80e-a890-41b1-8b2a-c8e6ba9624ad"/>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="86" uuid="c4f9c709-df2d-4766-b5b6-957e2dc34fd0">
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="86" height="28" uuid="a4cbe23f-55f0-49c2-b327-76967d0c9edc"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[AMPOLLAS LAVADAS]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="86" height="16" uuid="9bbf2d11-c9e8-4fb0-bef7-e3f4f9e36a2b"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD_PRODUCIDA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="83" uuid="fc415de3-14fc-41d2-bdaa-052d45d452d0">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="83" height="28" uuid="7cdfc36a-eb75-4432-b183-6499fe7fa913"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[AMPOLLAS ROTAS]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="83" height="16" uuid="b8e4f3ad-e148-4f5d-a051-912467e010f7"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cantidadFrv}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="130" y="140" width="261" height="46" uuid="d5b8431b-7f70-4658-86ca-7f61f5fdb624"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataCantidadFrv" uuid="3f7d8811-22af-41c1-9943-db5b42b5c3c2">
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codActividad">
+							<datasetParameterExpression><![CDATA[152]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codProcesoOM">
+							<datasetParameterExpression><![CDATA[1]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="254" uuid="00a0bebd-a6f7-46e3-8f09-5df110388355">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [3]"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="254" height="14" uuid="3f935b6b-758c-4983-b2cc-12171e376b13"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[DESPIROGENIZADO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="85" uuid="9125209d-a9be-48cf-b231-51bf828ac082">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="84" height="28" uuid="5a19a6f3-85cc-4a99-ad70-cc7a6eed4218"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[LOTE]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody" x="0" y="0" width="84" height="16" uuid="9fa71337-4c66-4ea5-8162-fc7e5265a999"/>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="86" uuid="8731d5bc-6b88-4da0-bd23-4f8b07528011">
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="86" height="28" uuid="09e38ece-e77f-42e0-a3b3-3588ea683606"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[AMPOLLAS LAVADAS]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="86" height="16" uuid="d4957cee-3d03-417c-9f34-ffba8a2ccd06"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD_PRODUCIDA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="83" uuid="0b77a8e9-d021-45ef-8738-cf51bc284092">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:columnHeader style="celdaCabecera" height="28" rowSpan="1">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="83" height="28" uuid="83356584-3b00-4e02-86b0-780499245b61"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="8" isBold="true"/>
+									</textElement>
+									<text><![CDATA[AMPOLLAS ROTAS]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="16" rowSpan="1">
+								<textField pattern="#,##0.###;#,##0.###-">
+									<reportElement style="textoBody" x="0" y="0" width="83" height="16" uuid="37f7e2db-1fd1-42bb-8bc0-f7de3aa56ea9"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="8"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cantidadFrv}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

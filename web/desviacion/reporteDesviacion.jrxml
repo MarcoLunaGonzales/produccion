@@ -1,0 +1,1136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2018-03-15T15:17:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteDesviacion" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="a3be59c1-8b39-4d7a-a78e-88e0eaebdffa">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="357"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20171010"/>
+	<style name="style1">
+		<pen lineWidth="0.5"/>
+	</style>
+	<style name="textoBold" forecolor="#000000" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="Arial_OM" fontSize="10" isBold="true"/>
+	<style name="textoNormal" forecolor="#000000" fontName="Arial_OM" fontSize="8">
+		<paragraph leftIndent="5"/>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="celdaCabecera" mode="Opaque" backcolor="#CFCFCF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dataSetAdjuntos" uuid="796dcacd-8cda-466e-b2f8-e2df34283c52">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160802"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codDesviacion" class="java.lang.Integer"/>
+		<parameter name="dirImagenAdjunto" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select d.NOMBRE_ARCHIVO,d.ADJUNTO,d.EXTENSION_ARCHIVO,d.DESCRIPCION_ADJUNTO
+from DESVIACION_ADJUNTO d
+where d.COD_DESVIACION= $P{codDesviacion} 
+
+order by d.NOMBRE_ARCHIVO]]>
+		</queryString>
+		<field name="NOMBRE_ARCHIVO" class="java.lang.String"/>
+		<field name="ADJUNTO" class="java.lang.Object"/>
+		<field name="EXTENSION_ARCHIVO" class="java.lang.String"/>
+		<field name="DESCRIPCION_ADJUNTO" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetDesviacionDiagrama" uuid="e13e60f7-0e98-4a91-9b0c-84a4b4bca889">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160802"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codDesviacion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select eac.IMAGEN_DIAGRAMA as IMAGEN
+from DESVIACION_EFECTO_ASEGURAMIENTO_CALIDAD dea
+	inner join EFECTO_ASEGURAMIENTO_CALIDAD eac on eac.COD_EFECTO_ASEGURAMIENTO_CALIDAD = dea.COD_EFECTO_ASEGURAMIENTO_CALIDAD
+where dea.COD_DESVIACION =  $P{codDesviacion}]]>
+		</queryString>
+		<field name="IMAGEN" class="java.lang.Object"/>
+	</subDataset>
+	<subDataset name="dataSetAdjuntosInvestigacion" uuid="3e1de396-3fa0-4c52-a105-9f8f64dd1223">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160802"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codDesviacion" class="java.lang.Integer"/>
+		<parameter name="dirImagenAdjunto" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select d.NOMBRE_ARCHIVO,d.ADJUNTO,d.EXTENSION_ARCHIVO,d.DESCRIPCION_ADJUNTO
+from DESVIACION_ADJUNTO_INVESTIGACION d
+where d.COD_DESVIACION= $P{codDesviacion} 
+order by d.NOMBRE_ARCHIVO]]>
+		</queryString>
+		<field name="NOMBRE_ARCHIVO" class="java.lang.String"/>
+		<field name="ADJUNTO" class="java.lang.Object"/>
+		<field name="EXTENSION_ARCHIVO" class="java.lang.String"/>
+		<field name="DESCRIPCION_ADJUNTO" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetCapasAsociadas" uuid="f6c440bb-5eb7-4049-a70c-ddb290a2947b">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20161111"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codDesviacion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select cac.COD_TIPO_CAPA_ASEGURAMIENTO_CALIDAD,tca.NOMBRE_TIPO_CAPA_ASEGURAMIENTO_CALIDAD,
+       cac.DESCRIPCION_CAPA_ASEGURAMIENTO_CALIDAD,cac.CODIGO,cac.COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD,
+       cac.COD_CAPA_ASEGURAMIENTO_CALIDAD,cc.COD_CATEGORIA_CAPA_ASEGURAMIENTO_CALIDAD,cc.NOMBRE_CATEGORIA_CAPA_ASEGURAMIENTO_CALIDAD,
+       ecac.NOMBRE_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD,
+       cac.FECHA_CUMPLIMIENTO,cac.DESCRIPCION_SEGUIMIENTO
+from CAPAS_ASEGURAMIENTO_CALIDAD_DESVIACION cacd
+     inner join CAPAS_ASEGURAMIENTO_CALIDAD cac on cac.COD_CAPA_ASEGURAMIENTO_CALIDAD =cacd.COD_CAPA_ASEGURAMIENTO_CALIDAD
+     inner join TIPOS_CAPAS_ASEGURAMIENTO_CALIDAD tca on tca.COD_TIPO_CAPA_ASEGURAMIENTO_CALIDAD =cac.COD_TIPO_CAPA_ASEGURAMIENTO_CALIDAD
+     inner join CATEGORIAS_CAPAS_ASEGURAMIENTO_CALIDAD cc on cc.COD_CATEGORIA_CAPA_ASEGURAMIENTO_CALIDAD =cac.COD_CATEGORIA_CAPA_ASEGURAMIENTO_CALIDAD
+     inner join ESTADOS_CAPAS_ASEGURAMIENTO_CALIDAD ecac on ecac.COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD =cac.COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD
+ where cacd.COD_DESVIACION = $P{codDesviacion} 
+ order by tca.COD_TIPO_CAPA_ASEGURAMIENTO_CALIDAD,tca.NOMBRE_TIPO_CAPA_ASEGURAMIENTO_CALIDAD,
+                 cac.CODIGO]]>
+		</queryString>
+		<field name="COD_TIPO_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.Integer"/>
+		<field name="NOMBRE_TIPO_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.String"/>
+		<field name="DESCRIPCION_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.String"/>
+		<field name="CODIGO" class="java.lang.String"/>
+		<field name="COD_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.Integer"/>
+		<field name="COD_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.Integer"/>
+		<field name="COD_CATEGORIA_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.Integer"/>
+		<field name="NOMBRE_CATEGORIA_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.String"/>
+		<field name="NOMBRE_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD" class="java.lang.String"/>
+		<field name="FECHA_CUMPLIMIENTO" class="java.sql.Timestamp"/>
+		<field name="DESCRIPCION_SEGUIMIENTO" class="java.lang.String"/>
+		<group name="Group1">
+			<groupExpression><![CDATA[$F{COD_TIPO_CAPA_ASEGURAMIENTO_CALIDAD}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="dataSetPersonalAsignadoDesviacion" uuid="f71d3c4a-2e51-408c-88b6-97a0e55212ce">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20170107"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codDesviacion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select p.AP_PATERNO_PERSONAL+' '+p.AP_MATERNO_PERSONAL+' '+p.NOMBRES_PERSONAL+' '+p.nombre2_personal as nombrePersonal,
+	dpa.FECHA_REVISION_REALIZADA
+from DESVIACION_PERSONAL_ASIGNADO_REVISION dpa
+	inner join PERSONAL p on p.COD_PERSONAL=dpa.COD_PERSONAL
+where dpa.COD_DESVIACION= $P{codDesviacion} 
+order by 1]]>
+		</queryString>
+		<field name="nombrePersonal" class="java.lang.String"/>
+		<field name="FECHA_REVISION_REALIZADA" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="codDesviacion" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[2771]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirLogoCofar" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="dirImagenAdjunto" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D://PROYECTOS//PRODUCCION_PRIME//web//img//adjunto.jpe"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[exec PAA_NAVEGADOR_DESVIACION $P{codDesviacion}]]>
+	</queryString>
+	<field name="COD_DESVIACION" class="java.lang.Integer"/>
+	<field name="COD_PERSONAL" class="java.lang.Integer"/>
+	<field name="nombrePersonal" class="java.lang.String"/>
+	<field name="COD_TIPO_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_TIPO_DESVIACION" class="java.lang.String"/>
+	<field name="COD_FUENTE_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_FUENTE_DESVIACION" class="java.lang.String"/>
+	<field name="FECHA_DESVIACION" class="java.sql.Timestamp"/>
+	<field name="FECHA_DETECCION" class="java.sql.Timestamp"/>
+	<field name="FECHA_APROBACION_ASEGURAMIENTO" class="java.sql.Timestamp"/>
+	<field name="FECHA_ENVIO_ASEGURAMIENTO" class="java.sql.Timestamp"/>
+	<field name="DESCRIPCION_DESVIACION" class="java.lang.String"/>
+	<field name="COD_PERSONAL_DETECTA" class="java.lang.Integer"/>
+	<field name="nombrePersonalDetecta" class="java.lang.String"/>
+	<field name="COD_AREA_EMPRESA_DETECTA_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_AREA_EMPRESA" class="java.lang.String"/>
+	<field name="CODIGO" class="java.lang.String"/>
+	<field name="COD_TIPO_REPORTE_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_TIPO_REPORTE_DESVIACION" class="java.lang.String"/>
+	<field name="COD_DESVIACION_GENERICA" class="java.lang.Integer"/>
+	<field name="NOMBRE_DESVIACION_GENERICA" class="java.lang.String"/>
+	<field name="COD_AREA_GENERADORA_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_AREA_GENERADORA_DESVIACION" class="java.lang.String"/>
+	<field name="COD_ESTADO_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRES_ESTADO_DESVIACION" class="java.lang.String"/>
+	<field name="DESCRIPCION_INVESTIGACION" class="java.lang.String"/>
+	<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+	<field name="COD_PROGRAMA_PROD" class="java.lang.Integer"/>
+	<field name="NRO_INGRESO_ALMACEN" class="java.lang.Integer"/>
+	<field name="NOMBRE_ALMACEN" class="java.lang.String"/>
+	<field name="COD_INGRESO_ALMACEN" class="java.lang.Integer"/>
+	<field name="COD_MATERIAL" class="java.lang.Integer"/>
+	<field name="LOTE_MATERIAL_PROVEEDOR" class="java.lang.String"/>
+	<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+	<field name="codAreaEmpresaDesviacion" class="java.lang.Integer"/>
+	<field name="nombreAreaEmpresaDesviacion" class="java.lang.String"/>
+	<field name="FECHA_CUMPLIMIENTO_REVISION" class="java.sql.Timestamp"/>
+	<field name="COD_TIPO_DESVIACION_DIAGRAMA" class="java.lang.Integer"/>
+	<field name="habilitadoRevision" class="java.lang.Integer"/>
+	<field name="FECHA_REVISION_REALIZADA" class="java.sql.Timestamp"/>
+	<field name="DESCRIPCION_DESESTIMACION" class="java.lang.String"/>
+	<field name="FECHA_DESESTIMACION" class="java.sql.Timestamp"/>
+	<field name="COD_EFECTO_ASEGURAMIENTO_CALIDAD" class="java.lang.Integer"/>
+	<field name="NOMBRE_EFECTO_ASEGURAMIENTO_CALIDAD" class="java.lang.String"/>
+	<field name="COD_OCURRENCIA_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_OCURRENCIA_DESVIACION" class="java.lang.String"/>
+	<field name="puntajeOcurrenciaDesviacion" class="java.lang.Integer"/>
+	<field name="COD_SEVERIDAD_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_SEVERIDAD_DESVIACION" class="java.lang.String"/>
+	<field name="puntajeSeveridadDesviacion" class="java.lang.Integer"/>
+	<field name="COD_CLASIFICACION_RIESGO_DESVIACION" class="java.lang.Integer"/>
+	<field name="NOMBRE_CLASIFICACION_RIESGO_DESVIACION" class="java.lang.String"/>
+	<field name="PUNTAJE_MENOR" class="java.lang.Integer"/>
+	<field name="PUNTAJE_MAYOR" class="java.lang.Integer"/>
+	<field name="nombreProducto" class="java.lang.String"/>
+	<field name="nombreFormaFarmaceutica" class="java.lang.String"/>
+	<field name="nombreCausaRaiz" class="java.lang.String"/>
+	<background>
+		<band height="763" splitType="Stretch">
+			<line>
+				<reportElement mode="Opaque" x="1" y="762" width="583" height="1" uuid="edce4deb-5fe0-4e9c-8a5c-ab41bdc17632"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="0" y="0" width="584" height="1" uuid="c7bb4969-6baf-4e37-88e5-4957707768eb"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="-1" y="0" width="1" height="763" uuid="23e4eb83-8dc7-42a0-8fe2-77f517164d20"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="584" y="0" width="1" height="762" uuid="c6237d3c-c208-49b3-99cf-70879523080c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="687" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoBold" x="112" y="0" width="472" height="15" uuid="393ca255-eb17-4b50-b685-97c08791b340"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[ASEGURAMIENTO DE CALIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="112" y="15" width="472" height="15" uuid="bee86ee9-f490-467a-a22b-ec108b70bbe3"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[ASC-5-019/R01]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="112" y="30" width="472" height="28" uuid="edf9d1f6-942f-45c4-9258-8dbf7fbec1e0"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[FORMULARIO DE DESVIACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoNormal" mode="Opaque" x="0" y="67" width="584" height="13" forecolor="#FFFFFF" backcolor="#000000" uuid="abde1990-ee0d-401a-ab79-150fd3e5784f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parte A: Registro de una Desviación/No Conformidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoNormal" x="0" y="80" width="112" height="12" uuid="05b6d5a9-eca5-4f70-a023-0cc905a70e24"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Fecha de detección:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="textoNormal" x="112" y="80" width="113" height="12" uuid="19f367ec-5cc0-41a3-a8e0-fd3add1e3b0e"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_DESVIACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" x="225" y="80" width="114" height="12" uuid="f547256d-54e1-479d-8922-f61e76f9d512"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Detectado por:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoNormal" x="339" y="80" width="245" height="12" uuid="c66f1731-83a6-474a-b082-39b70876779e"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrePersonalDetecta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" x="0" y="92" width="225" height="12" uuid="0a4013f3-e21c-44ee-b574-7e8901b6a4f7"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Fecha de informe de la desviación:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="textoNormal" x="225" y="92" width="359" height="12" uuid="b2f6f102-465b-4df3-a500-dda1a98ea8cd"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_ENVIO_ASEGURAMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoNormal" x="225" y="104" width="359" height="28" uuid="1cab29be-9417-44be-92f3-cf72a15fb6d6"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{COD_TIPO_DESVIACION}.equals(1)||$F{COD_TIPO_DESVIACION}.equals(2)||$F{COD_TIPO_DESVIACION}.equals(3))?($F{NOMBRE_MATERIAL}+" / "+$F{LOTE_MATERIAL_PROVEEDOR}):($F{COD_TIPO_DESVIACION}.equals(4)?($F{nombreProducto}+" ("+$F{nombreFormaFarmaceutica}+"/"+$F{COD_LOTE_PRODUCCION}+")"):($F{COD_TIPO_DESVIACION}.equals(5)?$F{nombreAreaEmpresaDesviacion}:""))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" x="0" y="153" width="225" height="12" uuid="cdd7a831-bbc6-4399-9801-90f522b0b09f"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Área donde se detecta la desviación:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="textoNormal" x="225" y="153" width="359" height="12" uuid="3e81595f-cc06-4627-9e0d-b03cf3d61ffb"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_AREA_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" style="textoNormal" mode="Opaque" x="0" y="193" width="584" height="16" backcolor="#D1D1D1" uuid="25c09108-9628-45ec-b8a2-f41435bb2de9"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial_OM" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción de la Desviación:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="textoNormal" x="0" y="209" width="584" height="57" forecolor="#000000" uuid="e8f5e196-1d3b-405c-857d-1ded74bb51e9"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Arial_OM" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION_DESVIACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" x="0" y="280" width="225" height="24" uuid="70f02af8-51dc-41a0-854a-f748f878e183"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Nombre de la persona que levanta la Desviación / No Conformidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" x="339" y="279" width="245" height="24" uuid="791e2db0-f8df-4c86-a70d-425205d7afa1"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Aseguramiento de Calidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoNormal" positionType="Float" x="0" y="269" width="225" height="11" uuid="a1f4cba5-672b-4561-baea-280aed1fbc8c"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrePersonalDetecta}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="321" width="584" height="52" uuid="bbad6c3c-c34d-4ff0-aa71-adc5a551f51c"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetAdjuntos" uuid="96969a27-bae2-4e0a-bcaf-3fbc73bc4ad4">
+						<datasetParameter name="codDesviacion">
+							<datasetParameterExpression><![CDATA[$P{codDesviacion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dirImagenAdjunto">
+							<datasetParameterExpression><![CDATA[$P{dirImagenAdjunto}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="52" width="584">
+						<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="false" onErrorType="Icon">
+							<reportElement x="0" y="1" width="80" height="49" uuid="06d3aa30-3c51-4711-83a8-2de0510d6ea2">
+								<printWhenExpression><![CDATA[$F{EXTENSION_ARCHIVO}.equals(".jpg") || $F{EXTENSION_ARCHIVO}.equals(".JPG")
+|| $F{EXTENSION_ARCHIVO}.equals(".jpeg") || $F{EXTENSION_ARCHIVO}.equals(".JPEG")
+|| $F{EXTENSION_ARCHIVO}.equals(".gif") || $F{EXTENSION_ARCHIVO}.equals(".GIF")
+|| $F{EXTENSION_ARCHIVO}.equals(".bpm") || $F{EXTENSION_ARCHIVO}.equals(".BPM")
+|| $F{EXTENSION_ARCHIVO}.equals(".png") || $F{EXTENSION_ARCHIVO}.equals(".PNG")]]></printWhenExpression>
+							</reportElement>
+							<graphicElement fill="Solid"/>
+							<imageExpression><![CDATA[JRImageRenderer.getInstance((byte [])$F{ADJUNTO})]]></imageExpression>
+						</image>
+						<textField>
+							<reportElement style="textoBold" x="83" y="0" width="501" height="18" uuid="859d877f-f65d-4e20-8e4c-544a142d5394"/>
+							<box leftPadding="5">
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{NOMBRE_ARCHIVO}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement style="textoNormal" x="83" y="18" width="501" height="32" uuid="9fa6b2ff-1cc0-44af-8d7b-1ca35fe8d2c5"/>
+							<box leftPadding="5"/>
+							<textFieldExpression><![CDATA[$F{DESCRIPCION_ADJUNTO}]]></textFieldExpression>
+						</textField>
+						<line>
+							<reportElement x="0" y="51" width="584" height="1" uuid="d47e8ec8-bda6-4354-a8a6-32e9a750a6e5">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</line>
+						<line>
+							<reportElement stretchType="RelativeToBandHeight" x="81" y="0" width="1" height="52" uuid="275042b6-a085-45cb-9ed7-4a273249b40a">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</line>
+						<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="false" onErrorType="Icon">
+							<reportElement x="0" y="0" width="80" height="49" uuid="95552256-2446-49e6-847f-82e8fa9b3a94">
+								<printWhenExpression><![CDATA[!($F{EXTENSION_ARCHIVO}.equals(".jpg") || $F{EXTENSION_ARCHIVO}.equals(".JPG")
+|| $F{EXTENSION_ARCHIVO}.equals(".jpeg") || $F{EXTENSION_ARCHIVO}.equals(".JPEG")
+|| $F{EXTENSION_ARCHIVO}.equals(".gif") || $F{EXTENSION_ARCHIVO}.equals(".GIF")
+|| $F{EXTENSION_ARCHIVO}.equals(".bpm") || $F{EXTENSION_ARCHIVO}.equals(".BPM")
+|| $F{EXTENSION_ARCHIVO}.equals(".png") || $F{EXTENSION_ARCHIVO}.equals(".PNG"))]]></printWhenExpression>
+							</reportElement>
+							<graphicElement fill="Solid"/>
+							<imageExpression><![CDATA[$P{dirImagenAdjunto}]]></imageExpression>
+						</image>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement key="" style="textoNormal" positionType="Float" mode="Opaque" x="0" y="304" width="584" height="16" backcolor="#CFCFCF" uuid="785ce7a6-7a0f-49ac-a4ac-657cabe42a93"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Archivos Adjuntos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" x="0" y="395" width="111" height="15" uuid="51b61443-0f52-4bb6-92be-6e21836ac6fc"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo asignado]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="textoNormal" positionType="Float" x="111" y="395" width="227" height="15" uuid="783dbcab-f24c-4d6c-b9b5-7a04bc4a4b35"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" mode="Opaque" x="0" y="376" width="584" height="19" forecolor="#FFFFFF" backcolor="#000000" uuid="18fa3501-0ec6-4f01-b149-7d6e7627b56c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parte B: Investigación]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoNormal" positionType="Float" x="454" y="395" width="130" height="15" uuid="966d4b19-f9af-4bd7-b965-0c7e7a698a75"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRES_ESTADO_DESVIACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" x="338" y="395" width="116" height="15" uuid="731b675b-111a-4fae-9174-8e78d8cfb888"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Estado de la desviación:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="textoNormal" positionType="Float" x="0" y="457" width="584" height="25" forecolor="#000000" uuid="5920dee1-8761-4b9f-8f6f-8740d14b0ffe">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Arial_OM" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION_INVESTIGACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" x="0" y="410" width="111" height="15" uuid="28781dfe-bdb0-4dcd-ac60-ed2febf1f0ec"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Generador]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="textoNormal" positionType="Float" x="111" y="410" width="473" height="15" uuid="cf5bb739-43e3-448e-b873-355c5a86d82c"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_AREA_GENERADORA_DESVIACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" x="0" y="425" width="111" height="15" uuid="f75e2194-b222-4da4-9014-6b3b1ea0c7d3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desviación genérica]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="textoNormal" positionType="Float" x="111" y="425" width="473" height="15" uuid="5938e9ec-ea0f-45c9-a91f-76e896b08308"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_DESVIACION_GENERICA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoNormal" x="0" y="132" width="225" height="21" uuid="e306c28a-7f9f-4f07-bccf-69982a8008ef"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<text><![CDATA[Nombre de la persona que levanta la 
+Desviación/No conformidad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoNormal" x="225" y="133" width="359" height="20" uuid="5c5c16b1-354f-446d-b872-68d3c4d48fe3"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrePersonal}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="false" onErrorType="Icon">
+				<reportElement x="0" y="1" width="112" height="57" uuid="73a545e1-ba88-4720-b3be-51a361b9a6be"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA[$P{dirLogoCofar}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="textoNormal" x="225" y="179" width="359" height="14" uuid="75e183b9-4094-4d17-a681-e33af88b129b"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_FUENTE_DESVIACION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoNormal" x="0" y="104" width="225" height="28" uuid="5abd40bd-6327-4cde-b6e7-484f45100d9a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{COD_TIPO_DESVIACION}.equals(1)||$F{COD_TIPO_DESVIACION}.equals(2)||$F{COD_TIPO_DESVIACION}.equals(3))?"Material/Lote Proveedor":($F{COD_TIPO_DESVIACION}.equals(4)?"Producto(Forma Farmaceútica/N° Lote)":($F{COD_TIPO_DESVIACION}.equals(5)?"Área":"Descripción Otros"))]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="671" width="98" height="1" uuid="a73b289d-1e9b-4882-b5ed-17a8fe44fa8b"/>
+			</break>
+			<componentElement>
+				<reportElement positionType="Float" x="-1" y="498" width="584" height="42" uuid="60372b23-dfa2-4606-b0a6-fe727a85898e"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetAdjuntosInvestigacion" uuid="75687a9d-3758-4588-b4c1-3e59fb01c1be">
+						<datasetParameter name="codDesviacion">
+							<datasetParameterExpression><![CDATA[$P{codDesviacion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dirImagenAdjunto">
+							<datasetParameterExpression><![CDATA[$P{dirImagenAdjunto}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="42" width="584">
+						<image scaleImage="RealSize" hAlign="Center" isUsingCache="true" isLazy="true" onErrorType="Icon">
+							<reportElement x="0" y="0" width="80" height="39" uuid="a7be62a0-71bf-44d5-9f61-9a50e5ada919">
+								<printWhenExpression><![CDATA[$F{EXTENSION_ARCHIVO}.equals(".jpg") || $F{EXTENSION_ARCHIVO}.equals(".JPG")
+|| $F{EXTENSION_ARCHIVO}.equals(".jpeg") || $F{EXTENSION_ARCHIVO}.equals(".JPEG")
+|| $F{EXTENSION_ARCHIVO}.equals(".gif") || $F{EXTENSION_ARCHIVO}.equals(".GIF")
+|| $F{EXTENSION_ARCHIVO}.equals(".bpm") || $F{EXTENSION_ARCHIVO}.equals(".BPM")
+|| $F{EXTENSION_ARCHIVO}.equals(".png") || $F{EXTENSION_ARCHIVO}.equals(".PNG")]]></printWhenExpression>
+							</reportElement>
+							<imageExpression><![CDATA[JRImageRenderer.getInstance((byte [])$F{ADJUNTO})]]></imageExpression>
+						</image>
+						<textField>
+							<reportElement style="textoBold" x="83" y="0" width="501" height="18" uuid="f9263842-d95b-4440-8157-17fb92299561"/>
+							<box leftPadding="5">
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{NOMBRE_ARCHIVO}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement style="textoNormal" x="83" y="18" width="501" height="22" uuid="f70d8095-6284-4112-8800-ecbd486d9e5a"/>
+							<box leftPadding="5"/>
+							<textFieldExpression><![CDATA[$F{DESCRIPCION_ADJUNTO}]]></textFieldExpression>
+						</textField>
+						<line>
+							<reportElement x="0" y="41" width="584" height="1" uuid="cd351389-70ab-49ad-8682-b074b256de4c">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</line>
+						<line>
+							<reportElement stretchType="RelativeToBandHeight" x="81" y="0" width="1" height="42" uuid="714e1413-55ba-4337-bf5e-08b5cf7555e9">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+						</line>
+						<image scaleImage="RealSize" hAlign="Center" isUsingCache="true" isLazy="true" onErrorType="Icon">
+							<reportElement x="0" y="0" width="80" height="39" uuid="9c7adda7-41e8-4b39-9628-06304a5a9932">
+								<printWhenExpression><![CDATA[!($F{EXTENSION_ARCHIVO}.equals(".jpg") || $F{EXTENSION_ARCHIVO}.equals(".JPG")
+|| $F{EXTENSION_ARCHIVO}.equals(".jpeg") || $F{EXTENSION_ARCHIVO}.equals(".JPEG")
+|| $F{EXTENSION_ARCHIVO}.equals(".gif") || $F{EXTENSION_ARCHIVO}.equals(".GIF")
+|| $F{EXTENSION_ARCHIVO}.equals(".bpm") || $F{EXTENSION_ARCHIVO}.equals(".BPM")
+|| $F{EXTENSION_ARCHIVO}.equals(".png") || $F{EXTENSION_ARCHIVO}.equals(".PNG"))]]></printWhenExpression>
+							</reportElement>
+							<imageExpression><![CDATA[$P{dirImagenAdjunto}]]></imageExpression>
+						</image>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoNormal" x="0" y="179" width="225" height="14" uuid="798476ac-7c35-42aa-9a79-b4d05cce080e"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial_OM"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Proviene de:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="" style="textoNormal" positionType="Float" mode="Opaque" x="0" y="440" width="584" height="16" backcolor="#CFCFCF" uuid="fe5bd3c6-8bbc-4709-a33e-29127e150488"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción Investigación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="" style="textoNormal" positionType="Float" mode="Opaque" x="0" y="482" width="584" height="16" backcolor="#CFCFCF" uuid="cfef4c66-376f-46b4-a88b-34e04f2cd90a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Archivos Adjuntos Investigación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoNormal" x="0" y="165" width="225" height="14" uuid="997d8cff-f1fc-4f2e-a80e-b6704467d2ba"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial_OM"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Tipo de reporte:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoNormal" x="225" y="165" width="359" height="14" uuid="5c14b3ae-3457-43cb-b69e-6fdb130f399e"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial_OM"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_TIPO_REPORTE_DESVIACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" style="textoNormal" positionType="Float" mode="Opaque" x="0" y="573" width="584" height="16" forecolor="#FFFFFF" backcolor="#000000" uuid="386ddb42-325d-49c7-a1a9-46a998028764"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial_OM" size="8" isBold="true" pdfEncoding="Cp1252"/>
+				</textElement>
+				<text><![CDATA[Capas Asociadas]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="589" width="584" height="14" uuid="3f2d8204-8766-45b0-a09f-cbdbee36aa01">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetCapasAsociadas" uuid="330d86ca-231d-49b7-9285-e0c5082c3f83">
+						<datasetParameter name="codDesviacion">
+							<datasetParameterExpression><![CDATA[$F{COD_DESVIACION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="584" uuid="4258b90e-3359-439a-83ac-d3170eb12b9e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [4]"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:groupHeader groupName="Group1">
+							<jr:cell style="celdaCabecera" height="17">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField>
+									<reportElement x="0" y="0" width="583" height="17" forecolor="#000000" uuid="1d6ea26e-a569-40c1-bf36-03500f5886d8"/>
+									<box>
+										<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+										<font fontName="Arial_OM" size="8" isBold="true" pdfEncoding="Cp1252"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOMBRE_TIPO_CAPA_ASEGURAMIENTO_CALIDAD}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:column width="90" uuid="803db6cb-9254-4dae-b929-d0835e242f37">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:columnHeader style="celdaCabecera" height="20">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="90" height="20" uuid="078d24a0-c9eb-4a37-90ed-9b8c30d466bf"/>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<text><![CDATA[Código]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="25">
+								<textField>
+									<reportElement style="textoNormal" x="0" y="0" width="90" height="25" uuid="22a71c42-dae8-4b1e-9613-fc7d85a59f48"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="250" uuid="a62e16fb-6a2a-4353-b4b8-b9f6cf7ec7ff">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:columnHeader style="celdaCabecera" height="20">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="250" height="20" uuid="90685f98-8e3f-46a4-bbe9-1b1ef3e4523a"/>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<text><![CDATA[Descripción]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="25">
+								<textField>
+									<reportElement style="textoNormal" x="0" y="0" width="250" height="25" uuid="d956c35e-bb2c-4176-9957-93891baa8366"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle" markup="html"/>
+									<textFieldExpression><![CDATA[$F{DESCRIPCION_CAPA_ASEGURAMIENTO_CALIDAD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="120" uuid="818d4f2c-f13d-425b-917e-8dc11e842376">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:columnHeader style="celdaCabecera" height="20">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="120" height="20" uuid="1d8bd7a4-2530-416c-832c-9c0ed8ac10e8"/>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<text><![CDATA[Categoría Capa]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="25">
+								<textField>
+									<reportElement style="textoNormal" x="0" y="0" width="120" height="25" uuid="7fb639d6-d96d-4513-9c46-9c2b2375f725"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_CATEGORIA_CAPA_ASEGURAMIENTO_CALIDAD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="124" uuid="a4863141-464f-46f2-b891-71f8fddd5acf">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:columnHeader style="celdaCabecera" height="20">
+								<staticText>
+									<reportElement style="textoBold" x="0" y="0" width="124" height="20" uuid="1079c8e2-8287-4f75-af16-b75512afd617"/>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<text><![CDATA[Estado Capa]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="25">
+								<textField>
+									<reportElement style="textoNormal" x="0" y="0" width="124" height="25" uuid="db053e9d-815e-4cf4-8fc1-69baa6e90331"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_ESTADO_CAPA_ASEGURAMIENTO_CALIDAD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement key="" style="textoNormal" positionType="Float" mode="Opaque" x="0" y="611" width="584" height="16" forecolor="#FFFFFF" backcolor="#000000" uuid="cccba315-4dec-4eec-a839-25d736343b1e"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial_OM" size="8" isBold="true" pdfEncoding="Cp1252"/>
+				</textElement>
+				<text><![CDATA[Personal asignado para revisión]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement style="textoBold" positionType="Float" x="60" y="646" width="410" height="17" uuid="16f6824b-2e72-4a19-9fdc-5c2fe16888d3">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetPersonalAsignadoDesviacion" uuid="3c35bc1c-7448-4feb-b5f1-629560836292">
+						<datasetParameter name="codDesviacion">
+							<datasetParameterExpression><![CDATA[$F{COD_DESVIACION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="300" uuid="ef9f0d85-d8db-481e-b9e0-97d4353e17ed">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="300" height="15" uuid="3d226008-7fcf-4c1b-b415-7e41866248a7"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Personal Asignado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="20">
+							<textField>
+								<reportElement style="textoNormal" x="0" y="0" width="300" height="20" uuid="27919ccb-ef08-4935-8664-44ca449738b6"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{nombrePersonal}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="3ef193e4-2955-4bf4-89ed-97d9c1de1267">
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="110" height="15" uuid="b7c21726-4862-4675-b878-be861d8f6dad"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Fecha de Cumplimiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="20">
+							<textField isBlankWhenNull="true">
+								<reportElement style="textoNormal" x="0" y="0" width="110" height="20" uuid="523dba55-4b89-4fdb-b6e2-f03c34e54711"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{FECHA_REVISION_REALIZADA}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="0" y="627" width="190" height="15" uuid="32b8067f-2533-4972-97c6-ef47ce864e07"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Fecha limite para revisión]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="textoNormal" positionType="Float" x="190" y="627" width="394" height="15" uuid="b11317a9-a55e-45b8-953e-4c66e6cdaa67">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_CUMPLIMIENTO_REVISION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" style="textoNormal" positionType="Float" mode="Opaque" x="0" y="540" width="584" height="16" forecolor="#FFFFFF" backcolor="#000000" uuid="53fe4a76-669e-42c9-9c67-e93e2b234aac"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial_OM" size="8" isBold="true" pdfEncoding="Cp1252"/>
+				</textElement>
+				<text><![CDATA[Causa Raiz]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoNormal" x="1" y="556" width="582" height="16" uuid="b5383f6d-c7f2-404a-b74a-919055afc5a2"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombreCausaRaiz}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="763" splitType="Stretch">
+			<componentElement>
+				<reportElement positionType="Float" x="1" y="27" width="583" height="733" uuid="07f94726-8539-4988-8eb6-de2973f98bf0"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetDesviacionDiagrama" uuid="8a1850d8-3447-4a9e-a868-737990fa4e88">
+						<datasetParameter name="codDesviacion">
+							<datasetParameterExpression><![CDATA[$P{codDesviacion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="733" width="583">
+						<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+							<reportElement x="0" y="0" width="583" height="733" uuid="a40a6768-32cc-4585-a3e0-fd8db71858cd"/>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<imageExpression><![CDATA[JRImageRenderer.getInstance((byte [])$F{IMAGEN})]]></imageExpression>
+						</image>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoNormal" positionType="Float" mode="Opaque" x="0" y="1" width="584" height="19" forecolor="#FFFFFF" backcolor="#000000" uuid="d92692a0-4389-4a8b-98f1-dc0b6a3bb5ed">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diagrama Causa-Efecto]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-05-05T15:27:12 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaTimbradoEmpaquePrimario" pageWidth="527" pageHeight="623" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetVeriricacionConternedores" uuid="fd3d7589-cc6f-4003-9627-3f0869fa8d4a">
+		<parameter name="codLoteProduccion" class="java.lang.String"/>
+		<parameter name="codProgramaProd" class="java.lang.String"/>
+		<parameter name="codTipoMaterial" class="java.lang.String"/>
+		<parameter name="cantidadLoteProduccion" class="java.lang.Double"/>
+		<parameter name="unidadMedidaOm" class="java.lang.String"/>
+		<parameter name="cantidadUnitariaLote" class="java.lang.Double"/>
+		<parameter name="textoPeso" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select 1 as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro
+union
+select 6 as nro
+union
+select 7 as nro
+union
+select 8 as nro
+union
+select 9 as nro
+union
+select 10 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+		<variable name="cantidadUnidadProducto" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+		<variable name="cantidadTotal" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="dataSetCantidadRegistros" uuid="8d6e00b1-37c8-4f9c-8f87-106b392aa2a0">
+		<queryString>
+			<![CDATA[select 1 as nro
+union
+select 2 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="codProgramaProd" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as indicacion
+	,pp.COD_COMPPROD_VERSION
+
+from PROGRAMA_PRODUCCION pp
+     inner join COMPONENTES_PROD_VERSION cpv on cpv.COD_VERSION =pp.COD_COMPPROD_VERSION
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =pp.COD_COMPPROD_VERSION
+	 and ip.COD_TIPO_INDICACION_PROCESO = 2-- tipos de indicacio:indicacion
+	 and ip.COD_PROCESO_ORDEN_MANUFACTURA = 33 --hoja de entrega de material secundario
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion} and
+      pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="indicacion" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="77" splitType="Stretch">
+			<rectangle>
+				<reportElement style="celdaCabecera" x="0" y="0" width="526" height="8" uuid="67e7a944-cf65-4e59-81fc-076b4e48df00"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="textoBold" x="146" y="0" width="217" height="8" uuid="fdf7b9b2-2302-4a8d-9316-3104d1df149c"/>
+				<text><![CDATA[ENTREGA DE MATERIAL SECUNDARIO A ACONDICIONAMIENTO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="0" y="8" width="526" height="1" uuid="2955f7fe-ccd3-4865-b284-347a27d72522"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" x="7" y="12" width="515" height="3" uuid="b7e04fcd-7300-4288-8963-6590c1507a0a"/>
+				<textFieldExpression><![CDATA[$F{indicacion}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement positionType="Float" x="31" y="17" width="453" height="60" uuid="8c4346a5-6732-48f4-b721-a927d6ed92d2"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetCantidadRegistros" uuid="cc9f3959-f1ab-4aff-854f-81a197932496">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="60" width="453">
+						<componentElement>
+							<reportElement key="table" x="5" y="32" width="447" height="27" uuid="3b952b00-522e-48eb-a563-06687e7407fb"/>
+							<jr:table>
+								<datasetRun subDataset="dataSetVeriricacionConternedores" uuid="36c70684-14ff-46d1-a2b4-54c88f2dc3e4">
+									<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+								</datasetRun>
+								<jr:column width="18" uuid="4572ee75-70cb-44fe-93e2-35833c4b784d">
+									<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="18" height="13" uuid="22690f8c-d1ad-422b-bddc-4205907b7be6"/>
+											<text><![CDATA[N°]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="15" rowSpan="1">
+										<textField>
+											<reportElement style="textoBody." x="0" y="0" width="18" height="15" uuid="a043ddfc-ddda-4eb2-942e-c26b58a2d277"/>
+											<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+										</textField>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="110" uuid="d5bf6ce2-45e0-4f86-8d80-a127208d08fa">
+									<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="110" height="13" uuid="b568a91a-885c-4c32-8e00-151ba1178050"/>
+											<text><![CDATA[Descripción]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+								</jr:column>
+								<jr:column width="70" uuid="cd35249a-a511-4ee3-9332-0ba57a6533ac">
+									<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="70" height="13" uuid="48cc4680-5ad6-47ef-ac1f-c8615b333cd0"/>
+											<text><![CDATA[Cantidad Solicitada]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+								</jr:column>
+								<jr:column width="59" uuid="54bc4bc0-e7fa-4a41-9621-50e3e3096de8">
+									<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="59" height="13" uuid="1de9d3cd-c43d-4e9f-8107-0e572df7616d"/>
+											<text><![CDATA[Hora Final]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+								</jr:column>
+								<jr:column width="54" uuid="39976aae-38b3-479b-bf96-f11d0ad95876">
+									<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="54" height="13" uuid="ad1d0e6d-e723-44f7-a513-ea513a9485d9"/>
+											<text><![CDATA[Conforme]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="15" rowSpan="1">
+										<rectangle>
+											<reportElement style="linea" x="23" y="3" width="8" height="8" uuid="8f8662cb-bc7d-4f82-a0cd-6cf874930b5e"/>
+										</rectangle>
+									</jr:detailCell>
+								</jr:column>
+								<jr:column width="128" uuid="0ed7e270-0b1f-4df7-991c-5a615ecfb9b5">
+									<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="128" height="13" uuid="18f0fe93-7912-42b3-8373-e6c3e3058b5a"/>
+											<text><![CDATA[Observaciones]]></text>
+										</staticText>
+									</jr:columnHeader>
+									<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+								</jr:column>
+							</jr:table>
+						</componentElement>
+						<staticText>
+							<reportElement style="textoBold" x="6" y="3" width="105" height="8" uuid="ee52a973-28e0-4fda-aed3-4c0d8eea3353"/>
+							<text><![CDATA[Personal que verifica entrega:]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="textoBold" x="7" y="12" width="40" height="8" uuid="c55e2799-fb0b-4ef2-b294-4c2bcf5b4bc3"/>
+							<text><![CDATA[Nro Salida:]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="textoBold" x="6" y="21" width="46" height="8" uuid="c223ab7a-6807-414d-90c9-2faf1bac8e3f"/>
+							<text><![CDATA[Fecha Salida:]]></text>
+						</staticText>
+						<line>
+							<reportElement style="lineaPunto" x="114" y="8" width="118" height="1" uuid="dc9a13f9-5ff0-4e1e-9305-15d9066f3f45"/>
+						</line>
+						<line>
+							<reportElement style="lineaPunto" x="51" y="17" width="43" height="1" uuid="1369fb96-867b-47c9-8d9a-f3b7e64f1f73"/>
+						</line>
+						<line>
+							<reportElement style="lineaPunto" x="52" y="26" width="85" height="1" uuid="fa3a32c8-3cce-4f21-835c-70160eea6eba"/>
+						</line>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

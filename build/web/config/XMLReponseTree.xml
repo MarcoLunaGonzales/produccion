@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : XMLReponseTree.xml
+    Created on : 3 de marzo de 2008, 11:36
+    Author     : Wilmer Manzaneda Chavez
+-->
+<tree >
+    <iconElement iconMas="../img/1.gif" iconMenos="../img/2.gif" iconFin="../img/3.gif" />    
+    <treeNode hasChildNodes="true"   nodeLabel="Datos Generales" nodeLink="#" nodeName="D"  nodeParent="root" nodeIcon="../img/folder.gif"  />
+    <treeNode hasChildNodes="true"   nodeLabel="Transacciones" nodeLink="#" nodeName="T" nodeParent="root" nodeIcon="../img/folder.gif"/>
+    <treeNode hasChildNodes="true"   nodeLabel="Reportes" nodeLink="#" nodeName="R" nodeParent="root" nodeIcon="../img/folder.gif"/>            
+    <treeNode hasChildNodes="false"  nodeLabel="Afp" nodeLink="../afp/navegadorafp.jsf" nodeName="AF" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Areas Empresa" nodeLink="../areas_empresa/navegador_areasempresa.jsf" nodeName="DA" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Areas Empresa (Arbol)" nodeLink="../jspx/arbolAreasEmpresa.jsp" nodeName="AEA" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Cargos" nodeLink="../cargos/navegador_cargos.jsf" nodeName="DK" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Configuración Datos Planilla" nodeLink="../configuracion_datosplanilla/navegador_configuracion_datosplanilla.jsf" nodeName="TIPO1" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Configuración Reporte Planilla " nodeLink="../configuracionReporte/navegadorConfiguracionReporte.jsf" nodeName="TIPO10" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Estado Civil" nodeLink="../estados_civil/navegador_estadoscivil.jsf" nodeName="TIPO1" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Escala Antiguedad" nodeLink="../escala_antiguedad/navegador_escalaantiguedad.jsf" nodeName="DF" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Escala de Vacaciones" nodeLink="../dias_calculo_vacaciones/navegador_vacaciones.jsf" nodeName="DF" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Filiales" nodeLink="../filiales/navegador_filiales.jsf" nodeName="DF" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Feriados" nodeLink="../feriados/navegador_feriados.jsf" nodeName="DF" nodeParent="D" nodeIcon="../img/b.bmp"  />   
+    <treeNode hasChildNodes="false"  nodeLabel="Gestiones" nodeLink="../gestiones/navegador_gestion.jsf" nodeName="DF" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Grados Academicos" nodeLink="../gradosacademicos/navegador_gradosacademicos.jsf" nodeName="DA" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Horarios Anterior" nodeLink="../horario/navegadorhorario.jsf" nodeName="DH" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Horarios" nodeLink="../horario/navegadorHorarios.jsp" nodeName="NH" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Horarios de Personal" nodeLink="../horario/navegadorHorariosPersonal.jsp" nodeName="NH" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Asignación de Horarios en Grupo" nodeLink="../horario/asignarHorarioGrupo.jsp" nodeName="NH" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Horarios Nocturnos" nodeLink="../horarios_plus/navegador_horariosplus.jsf" nodeName="DF" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Personal" nodeLink="../personal_jsp/navegador_personal.jsf" nodeName="PERSONAL" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Tipo de Aporte Afp" nodeLink="../tiposAporteAfp/navegadorTipoAporteAfp.jsf" nodeName="TAA" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Tipos Permisos" nodeLink="../tipopermisos/navegadortipopermiso.jsf" nodeName="TIPO1" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Tipos Metas" nodeLink="../tipos_meta/navegadorTiposMeta.jsf" nodeName="TIPO1" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Tipos Dependientes" nodeLink="../tipos_dependientes/navegador_tipos_dependiente.jsf" nodeName="TIPO1" nodeParent="D" nodeIcon="../img/b.bmp"  />
+    
+    
+    
+    <treeNode hasChildNodes="false" nodeLabel="Anticipos" nodeLink="../anticipos/navegador_anticipos.jsf" nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Cargar Asistencia" nodeLink="../cargarhorarios/cargarAsistencia.jsp" nodeName="AHE" nodeParent="T" nodeIcon="../img/b.bmp"  />       
+    <treeNode hasChildNodes="false" nodeLabel="Aprobación de Horas Extras" nodeLink="../aprobacion_horasextra/navegadorAprobacionHorasExtra.jsf" nodeName="AHE" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Aprobación de Horas Nocturnas" nodeLink="../aprobacion_horas_plus/navegadorAprobacionHorasPlus.jsf" nodeName="AHE" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Aprobación de Permisos" nodeLink="../aprobacion_faltas_retrasos/navegadorAprobacionFaltasRetrasos.jsf" nodeName="AHE" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Bonos" nodeLink="../tiposbono/navegador_tiposbono.jsf"  nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />   
+    <treeNode hasChildNodes="false" nodeLabel="Bonos Extra Planilla" nodeLink="../bonosextraplanilla/navegadorBonosExtraPlanilla.jsf"  nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Devolución de Pasajes" nodeLink="../devolucionPasajes/planillaPasajes.jsp"  nodeName="DP" nodeParent="T" nodeIcon="../img/b.bmp"  />    
+    <treeNode hasChildNodes="false" nodeLabel="Control de Asistencia" nodeLink="../controlasistencia/registrarcontrolasistencia.jsf" nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Descuentos" nodeLink="../tipos_descuento/navegador_tiposdescuento.jsf"  nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Dotaciones" nodeLink="../tipos_prestamo/navegador_tiposprestamo.jsf" nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <!--treeNode hasChildNodes="false" nodeLabel="Generar Abono BNB" nodeLink="../generarAbonoBNB/generarAbono.jsf" nodeName="GABNB" nodeParent="T" nodeIcon="../img/b.bmp"  /-->    
+    <treeNode hasChildNodes="false" nodeLabel="Generar Abono BNB con Movilidad" nodeLink="../generarAbonoBNB_BMovilidad/generarAbonoMovilidad.jsf" nodeName="GABNBM" nodeParent="T" nodeIcon="../img/b.bmp"  />    
+    <!--treeNode hasChildNodes="false" nodeLabel="Generar Abono BNB Movilidad" nodeLink="../generarAbonoBNB_Movilidad/generarAbono_Movilidad.jsf" nodeName="GABNBM" nodeParent="T" nodeIcon="../img/b.bmp"  /-->    
+    <treeNode hasChildNodes="false" nodeLabel="Procesar Planilla" nodeLink="../planillasueldos/navegador_prepararplanilla.jsf" nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Planillas Generadas" nodeLink="../cerrarPlanilla/listadoPlanillas.jsp" nodeName="LP" nodeParent="T" nodeIcon="../img/b.bmp"/>
+    <treeNode hasChildNodes="false" nodeLabel="Planilla de Subsidios" nodeLink="../planillasubsidios/navegador_prepararplanillasubsidio.jsf" nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Permisos" nodeLink="../permisos/navegadorpermiso.jsf" nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Quinquenios" nodeLink="../quinquenios/navegadorQuinquenios.jsf" nodeName="NQ" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false" nodeLabel="Subsidios" nodeLink="../subsidios/navegadorsubsidios.jsf" nodeName="TIPO1" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Vacaciones" nodeLink="../vacacionesTomadas/navegador_vacaciones_tomadas.jsf" nodeName="NVT" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Registrar Vacaciones en Grupo" nodeLink="../vacacionesTomadas/agregar_vacaciones_tomadas.jsf" nodeName="VT" nodeParent="T" nodeIcon="../img/b.bmp"  />
+    
+    
+    <treeNode hasChildNodes="false"  nodeLabel="Cuaderno de Asistencia" nodeLink="../reporteCuadernoAsistencia/reporteCuadernoAsistencia.jsf" nodeName="DK1" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte Horas Extras" nodeLink="../calculoplanillas/filtro_horasextras.jsf" nodeName="DK" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte de Horas de Retraso" nodeLink="../calculoplanillas/filtro_horasretrasos.jsf" nodeName="DK1" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte de Horas Faltantes" nodeLink="../calculoplanillas/filtro_horasfaltantes.jsf" nodeName="DK2" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte Horas Plus" nodeLink="../calculoplanillas/filtro_horasplus.jsf" nodeName="DK3" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Horas Trabajadas" nodeLink="../calculoplanillas/filtro_horastrabajadas.jsf" nodeName="DK4" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte de Bono antigüedad" nodeLink="../calculoplanillas/filtro_bonoantiguedad.jsf" nodeName="DK5" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte Bonos" nodeLink="../reporteBonos/filtroReporteBonos.jsp" nodeName="DK" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte Bonos Extra Planilla" nodeLink="../reportebonosExtraplanilla/reportebonosExtra.jsf" nodeName="DKE" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte Préstamos" nodeLink="../reporteprestamos/reporteprestamos.jsf" nodeName="DK" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <!--treeNode hasChildNodes="false"  nodeLabel="Reporte Vacaciones" nodeLink="../reporteVacaciones/filtro_vacaciones.jsf" nodeName="RV" nodeParent="R" nodeIcon="../img/b.bmp"  /-->
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte Auditoria" nodeLink="../reporte_auditoria/filtro_auditoria.jsf" nodeName="RA" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte de Abonos" nodeLink="../reportes/filtroReporteAbono.jsp" nodeName="RAD" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte Finalización de Contratos" nodeLink="../reporteContratoFin/filtro_reporte.jsf" nodeName="RFC" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte AFP" nodeLink="../reportePagoContribuciones/filtroReportePagoContribuciones.jsf" nodeName="DK" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte de Devolución de Pasajes" nodeLink="../reporteDevolucionPasajes/filtroDevolucionPasajes.jsf" nodeName="DP" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte de Saldo de Vacaciones General" nodeLink="../reporteVacacionesGeneral/filtroVacacionesGeneral.jsf" nodeName="VG" nodeParent="R" nodeIcon="../img/b.bmp"  />
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte de Descuentos" nodeLink="../reporteDescuentos/filtroReporteDescuentos.jsf" nodeName="RFC1" nodeParent="R" nodeIcon="../img/b.bmp"  />   
+    <treeNode hasChildNodes="false"  nodeLabel="Reporte para Anticipos" nodeLink="../reporteMontoMaximoAnticipos/filtroMontoMaximoAnticipos.jsf" nodeName="RFCM" nodeParent="R" nodeIcon="../img/b.bmp"  />       
+</tree>
+
+

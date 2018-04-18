@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-09T12:09:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapImpresionGeneral" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<subDataset name="dataSetRapDesviacion" uuid="fccb4cdf-5321-4e45-90f7-da19bfbc8f55">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicio" class="java.util.Date"/>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[select trd.COD_LOTE_PRODUCCION,trd.codigo_desviacion,trd.motivo_desviacion
+from PROGRAMA_PRODUCCION pp
+     inner join PROGRAMA_PRODUCCION_PERIODO ppp on ppp.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+     inner join TEMP_RAP_DATOS_DESVIACION trd on trd.COD_LOTE_PRODUCCION=pp.COD_LOTE_PRODUCCION	 
+where pp.COD_COMPPROD in 
+        (
+            select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+        )
+        and ppp.FECHA_INICIO>= $P{fechaInicio} 
+        and ppp.FECHA_FINAL<= $P{fechaFinal} 
+order by trd.COD_LOTE_PRODUCCION]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="codigo_desviacion" class="java.lang.String"/>
+		<field name="motivo_desviacion" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetDatosOOS" uuid="8f31c22d-dacb-45e5-81b2-74b2c5258b1b">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicio" class="java.util.Date"/>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[select pp.COD_LOTE_PRODUCCION,ro.CORRELATIVO_OOS
+from PROGRAMA_PRODUCCION pp
+     inner join PROGRAMA_PRODUCCION_PERIODO ppp on ppp.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+     inner join REGISTRO_OOS ro on ro.COD_LOTE=pp.COD_LOTE_PRODUCCION
+     and ro.COD_PROGRAMA_PROD=pp.COD_PROGRAMA_PROD
+where pp.COD_COMPPROD in 
+        (
+            select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+        )
+        and ppp.FECHA_INICIO>= $P{fechaInicio} 
+        and ppp.FECHA_FINAL<= $P{fechaFinal} 
+order by pp.COD_LOTE_PRODUCCION]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="CORRELATIVO_OOS" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="DatasetReclamos" uuid="206bfa84-672f-467a-87be-5e22852cdae1">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicio" class="java.lang.String"/>
+		<parameter name="fechaFinal" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select getdate() as fecha
+where 1=2]]>
+		</queryString>
+		<field name="fecha" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="DatasetControlCambios" uuid="af1b3129-26d3-48fb-ba84-4f8af92b3fbb">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<parameter name="fechaInicio" class="java.util.Date">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+		</parameter>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[select DISTINCT trd.CODIGO_REGISTRO_CONTROL_CAMBIOS,trd.DESCRIPCION,trd.CAPA
+  from COMPONENTES_PROD cp
+   inner join TEMP_RAP_DATOS_CONTROL_CAMBIOS trd on trd.COD_PROD=cp.COD_PROD
+   where cp.COD_COMPPROD in 
+   (
+   select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+   )
+   and len(trd.CODIGO_REGISTRO_CONTROL_CAMBIOS)>0
+   order by trd.CODIGO_REGISTRO_CONTROL_CAMBIOS]]>
+		</queryString>
+		<field name="CODIGO_REGISTRO_CONTROL_CAMBIOS" class="java.lang.String"/>
+		<field name="DESCRIPCION" class="java.lang.String"/>
+		<field name="CAPA" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetReclamo" uuid="8280a8ad-7321-4e9c-87a9-7143ab1eb9d3">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<parameter name="fechaInicio" class="java.util.Date">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+		</parameter>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[
+select DISTINCT trd.codTipo,trd.codArea,trd.correlativo,trd.descripcion
+  from COMPONENTES_PROD cp
+   inner join temp_rap_datos_reclamos trd on trd.COD_PROD=cp.COD_PROD
+   where cp.COD_COMPPROD in 
+   (
+   select cppp.codCompProd from ##TEMP_COD_COMPPROD cppp
+   )]]>
+		</queryString>
+		<field name="codTipo" class="java.lang.String"/>
+		<field name="codArea" class="java.lang.String"/>
+		<field name="correlativo" class="java.lang.String"/>
+		<field name="descripcion" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date("01/01/2015")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select getdate() as feha]]>
+	</queryString>
+	<field name="feha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="10" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="487" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="13" y="37" width="459" height="57" uuid="f96b113b-619b-4894-9ef4-63552b001dd4"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="dataSetRapDesviacion" uuid="a336ec73-d2f1-42f0-8b33-afaa66dbf638">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="85" uuid="49a78fa9-22a1-47d3-8ff2-2e0eb6f42b88">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="85" height="19" uuid="febfb0ff-9233-4358-a041-caba69c0ace7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="1" width="84" height="34" uuid="d68c42b8-3a23-4ec6-8d6d-849cc51188e6"/>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="ee560a30-cfe0-49bb-b451-1297bf1cdfae">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="84" height="19" uuid="2572bfa3-78c8-4dde-851f-322edd42cb8c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[CODIGO DE DESVIACION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="1" width="84" height="32" uuid="1f72d6bf-e45e-444d-8e41-09d4ffed7c67"/>
+								<textFieldExpression><![CDATA[$F{codigo_desviacion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="a4a211be-c7ba-4504-91c4-4d51b2c9efd5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="84" height="19" uuid="a69a251c-4550-4917-90d3-b63db95eb45c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[DESCRIPCIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="1" y="1" width="84" height="32" uuid="196b0d46-af9d-420a-acbc-528162dc8761"/>
+								<textFieldExpression><![CDATA[$F{motivo_desviacion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="86" uuid="f1f42749-92a4-4e48-a603-742a63c424cc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="4a9622d9-f72e-462e-b2e7-f6939d021198"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[ACCION CORRECTIVA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="83" uuid="8e8b1f83-011e-449d-9bfe-4e85445ca71b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="82" height="19" uuid="dc099ae9-db5c-4338-88f4-9311358ff257"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[ACCION PREVENTIVA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" x="12" y="4" width="238" height="15" uuid="1ad8a0ba-9bf9-4d24-b60a-d02144c00b63"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[5)DESCRIPCION PARAMETROS DE ASEGURAMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="22" y="19" width="238" height="15" uuid="78bc6729-7d66-40e5-87e1-575feea29ceb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[a) Desviaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="23" y="97" width="317" height="15" uuid="94026880-0ff2-4569-91bd-a3d04456d03c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[b)RESULTADOS FUERA DE ESPECIFICACIONES]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="13" y="112" width="459" height="57" uuid="9f98e538-513c-460f-86a3-91b99a508d2b"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="dataSetDatosOOS" uuid="05b3dbd0-f7f2-4965-a327-f0ae8ac6ec67">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="85" uuid="7a697846-53ef-420e-bc9a-d24b080382ff">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="85" height="19" uuid="11fb7c83-a998-4b4f-87db-54dc16b1d202"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="1" width="85" height="30" uuid="154a0726-1c73-4d40-9422-16701e91c90b"/>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="2ee796fb-1a33-4b99-a382-4c1f4e581102">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="84" height="19" uuid="2d7059fa-daf5-4aa5-8841-ebe82484fb89"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[CODIGO DE OOS]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="3" y="0" width="80" height="30" uuid="4048740a-496d-45c3-a804-bde130b34ee0"/>
+								<textFieldExpression><![CDATA[$F{CORRELATIVO_OOS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="f0270639-9c42-4520-b372-21e8e8fa8a86">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="84" height="19" uuid="e9096299-e9ed-4a29-9076-b20d5b6d6527"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[DESCRIPCIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="86" uuid="f214b7c6-d506-4684-9209-c160944ba5ee">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="86" height="19" uuid="d83e4f67-2f5a-4a38-aff7-3d32623e6807"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[ACCION CORRECTIVA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="83" uuid="b961f140-250e-4714-8f52-a38b95322b2b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="82" height="19" uuid="a11488cd-46af-415b-99ab-955f56a44191"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[ACCION PREVENTIVA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="170" width="317" height="10" uuid="aa56a319-b960-48aa-b607-65c1244abe85"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[c) RECLAMOS]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="13" y="184" width="459" height="57" uuid="ab16a54f-56be-400e-b5c8-9d8a0b68c0e0"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="dataSetReclamo" uuid="c820bb1e-de81-4e2e-9baa-56c1cec5a8af">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="110" uuid="ac133fbd-ab4c-4e05-9f51-2cfb747e1378">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="110" height="19" uuid="0786bdb5-043e-4668-8768-d10f7cddacb6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[CODIGO DE CONTROL DE CAMBIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="110" height="35" uuid="d5436775-aeac-4752-8944-79c14d19ec37"/>
+								<textFieldExpression><![CDATA[ $F{codArea}+' '+$F{codTipo}+' '+$F{correlativo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="150" uuid="8ffbd1f7-fe82-4215-b593-266fd524c95b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="150" height="19" uuid="79806659-2eac-471b-8259-14e6eadfc1b2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[DESCRIPCIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="150" height="35" uuid="75259370-d4d5-4bf9-a0c9-a55fd15cefed"/>
+								<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="130" uuid="d5a43cf6-45f2-4d5c-9555-fef1fa889637">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="130" height="19" uuid="a1ebb780-e98c-45fb-b843-eda94f49f69b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[ACCION  A SEGUIR]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="244" width="317" height="10" uuid="9f3de91e-a148-4926-94e4-9340e128651c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[d)CONTROL DE CAMBIOS]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="47" y="257" width="373" height="57" uuid="34ed9f11-fb48-491d-8db4-9fd09879e158"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="DatasetControlCambios" uuid="d703554c-5ade-4813-9461-0909db93e695">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="110" uuid="f854094c-21f9-4ee9-ac85-fa1fe2723b2a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="110" height="19" uuid="4c940743-95f5-4f57-a098-46c7dc35a81b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[CODIGO DE CONTROL DE CAMBIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="1" width="110" height="34" uuid="a08f59af-459a-4df9-9fb9-f8b5c1c388bc"/>
+								<textFieldExpression><![CDATA[$F{CODIGO_REGISTRO_CONTROL_CAMBIOS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="21d8dd72-fe6d-4cc0-a9ee-2d205c1724fc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="140" height="19" uuid="a96b4e72-176a-4129-b73f-adc86654312b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[DESCRIPCIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="140" height="35" uuid="d2ff153c-b704-4f43-b382-f9fa5e124b68"/>
+								<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="123" uuid="e2f7d0ed-ac5c-4942-a91e-e6e429786f7c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="123" height="19" uuid="8672b13a-d96e-4797-afc7-75b2af900973"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[ACCION  A SEGUIR]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="123" height="35" uuid="f29a4a70-8591-49b1-8f8e-ee465a5c7063"/>
+								<textFieldExpression><![CDATA[$F{CAPA}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="11" y="330" width="459" height="57" uuid="f86926ef-ed6a-4f6c-889c-5e0585051a9e"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="DatasetReclamos" uuid="25563464-ef36-4461-810a-2b19c28057fd">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="100" uuid="f4a18096-4b1e-4752-ab70-f63b7a8d2d0b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="100" height="19" uuid="96bdb36e-764a-4c7c-ab2a-643a5662ed7d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement x="2" y="1" width="91" height="30" uuid="878488d3-c2bf-49da-9ebd-b8765d45a86f"/>
+								<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="07ad1feb-ba11-408f-97ef-fe9c5990ca46">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="110" height="19" uuid="bc024d15-dd3b-4bef-9c3f-2f535c2f4963"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[RETRABAJO (aplica/no aplica)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="100" uuid="e3e4abe0-4a5a-4acf-86bd-24d093ec3126">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="100" height="19" uuid="9d42732f-6981-44c9-894d-df6c8df07f16"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[REPROCESO (aplica/no aplica)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="110" uuid="6a19509d-a6a7-4b60-8c2b-a4d2a8103edb">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="110" height="19" uuid="b7bc8e80-a686-4d3b-a80d-bf3234619803"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[ACCION  A SEGUIR]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="315" width="317" height="10" uuid="af0635e6-d870-41e6-bc7e-9264d7fd06e4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[e)RETRABAJO, REPROCESO, REACONDICIONADO]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="10" y="405" width="459" height="57" uuid="4f3cecac-7f26-4aae-8f59-5cce3d9e0bd9"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="DatasetReclamos" uuid="2ee829a6-425f-4cb6-b04e-f0ddf98ff54c">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="100" uuid="5275a84b-e3e0-4d8b-a8e8-4e8fd643fa14">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="100" height="19" uuid="c62dc117-8ed7-46d5-88da-e0b65b11fd2f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1">
+							<textField>
+								<reportElement x="2" y="1" width="91" height="30" uuid="28183bad-c782-4f7a-bc63-a223b8a2a6ab"/>
+								<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="a1cf812b-2769-4243-b26c-01642cb627a0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="110" height="19" uuid="50e75d0b-5bd3-4b0e-b8df-7f8ff490d716"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[RETIRO DE PRODUCTO (aplica/no aplica)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="100" uuid="c48d118e-0e1d-4226-bb84-7970f28d381f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="100" height="19" uuid="d6de0dfb-e9e2-4c56-90a3-fbfe9f097eb0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Fecha de recojo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="110" uuid="c7ed83fa-a5a5-4573-8279-efe058e6f521">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="19" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="110" height="19" uuid="5c2668fe-d4dd-4f70-8a46-20f0557c6196"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Unidades recogidas]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="35" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="390" width="317" height="10" uuid="5bd9b629-130a-40ee-b5cc-aec983cb0d7c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[f)RETIRO DE PRODUCTO DEL MERCADO]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

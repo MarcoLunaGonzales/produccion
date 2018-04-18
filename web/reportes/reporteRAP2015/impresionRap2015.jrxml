@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-05-24T19:03:32 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionOrdenManufactura" pageWidth="610" pageHeight="792" columnWidth="526" leftMargin="42" rightMargin="42" topMargin="17" bottomMargin="17" uuid="46ff880b-427f-4d6d-82a3-48b2fd69d73e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.2"/>
+	<property name="ireport.x" value="6"/>
+	<property name="ireport.y" value="1471"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160105"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresion8px.jrtx"]]></template>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date("01/01/2015")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirLogoCofar" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D://PRODUCCION OFICIAL//PRODUCCION//web//img//nuevoLogoCofar.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 1 as nro,'rapIndiceGeneral.jasper' AS URLREPORTE
+union
+SELECT 2 as nro,'rapImpresionGeneral.jasper' AS URLREPORTE
+union 
+SELECT 3 as nro,'rapReporteLotes.jasper' AS URLREPORTE
+union
+SELECT 4 as nro,'rapRendimientoLote.jasper' AS URLREPORTE
+union
+SELECT 5 as nro,'rapDefectosAmpollas.jasper' AS URLREPORTE
+union
+SELECT 6 as nro,'rapBalanceUnidadesProduccion.jasper' AS URLREPORTE
+union
+SELECT 7 as nro,'rapResultadoEspecificacionesFisicasLotesProduccion.jasper' AS URLREPORTE
+union
+
+SELECT 8 as nro,'rapResultadoEspecificacionesQuimicasLotesProduccion.jasper' AS URLREPORTE
+union
+SELECT 9 as nro,'rapResultadoRegistroControlVolumen.jasper' AS URLREPORTE
+union
+SELECT 10 as nro,'rapDatosAseguramiento.jasper' AS URLREPORTE
+union
+SELECT 11 as nro,'rapDatosEstabilidad.jasper' AS URLREPORTE
+order by nro]]>
+	</queryString>
+	<field name="nro" class="java.lang.Integer"/>
+	<field name="URLREPORTE" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band height="758" splitType="Stretch">
+			<line>
+				<reportElement style="linea" x="0" y="0" width="1" height="758" uuid="c4e4c98b-178f-4d52-882e-e6aeecde387e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="526" y="0" width="1" height="758" uuid="57612008-fe8d-4f56-9729-92dd015e3514"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="1" y="757" width="526" height="1" uuid="1ef1d5ca-d079-423a-8827-ba8afd89acf8"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="1" y="0" width="526" height="1" uuid="d10bbb2f-f6be-448a-9f70-0f71002905af"/>
+			</line>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="43" splitType="Stretch">
+			<rectangle>
+				<reportElement style="linea" x="1" y="0" width="525" height="42" uuid="f9a96ba7-b67d-4c5a-a4cf-f686249de7b3"/>
+			</rectangle>
+			<line>
+				<reportElement style="linea" x="94" y="0" width="1" height="42" uuid="265bf7f7-2a7b-4afd-914f-05ee21621a75"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" x="97" y="2" width="301" height="11" uuid="a3c41ac5-442d-4b1f-af14-e9071cf933f1"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DIRECCION TÉCNICA]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="95" y="13" width="431" height="1" uuid="105d3646-8be3-4f45-b7dd-5d64b4ad38fa"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="95" y="27" width="431" height="1" uuid="18482d95-0e21-4435-8324-9701d162d473"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" x="97" y="15" width="299" height="11" uuid="7455bcfe-9a1c-4b33-941e-1a6bc6f2220a"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DT-9-003]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="404" y="0" width="1" height="42" uuid="7477bc02-4df7-45db-aefa-95d656f36e03"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" x="98" y="29" width="300" height="11" uuid="a65bbbb6-71b9-4036-9f38-438b815a1ea7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[PROTOCOLO REVISIÓN ANUAL DE PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="421" y="1" width="29" height="12" uuid="f850fd1e-a274-404b-98a4-e67dde3828d3"/>
+				<text><![CDATA[Página]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="449" y="1" width="11" height="11" uuid="fa099520-3c3d-4f95-99a4-cfb64dc52ee5"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="texto" x="461" y="0" width="9" height="13" uuid="d784c22f-7c64-46b5-9c05-f50cc0084105"/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement style="texto" x="471" y="1" width="16" height="12" uuid="c556e51c-b310-47d3-8efd-2e2385eec2dd"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="23" y="1" width="56" height="41" uuid="5bba474b-5c85-46ce-a356-d981c76d30df"/>
+				<imageExpression><![CDATA[$P{dirLogoCofar}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="textoBold" x="404" y="16" width="123" height="11" uuid="1ee11e7d-d8c1-4b3e-8400-d3c5604f612a"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Vigencia:01/12/15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="404" y="29" width="123" height="11" uuid="7e89efed-19c9-4099-8f04-7024dcfe81fb"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Revisión:00]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="714">
+			<subreport>
+				<reportElement mode="Transparent" x="0" y="0" width="526" height="706" uuid="887c7de0-4af8-4c25-b593-58eb2a7f82cf"/>
+				<subreportParameter name="fechaFinal">
+					<subreportParameterExpression><![CDATA[$P{fechaFinal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fechaInicio">
+					<subreportParameterExpression><![CDATA[$P{fechaInicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./"+$F{URLREPORTE}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

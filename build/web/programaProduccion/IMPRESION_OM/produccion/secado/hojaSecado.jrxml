@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-11-20T15:03:42 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaSecado" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9c7b3066-13a3-40ed-8b65-406f21485ed0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dataSetEspecificacionesMaquinaria" uuid="6d688b4d-e1e1-4527-9c07-175581346275">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codVersion" class="java.lang.Integer"/>
+		<parameter name="nroFracciones" class="int "/>
+		<queryString>
+			<![CDATA[exec PAA_LISTAR_PROCESO_MAQUINARIA_ESPECIFICACIONES
+ $P{codVersion} ,
+ 6-- proceso de secado]]>
+		</queryString>
+		<field name="COD_COMPPROD_VERSION_MAQUINARIA_PROCESO" class="java.lang.Integer"/>
+		<field name="COD_MAQUINA" class="java.lang.Integer"/>
+		<field name="NOMBRE_MAQUINA" class="java.lang.String"/>
+		<field name="CODIGO" class="java.lang.String"/>
+		<field name="NOMBRE_TIPO_ESPECIFICACIONES_PROCESOS_PRODUCTO_MAQUINARIA" class="java.lang.String"/>
+		<field name="COD_TIPO_ESPECIFICACIONES_PROCESOS_PRODUCTO_MAQUINARIA" class="java.lang.Integer"/>
+		<field name="NOMBRE_ESPECIFICACIONES_PROCESO" class="java.lang.String"/>
+		<field name="NOMBRE_UNIDAD_MEDIDA" class="java.lang.String"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+		<field name="RESULTADO_NUMERICO" class="java.lang.Integer"/>
+		<field name="PORCIENTO_TOLERANCIA" class="java.lang.Double"/>
+		<field name="VALOR_EXACTO" class="java.lang.Double"/>
+		<field name="VALOR_TEXTO" class="java.lang.String"/>
+		<field name="VALOR_MINIMO" class="java.lang.Double"/>
+		<field name="VALOR_MAXIMO" class="java.lang.Double"/>
+		<field name="RESULTADO_ESPERADO_LOTE" class="java.lang.Integer"/>
+		<field name="COD_TIPO_DESCRIPCION" class="java.lang.Integer"/>
+		<field name="NOMBRE_TIPO_DESCRIPCION" class="java.lang.String"/>
+		<field name="ESPECIFICACION" class="java.lang.String"/>
+		<field name="especificacionReporte" class="java.lang.String"/>
+		<group name="grupoMaquinaria">
+			<groupExpression><![CDATA[$F{COD_MAQUINA}]]></groupExpression>
+		</group>
+		<group name="grupoTiposEspecificaciones">
+			<groupExpression><![CDATA[$F{COD_TIPO_ESPECIFICACIONES_PROCESOS_PRODUCTO_MAQUINARIA}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="dataSetCantidadRegistrosFraccion" uuid="7eba7118-18e9-493b-8131-5d042248e7af">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<parameter name="nroFracciones" class="java.lang.Integer">
+			<parameterDescription><![CDATA[]]></parameterDescription>
+		</parameter>
+		<queryString>
+			<![CDATA[select *
+from
+(
+	select 1 as nro
+	union
+	select 2 as nro
+	union
+	select 3 as nro
+	union
+	select 4 as nro
+	union 
+	select 5 as nro
+	union 
+	select 6 as nro
+	union 
+	select 7 as nro
+	union 
+	select 8 as nro
+) as registro
+where registro.nro<=$P{nroFracciones}]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+		<group name="nro">
+			<groupExpression><![CDATA[$F{nro}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="dataSetEspecificacionesProceso" uuid="da4da64d-d1d3-44f5-951e-b2fd9e218653">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codVersion" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[exec PAA_LISTAR_ESPECIFICACIONES_PROCESO
+ $P{codVersion} ,--codigo de version
+ 6-- proceso de secado]]>
+		</queryString>
+		<field name="NOMBRE_ESPECIFICACIONES_PROCESO" class="java.lang.String"/>
+		<field name="especificacionReporte" class="java.lang.String"/>
+		<field name="ABREVIATURA" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["H2195"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as precauciones,ip1.INDICACION_PROCESO as CondicionesGenerales,
+ip2.INDICACION_PROCESO as indicacionDespejeLinea,cast(detalleEspecificacion.nroFracciones as Integer) as nroFracciones,
+ip3.INDICACION_PROCESO as indicacionCC,
+ip4.INDICACION_PROCESO as indicacionRendimiento,
+ip5.INDICACION_PROCESO as indicacionRegistroResponsables,
+ip6.INDICACION_PROCESO as indicacionPostProceso,
+pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+left outer join INDICACION_PROCESO ip on ip.COD_VERSION=pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO=1 and ip.COD_PROCESO_ORDEN_MANUFACTURA=6
+left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION=pp.COD_COMPPROD_VERSION and ip1.COD_TIPO_INDICACION_PROCESO=3 and ip1.COD_PROCESO_ORDEN_MANUFACTURA=6
+left outer join INDICACION_PROCESO ip2 on ip2.COD_VERSION=pp.COD_COMPPROD_VERSION and ip2.COD_TIPO_INDICACION_PROCESO=14 and ip2.COD_PROCESO_ORDEN_MANUFACTURA=6
+left outer join INDICACION_PROCESO ip3 on ip3.COD_VERSION=pp.COD_COMPPROD_VERSION and ip3.COD_TIPO_INDICACION_PROCESO= 26 and ip3.COD_PROCESO_ORDEN_MANUFACTURA=6
+left outer join INDICACION_PROCESO ip4 on ip4.COD_VERSION=pp.COD_COMPPROD_VERSION and ip4.COD_TIPO_INDICACION_PROCESO= 29 and ip4.COD_PROCESO_ORDEN_MANUFACTURA=6
+left outer join INDICACION_PROCESO ip5 on ip5.COD_VERSION=pp.COD_COMPPROD_VERSION and ip5.COD_TIPO_INDICACION_PROCESO= 33 and ip5.COD_PROCESO_ORDEN_MANUFACTURA=6
+left outer join INDICACION_PROCESO ip6 on ip6.COD_VERSION=pp.COD_COMPPROD_VERSION and ip6.COD_TIPO_INDICACION_PROCESO=34 and ip6.COD_PROCESO_ORDEN_MANUFACTURA=6
+outer apply
+    (
+        select max(eppm.VALOR_EXACTO) as nroFracciones
+        from COMPONENTES_PROD_VERSION_MAQUINARIA_PROCESO cpvm
+            inner join ESPECIFICACIONES_PROCESOS_PRODUCTO_MAQUINARIA eppm on eppm.COD_COMPPROD_VERSION_MAQUINARIA_PROCESO=cpvm.COD_COMPPROD_VERSION_MAQUINARIA_PROCESO
+        where pp.COD_COMPPROD_VERSION=cpvm.COD_VERSION
+            and eppm.COD_ESPECIFICACION_PROCESO=106--especificacion nro receta
+            and cpvm.COD_PROCESO_ORDEN_MANUFACTURA=6
+    ) as detalleEspecificacion
+where pp.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+and pp.COD_PROGRAMA_PROD=$P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="precauciones" class="java.lang.String"/>
+	<field name="CondicionesGenerales" class="java.lang.String"/>
+	<field name="indicacionDespejeLinea" class="java.lang.String"/>
+	<field name="nroFracciones" class="java.lang.Integer"/>
+	<field name="indicacionCC" class="java.lang.String"/>
+	<field name="indicacionRendimiento" class="java.lang.String"/>
+	<field name="indicacionRegistroResponsables" class="java.lang.String"/>
+	<field name="indicacionPostProceso" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="322">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="8" y="52" width="512" height="3" uuid="7e2977fc-4949-4344-af8d-e801c0eb6615">
+					<printWhenExpression><![CDATA[$F{precauciones}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{precauciones}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="8" y="67" width="512" height="4" uuid="b970ca01-6291-4d82-a725-78ee0475327d">
+					<printWhenExpression><![CDATA[$F{CondicionesGenerales}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{CondicionesGenerales}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="200" width="527" height="1" uuid="5ba7a6a8-3e2f-4b80-925e-82f35ce9deea"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="15" y="214" width="74" height="8" uuid="e498769e-94e7-4716-ae4f-e3215898b3cc"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="95" y="220" width="96" height="1" uuid="e81c280d-e21f-4422-94d8-1fae1dd50572"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="194" y="213" width="22" height="8" uuid="ff249011-7ac7-402b-9281-1a5a35e0897b"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="223" y="220" width="46" height="1" uuid="7907a736-3f7f-49c7-bddf-f6ec474e601e"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="272" y="213" width="22" height="8" uuid="71f13624-3fc1-4ed8-ba9f-6a83f52f5345"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="297" y="220" width="43" height="1" uuid="6f69e3e3-71f1-44eb-8014-d7e8557532cc"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="223" y="230" width="46" height="1" uuid="d7f50160-098a-460e-acde-145b893a4fa9"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="297" y="231" width="43" height="1" uuid="96c81953-d5cd-4187-ab13-3b4e21b57b78"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="272" y="223" width="22" height="8" uuid="c7dec52e-a9e0-4e48-aace-939a0bd6be8e"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="194" y="223" width="22" height="8" uuid="1179b1af-74e3-4a5b-9f69-f81bb015b47a"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="95" y="230" width="96" height="1" uuid="95f9b49a-9a3c-44a7-a7e9-aac79df52e58"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="15" y="224" width="74" height="8" uuid="b636985f-eeff-4aa6-a319-8c7741aa1c44"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="223" y="240" width="46" height="1" uuid="c7260e82-833f-4a13-b261-95ab9cf6489a"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="194" y="233" width="22" height="8" uuid="1b143a02-7cd8-4387-9411-a430ba6f8753"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="297" y="240" width="43" height="1" uuid="771aa5ef-bf74-4530-8797-7e7a32891f0a"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="15" y="234" width="74" height="8" uuid="200473bc-84c6-47b2-9216-e0e6982d593f"/>
+				<text><![CDATA[Responsable muestreo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="272" y="233" width="22" height="8" uuid="7a48afc3-9c64-4a50-b3fa-20fbd35ed943"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="95" y="240" width="96" height="1" uuid="bed14566-b571-45a5-a240-e80805889193"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="248" width="527" height="1" uuid="39358f4f-85d4-412f-aec9-0ae093999f6a"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="340" y="214" width="40" height="8" uuid="f66dac0c-46bc-4eea-81ac-05fa5e78714c"/>
+				<text><![CDATA[H% Resultado]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="381" y="219" width="39" height="1" uuid="dfc03942-f96e-4798-99ae-220d3ebb8a06"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="435" y="213" width="35" height="8" uuid="3a6f771c-9cb8-44a5-ac4f-f1a14fe2a76a"/>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="489" y="213" width="33" height="9" uuid="6db9353f-0096-4e49-8ac5-e2f916c566f6"/>
+				<text><![CDATA[Rechazado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="420" y="213" width="12" height="9" uuid="989ff328-81e0-4b8c-b760-148a02df1994"/>
+			</rectangle>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="473" y="213" width="12" height="9" uuid="9966b0b8-7283-4544-b0d7-3dda6ab5e9f8"/>
+			</rectangle>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="381" y="229" width="39" height="1" uuid="e6ddab94-a247-4157-8c93-692cee0b0fab"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="435" y="223" width="35" height="8" uuid="526dd825-9268-4dd9-a368-80de6411ac0e"/>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="340" y="224" width="40" height="8" uuid="3181dd7c-037d-4c83-95a8-618cf4d190f2"/>
+				<text><![CDATA[H% Resultado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="489" y="223" width="33" height="9" uuid="a4f30dff-234b-4e11-8315-366ea31ec24c"/>
+				<text><![CDATA[Rechazado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="473" y="223" width="12" height="9" uuid="70e46a6e-5df3-4a87-a2c8-e039984a7844"/>
+			</rectangle>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="420" y="223" width="12" height="9" uuid="4522ed65-f9fb-4e84-8005-c30fee5db82b"/>
+			</rectangle>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="381" y="239" width="39" height="1" uuid="c814cf1e-cde2-4a9f-91ff-9b467528e50f"/>
+			</line>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="435" y="233" width="35" height="8" uuid="f84274e1-2b73-444d-81a4-b4da89cede7c"/>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="340" y="234" width="40" height="8" uuid="82c9f7f4-f067-42d9-8d37-de3697265789"/>
+				<text><![CDATA[H% Resultado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="489" y="233" width="33" height="9" uuid="a0bc7690-c22a-472e-b4bf-753c08cc2c00"/>
+				<text><![CDATA[Rechazado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="473" y="233" width="12" height="9" uuid="f9b3adad-9f45-4818-be79-c70290e224b9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement style="linea" positionType="Float" x="420" y="233" width="12" height="9" uuid="666eb5f1-6ddf-42a8-8759-246b86c9e4dc"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="43" y="261" width="84" height="8" uuid="5faabd0b-4cc5-43f8-b720-afbe6c3bed40"/>
+				<text><![CDATA[Peso gránulo seco]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="128" y="267" width="109" height="1" uuid="3fbe7603-c349-456d-a5d7-88f92617d5dc"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="240" y="261" width="18" height="8" uuid="85b6bcb0-11ce-474d-a106-800208660446"/>
+				<text><![CDATA[Kg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="269" y="261" width="54" height="8" uuid="ecb8e1f1-91f7-4e30-a421-1e064687c868"/>
+				<text><![CDATA[Responsable]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="350" y="268" width="109" height="1" uuid="a3a7ea5a-b3de-4907-8894-f831f8317649"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="294" width="95" height="8" uuid="603e1158-0bb1-443a-bd60-40ad5dca2441"/>
+				<text><![CDATA[MERMA DEL PROCESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="303" width="95" height="8" uuid="d695d13c-6b77-4fc1-9241-39006f07f74c"/>
+				<text><![CDATA[Supervisor]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="116" y="300" width="123" height="1" uuid="bc19b38b-f724-4169-a1f8-c644ae11fd85"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="15" y="314" width="92" height="8" uuid="10030939-3478-49eb-bfe4-7e5ea3406d71"/>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="118" y="307" width="394" height="1" uuid="e4e4d6b3-49f2-42f8-b730-5182b2607956"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="119" y="319" width="394" height="1" uuid="69267347-60ec-4038-a339-7be564e56515"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="8" y="43" width="52" height="9" uuid="a6fe61f4-82e5-49a4-85cb-c59fb1588f38">
+					<printWhenExpression><![CDATA[$F{precauciones}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[Precauciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="8" y="58" width="82" height="9" uuid="61c00902-041c-41a0-9b9b-6843ffd71157">
+					<printWhenExpression><![CDATA[$F{CondicionesGenerales}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[Condiciones Generales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" x="1" y="0" width="526" height="11" uuid="254d05a7-36b9-4dcc-8a1f-c834c877f9eb">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[DESPEJE DE LINEA DE ETAPA DE SECADO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" x="9" y="13" width="512" height="3" uuid="b9907ff9-9ba1-4dcb-8c26-f7b950e7c2b6">
+					<printWhenExpression><![CDATA[$F{indicacionDespejeLinea}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{indicacionDespejeLinea}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="30" width="526" height="11" uuid="d6c27a9c-8a57-4103-a90b-712290fe1e22">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[ETAPA DE SECADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="8" y="20" width="278" height="10" uuid="cf38cf01-581c-482e-91b1-54652b7f3aa8"/>
+				<text><![CDATA[APROBADO POR:.......................................................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="71" width="526" height="11" uuid="b03815fb-da35-4543-a5e9-a106c600600a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[CONDICIONES DE OPERACIÓN EQUIPO AMBIENTE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="9" y="160" width="512" height="4" uuid="9f768774-9bf7-4f77-bb07-0258a4f72193">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{indicacionRegistroResponsables}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{indicacionRegistroResponsables}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="14" y="203" width="512" height="4" uuid="8b6d1690-9155-4ac5-81fa-5890c7d1a62c">
+					<printWhenExpression><![CDATA[$F{indicacionCC}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{indicacionCC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="14" y="253" width="512" height="4" uuid="dec49738-55c5-4d47-a3da-491095bbd997">
+					<printWhenExpression><![CDATA[$F{indicacionPostProceso}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{indicacionPostProceso}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement positionType="Float" x="4" y="84" width="519" height="50" uuid="5919a698-bdde-41ff-9d5f-210b7fd3edb1">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetEspecificacionesMaquinaria" uuid="4bf5c60c-e92b-4546-bcfd-839e4e0c8656">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="nroFracciones">
+							<datasetParameterExpression><![CDATA[$F{nroFracciones}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="519" uuid="20e0f112-badf-4d92-996c-3d2f1ecbe578">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [9]"/>
+						<jr:groupHeader groupName="grupoMaquinaria">
+							<jr:cell height="15">
+								<textField>
+									<reportElement style="textoCabecera" x="190" y="2" width="250" height="12" uuid="22e94bc1-4da2-4af8-8acb-bccc5607977b">
+										<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Left">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOMBRE_MAQUINA}.toUpperCase()+" ("+$F{CODIGO}+")"]]></textFieldExpression>
+								</textField>
+								<rectangle>
+									<reportElement x="175" y="4" width="6" height="6" uuid="e813ed80-4d50-4e00-a4c9-75b46b8d7045">
+										<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+										<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+										<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									</reportElement>
+								</rectangle>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnGroup width="264" uuid="66370f3c-fa08-49be-bdbb-a16bdff5a6ec">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [3]"/>
+							<jr:groupHeader groupName="grupoTiposEspecificaciones">
+								<jr:cell style="celdaCabecera" height="12"/>
+							</jr:groupHeader>
+							<jr:column width="141" uuid="47e0153e-23f6-4add-8518-fe3f7c7354e5">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="141" height="12" uuid="dcf0c0c6-a2fa-4b96-9fcc-9d41ececc94c"/>
+											<text><![CDATA[Especificación]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12">
+									<textField isStretchWithOverflow="true">
+										<reportElement style="textoBody." x="0" y="0" width="141" height="12" uuid="61b567c5-0674-4c77-b132-f31739aef78f"/>
+										<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACIONES_PROCESO}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="63" uuid="09b2f66c-9b93-428a-8dc0-7f9cb1ce5be6">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="63" height="12" uuid="eef94797-f622-4501-9dde-82eb20c839ad"/>
+											<text><![CDATA[Valor]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12">
+									<textField isStretchWithOverflow="true">
+										<reportElement style="textoBody." x="0" y="0" width="63" height="12" uuid="dc28bff9-243b-40c7-b6cc-a4b6bd8be263"/>
+										<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle"/>
+										<textFieldExpression><![CDATA[$F{especificacionReporte}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+							<jr:column width="60" uuid="26bb86e5-1285-46c4-aecc-84f2fb1b5b9b">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="85e110f9-e00f-4763-9aef-bd7d5d4ecd92"/>
+											<text><![CDATA[Unidad]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12">
+									<textField>
+										<reportElement style="textoBody." x="0" y="0" width="60" height="12" uuid="8a34b058-cbc5-434a-9ec7-348a25cce036"/>
+										<box padding="2"/>
+										<textElement textAlignment="Center" verticalAlignment="Middle"/>
+										<textFieldExpression><![CDATA[$F{ABREVIATURA}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+						<jr:columnGroup width="255" uuid="34bf997d-1f15-4b69-8f66-12248c46f00f">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [6]"/>
+							<jr:groupHeader groupName="grupoTiposEspecificaciones">
+								<jr:cell style="celdaCabecera" height="12">
+									<staticText>
+										<reportElement style="textoCabecera" x="0" y="0" width="255" height="12" uuid="2dcd7ec0-d735-431a-82bc-9fe8f5f626cd"/>
+										<text><![CDATA[DATOS DEL PROCESO]]></text>
+									</staticText>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:column width="45" uuid="8fa385b8-49ab-41c1-ae58-4b40ab73f94a">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+								<printWhenExpression><![CDATA[$F{nroFracciones}>0]]></printWhenExpression>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="45" height="12" uuid="333e0244-6397-48f5-998b-022ed187c2f9"/>
+											<text><![CDATA[Fracción 1]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12"/>
+							</jr:column>
+							<jr:column width="45" uuid="14283bff-39e0-44c7-8eca-9db51464d0dd">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+								<printWhenExpression><![CDATA[$F{nroFracciones}>1]]></printWhenExpression>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="45" height="12" uuid="2cff63ff-5c45-453b-bec1-e0234b8b5c38"/>
+											<text><![CDATA[Fracción 2]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12"/>
+							</jr:column>
+							<jr:column width="44" uuid="d41bff07-49ee-43f8-b0de-0f2031a7cc83">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+								<printWhenExpression><![CDATA[$F{nroFracciones}>2]]></printWhenExpression>
+								<jr:groupHeader groupName="grupoMaquinaria">
+									<jr:cell height="0"/>
+								</jr:groupHeader>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="44" height="12" uuid="916f82eb-f989-4a5e-b92c-778e8351511a"/>
+											<text><![CDATA[Fracción 3]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12"/>
+							</jr:column>
+							<jr:column width="40" uuid="2f976367-be9f-4df7-a09a-109c149e0cbf">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+								<printWhenExpression><![CDATA[$F{nroFracciones}>3]]></printWhenExpression>
+								<jr:groupHeader groupName="grupoMaquinaria">
+									<jr:cell height="0"/>
+								</jr:groupHeader>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="40" height="12" uuid="95e17c7c-ee24-49ae-9565-5a9a56058115"/>
+											<text><![CDATA[Fracción 4]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12"/>
+							</jr:column>
+							<jr:column width="38" uuid="91e2dcfe-cfd1-4c09-9d3f-9c636fcaf593">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+								<printWhenExpression><![CDATA[$F{nroFracciones}>4]]></printWhenExpression>
+								<jr:groupHeader groupName="grupoMaquinaria">
+									<jr:cell height="0"/>
+								</jr:groupHeader>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="38" height="12" uuid="77098b29-f7f9-4e2a-aa05-bcb8f8b6bbe6"/>
+											<text><![CDATA[Fracción 5]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12"/>
+							</jr:column>
+							<jr:column width="43" uuid="b461d349-4774-44cd-bd7b-be424b988c79">
+								<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+								<printWhenExpression><![CDATA[$F{nroFracciones}>5]]></printWhenExpression>
+								<jr:groupHeader groupName="grupoMaquinaria">
+									<jr:cell height="0"/>
+								</jr:groupHeader>
+								<jr:groupHeader groupName="grupoTiposEspecificaciones">
+									<jr:cell style="celdaCabecera" height="12">
+										<staticText>
+											<reportElement style="textoCabecera" x="0" y="0" width="43" height="12" uuid="d9159b2d-1424-4bbc-95fd-32c9bd76905c"/>
+											<text><![CDATA[Fracción 6]]></text>
+										</staticText>
+									</jr:cell>
+								</jr:groupHeader>
+								<jr:detailCell style="celdaBody" height="12"/>
+							</jr:column>
+						</jr:columnGroup>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="86" y="170" width="290" height="27" uuid="4139b6d8-0ba9-45b6-a473-5bf31048353e">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetCantidadRegistrosFraccion" uuid="6af486bb-3d85-4c37-b98c-9518c65cdb48">
+						<datasetParameter name="nroFracciones">
+							<datasetParameterExpression><![CDATA[$F{nroFracciones}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="60" uuid="77a4e3ea-7d6b-451e-8189-274af4a0831e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="09e8d8ce-cc91-4dba-8576-902bcd5caeb6"/>
+								<text><![CDATA[Nro Fracción]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="60" height="14" uuid="a508c6db-9e3b-41b0-afcb-05ca1141d4c0"/>
+								<textFieldExpression><![CDATA[$F{nro}.toString()+"° Frac"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="447e55de-e363-46eb-b1cb-ca8c8e2881fe">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="110" height="12" uuid="81615d2d-5d98-44a1-8332-950022529366"/>
+								<text><![CDATA[Responsable Carga]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<line>
+								<reportElement style="lineaPunto" x="10" y="10" width="90" height="1" uuid="d137117f-2fea-4f99-963d-015743838596">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="6a81bf7a-ae28-4a69-9974-ac0e1e258605">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="42a7126d-43e4-41ac-bb98-488c7ddd7f80"/>
+								<text><![CDATA[Hora Inicio Secado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<line>
+								<reportElement style="lineaPunto" x="5" y="10" width="50" height="1" uuid="0ff4ffd3-2a9f-4abd-b446-1d692ad4d140">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="76362c22-a0b1-4d15-a488-1f21d3e5fc7b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="ac764201-3649-4484-9a7d-a7d3f9cfba9f"/>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<line>
+								<reportElement style="lineaPunto" x="5" y="10" width="50" height="1" uuid="562d76c0-f79e-4715-8a0b-b211ee35d477">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="83" y="272" width="290" height="21" uuid="58140380-d2e8-4f04-b759-dd2356f9a3ae">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetCantidadRegistrosFraccion" uuid="f07c5d61-e9ce-44fc-b6b1-8b5920639946">
+						<datasetParameter name="nroFracciones">
+							<datasetParameterExpression><![CDATA[$F{nroFracciones}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="60" uuid="f09f8dc9-ca92-44f0-bb92-cb33afb07410">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="ad9cd63b-b107-4eda-aa9e-0236e52e24fc"/>
+								<text><![CDATA[Nro Fracción]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="60" height="14" uuid="15a6c978-5c56-4f59-9f1d-30d4047c6d0f"/>
+								<textFieldExpression><![CDATA[$F{nro}.toString()+"° Frac"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="8b9ea892-ada4-4e4d-a2ee-717fce3083ac">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="110" height="12" uuid="822f4ac6-9807-4483-861a-6664549f218a"/>
+								<text><![CDATA[Responsable Descarga]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<line>
+								<reportElement style="lineaPunto" x="10" y="10" width="90" height="1" uuid="01f0e871-07c4-4abd-826a-a443aea8f86e">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="b808f544-7be6-44ed-b539-17cebe6fdd18">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="8a042aa2-8c0d-4813-9888-b49c802851c0"/>
+								<text><![CDATA[Hora Final Secado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<line>
+								<reportElement style="lineaPunto" x="5" y="10" width="50" height="1" uuid="0adc7909-34a4-46b9-b518-1c80a13c688b">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="c36c1dc7-328c-4a65-889f-a62a94845678">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="0d0fec99-419f-4461-857d-45e1d9765e95"/>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="14">
+							<line>
+								<reportElement style="lineaPunto" x="5" y="10" width="50" height="1" uuid="44012656-2b7c-436b-8f50-87da5c1196c4">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="4" y="134" width="438" height="24" uuid="a2a7eb07-37b9-41db-b2b1-e30bc251253f">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetEspecificacionesProceso" uuid="eac9ef06-c70e-4346-a24a-512f7c482498">
+						<datasetParameter name="codVersion">
+							<datasetParameterExpression><![CDATA[$F{COD_COMPPROD_VERSION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="141" uuid="f5c25371-0304-4f9a-b6cf-b4df63ada6ba">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="141" height="12" uuid="57fd4215-0fa1-4e11-a4bf-db76b8ba82eb"/>
+								<text><![CDATA[Condición del proceso]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="141" height="12" uuid="7dabc992-00ea-4a64-88bc-38a862966fda"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_ESPECIFICACIONES_PROCESO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="63" uuid="46388be5-7880-4a65-a987-8690a97a7ab3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="63" height="12" uuid="f0dd9210-d70d-47f9-be4a-380a27368c4d"/>
+								<text><![CDATA[Especificación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="63" height="12" uuid="5e8c5c09-dfb8-44d7-8bbd-f0d3d8cb226e"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{especificacionReporte}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="f466033d-af39-4465-85e5-ae6d03d22532">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="12" uuid="5fd34ad1-61c8-4dd1-b0d7-07cbdef17d07"/>
+								<text><![CDATA[Unidad]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="60" height="12" uuid="c2ca5eb8-626f-4688-9847-efed72b46ddd"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{ABREVIATURA}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="174" uuid="5bb503ca-03fe-4a58-be5f-024f8cf2b5c6">
+						<jr:columnHeader style="celdaCabecera" height="12">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="174" height="12" uuid="4afbc3eb-8af6-4838-863f-f78e67b1fc94"/>
+								<text><![CDATA[DATOS DEL PROCESO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

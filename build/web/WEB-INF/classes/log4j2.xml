@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Properties>
+    <Property name="filename">ATLAS.log</Property>
+  </Properties>
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%-5level:%msg%n"/>
+    </Console>
+    <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="../logs/ATLAS/${filename}" append="true"
+                 filePattern="../logs/ATLAS/ATLAS$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH-mm-ss}-%i.log.gz">
+      
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="20 MB"/>
+      </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="RoollingMantenimiento" fileName="../logs/ATLAS/MANTENIMIENTO.log" append="true"
+                 filePattern="../logs/ATLAS/MANTENIMIENTO/mantenimiento-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+      
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="RoollingCompras" fileName="../logs/ATLAS/COMPRAS.log" append="true"
+                 filePattern="../logs/ATLAS/COMPRAS/COMPRAS-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+      
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="RoollingLogging" fileName="../logs/ATLAS/LOGGIN.log" append="true"
+                 filePattern="../logs/ATLAS/COMPRAS/LOGGIN-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+      
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="VersionamientoLogging" fileName="../logs/ATLAS/VERSIONAMIENTO.log" append="true"
+                 filePattern="../logs/ATLAS/VERSIONAMIENTO/VERSIONAMIENTO-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+      
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="ProtocoloMantenimientoLogging" fileName="../logs/ATLAS/PROTOCOLO_MANTENIMIENTO.log" append="true"
+                 filePattern="../logs/ATLAS/MANTENIMIENTO/PROTOCOLO_MANTENIMIENTO-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+      
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="MantenimientoPlanificadoLogging" fileName="../logs/ATLAS/MANTENIMIENTO_PLANIFICADO.log" append="true"
+                 filePattern="../logs/ATLAS/MANTENIMIENTO/MANTENIMIENTO_PLANIFICADO-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="DesviacionProduccionLogging" fileName="../logs/ATLAS/DESVIACION_PRODUCCION.log" append="true"
+                 filePattern="../logs/ATLAS/DESVIACION/DESVIACION_PRODUCCION-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="PresentacionesProductoLogging" fileName="../logs/ATLAS/PRESENTACIONES_PRODUCTO.log" append="true"
+                 filePattern="../logs/ATLAS/PRESENTACIONES/PRESENTACIONES_PRODUCTO-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="LiberacionLotesLogging" fileName="../logs/ATLAS/LIBERACION_LOTES.log" append="true"
+                 filePattern="../logs/ATLAS/LIBERACION_LOTES/LIBERACION_LOTES-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="ProductosDesarrolloLogging" fileName="../logs/ATLAS/PRODUCTOS_DESARROLLO.log" append="true"
+                 filePattern="../logs/ATLAS/PRODUCTOSDESARROLLO/PRODUCTOS_DESARROLLO-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="OOSLogging" fileName="../logs/ATLAS/OOS.log" append="true"
+                 filePattern="../logs/ATLAS/PRODUCTOSDESARROLLO/OOS-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="EnvioCorreoLogging" fileName="../logs/ATLAS/OOS.log" append="true"
+                 filePattern="../logs/ATLAS/ENVIOCORREO/ENVIO_CORREO-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="RegistroTiemposLogging" fileName="../logs/ATLAS/TIEMPOS.log" append="true"
+                 filePattern="../logs/ATLAS/REGISTRO_TIEMPOS/TIEMPOS-%d{yyyy-MM-dd-HH-mm-ss}-%i.log">
+        <PatternLayout pattern="[%d] \n%-5level: %msg%n%throwable"/>
+        <Policies>
+          <SizeBasedTriggeringPolicy size="20 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+  </Appenders>
+        
+  <Loggers>
+    <Logger name="OOS" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="OOSLogging"/>
+    </Logger>  
+    <Logger name="EnvioCorreo" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="EnvioCorreoLogging"/>
+    </Logger>
+    <Logger name="LiberacionLotes" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="LiberacionLotesLogging"/>
+    </Logger>
+    <Logger name="ProductosDesarrollo" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="ProductosDesarrolloLogging"/>
+    </Logger>
+    <Logger name="PresentacionesProducto" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="PresentacionesProductoLogging"/>
+    </Logger>
+    <Logger name="DesviacionProduccion" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="DesviacionProduccionLogging"/>
+    </Logger>
+    <Logger name="MantenimientoPlanificado" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="MantenimientoPlanificadoLogging"/>
+    </Logger>
+    <Logger name="ProtocoloMantenimiento" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="ProtocoloMantenimientoLogging"/>
+    </Logger>
+    <Logger name="Versionamiento" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="VersionamientoLogging"/>
+    </Logger>
+    <Logger name="Loggin" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="RoollingLogging"/>
+    </Logger>    
+    <Logger name="Compras" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="RoollingCompras"/>
+    </Logger>    
+    <Logger name="Mantenimiento" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="RoollingMantenimiento"/>
+    </Logger>  
+    <Logger name="RegistroTiempos" level="ALL" additivity="false">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="RegistroTiemposLogging"/>
+    </Logger>  
+    <Root level="ALL">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="RollingRandomAccessFile"/>
+    </Root>
+  </Loggers>
+</Configuration>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-05-05T15:45:30 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaControlDosificado" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="63"/>
+	<property name="ireport.y" value="30"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetRegistrosOtros" uuid="39b97b9e-d25f-4846-b665-4899fedaefd4">
+		<queryString>
+			<![CDATA[select 1  as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="dateSetParametrosRendimiento" uuid="4f0ca332-1481-4f24-b063-0454b15e448c">
+		<queryString>
+			<![CDATA[select
+'RENDIMIENTO DE SECADO' as parametro
+union
+select
+'RENDIMIENTO DE TAMIZADO' as parametro
+union
+select
+'RENDIMIENTO DE ENVASADO' as parametro
+union
+select
+'CANTIDAD DE SOBRES A CONTROL DE CALIDAD' as parametro
+union
+select
+'CANTIDAD DE SOBRES MERMA' as parametro
+union
+select
+'CANTIDAD DE SOBRES ENVIADOS A ACONDICIONAMIENTO' as parametro]]>
+		</queryString>
+		<field name="parametro" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 1 as nro]]>
+	</queryString>
+	<field name="nro" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="267" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="44" y="7" width="431" height="29" uuid="71335ed0-f615-4959-80e4-6f2db98ad4fa"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dateSetParametrosRendimiento" uuid="2f6a1f9c-286f-4737-8b48-9a7a5b942a60">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="311" uuid="0d61d60b-8400-4812-b3f5-474c396d6944">
+						<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="311" height="14" uuid="568dc3a8-98ec-4839-86af-f5b5f228cb1a"/>
+								<textElement>
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[SOBRES]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody." x="10" y="0" width="301" height="14" uuid="7600a93a-cb6e-437d-96ec-e0b38ac49958"/>
+								<textFieldExpression><![CDATA[$F{parametro}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="114" uuid="daeaff04-bc30-49f1-9c41-7549a49b5249">
+						<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="114" height="14" uuid="278a191e-58da-4d62-a6cd-2f878be282b3"/>
+								<textElement>
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CANTIDAD]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1">
+							<line>
+								<reportElement style="lineaPunto" x="7" y="10" width="101" height="1" uuid="541c3614-b1e3-4158-82c1-946ec0f94628"/>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<frame>
+				<reportElement positionType="Float" x="55" y="40" width="409" height="36" uuid="feac80aa-b8a7-450b-971f-b8af479c5c2f"/>
+				<rectangle>
+					<reportElement style="linea" x="2" y="3" width="404" height="29" uuid="9ac6e7d1-a861-4cb2-a350-a604f2416dcf"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="texto" x="3" y="13" width="87" height="8" uuid="4d340cc0-3030-4e8a-bcfe-7a53ae6f01a4"/>
+					<text><![CDATA[% Rendimiento SECADO=]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="90" y="16" width="239" height="2" uuid="a71bec59-cfde-4a5f-9159-0369b582b21d"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" x="97" y="8" width="202" height="8" uuid="e04f967d-fa5c-4188-b220-89b9f81fd21f"/>
+					<text><![CDATA[Peso teórico inicial(según formula cualicuantitativa)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="141" y="21" width="120" height="9" uuid="a17d2d0b-d62c-4b4d-8375-3a13c33f50a0"/>
+					<text><![CDATA[Peso obtenido después de secar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="333" y="12" width="71" height="10" uuid="387106c1-3e21-4d71-869c-450305fdd41d"/>
+					<text><![CDATA[x 100=............................%]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="55" y="80" width="409" height="36" uuid="f01d101f-fbc3-4326-a5f5-eff6f5568f6f"/>
+				<rectangle>
+					<reportElement style="linea" x="2" y="3" width="404" height="29" uuid="355275a7-f382-4f62-ab06-aa50ddad5916"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="texto" x="3" y="13" width="87" height="8" uuid="841c1339-db79-4734-bff8-620c25af099b"/>
+					<text><![CDATA[% Rendimiento TAMIZADO=]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="90" y="16" width="239" height="2" uuid="c9d5237e-6027-464f-aca7-6e18863ce303"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" x="141" y="8" width="158" height="8" uuid="59402011-8eb4-4e96-9350-bf7700d8c5dd"/>
+					<text><![CDATA[Peso obtenido después de secar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="141" y="21" width="120" height="9" uuid="7d2331f5-435c-4e5b-945f-072705361099"/>
+					<text><![CDATA[Peso obtenido después de tamizar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="333" y="12" width="71" height="10" uuid="7306ba1a-9abe-4397-babc-5e61845fa741"/>
+					<text><![CDATA[x 100=............................%]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="55" y="120" width="409" height="36" uuid="ffa99374-aea3-441f-8cc3-297f3fe72393"/>
+				<rectangle>
+					<reportElement style="linea" x="2" y="3" width="404" height="29" uuid="ea6b1928-40b6-4058-a833-22e38503d17d"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="texto" x="3" y="13" width="87" height="8" uuid="6be6cefb-1851-44b3-b2fc-ca88a6747d38"/>
+					<text><![CDATA[% Rendimiento ENVASADO=]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="90" y="16" width="239" height="2" uuid="b77dcf23-e7de-4772-b92f-a3284f8f74d2"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" x="141" y="8" width="167" height="8" uuid="89f9c1e6-5431-4727-aa3a-f218120b6052"/>
+					<text><![CDATA[Peso obtenido después de tamizar+peso teorico de sobres]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="141" y="21" width="149" height="9" uuid="08945ae9-6525-4a90-88de-75c7c62906a7"/>
+					<text><![CDATA[Número de sobres obtenidos después de envasar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="333" y="12" width="71" height="10" uuid="5168d7b0-e461-4d89-b43a-20fd0ab1e037"/>
+					<text><![CDATA[x 100=............................%]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="55" y="182" width="409" height="36" uuid="43b35692-a534-4021-8cd8-4bb3dfd36832"/>
+				<rectangle>
+					<reportElement style="linea" x="2" y="3" width="404" height="29" uuid="462e23bb-63b8-4eee-99fb-50694eac351f"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="texto" x="3" y="13" width="87" height="8" uuid="18ed9d13-1359-4a14-9a22-010cb7002032"/>
+					<text><![CDATA[% Rendimiento TOTAL=]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="90" y="16" width="239" height="2" uuid="919b17bd-acea-4b30-8581-428deb366130"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" x="141" y="8" width="167" height="8" uuid="5405c033-19fb-4fef-b18d-79cf816d5136"/>
+					<text><![CDATA[Cantidad total enviada a acondicionamiento(sobres)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="141" y="21" width="149" height="9" uuid="594f9c90-f6cb-4f94-a6fc-f86ea85cf2e5"/>
+					<text><![CDATA[Cantidad teórica de producción]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="333" y="12" width="71" height="10" uuid="fdc775f5-7694-4a54-939d-2f9cd444ef1f"/>
+					<text><![CDATA[x 100=............................%]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement style="textoCabeceraProceso" positionType="Float" x="1" y="163" width="526" height="11" uuid="ecfc7229-f66b-4ec7-bf95-8ee2b5b69a06">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[RENDIMIENTO TOTAL DE PRODUCCIÓN]]></text>
+			</staticText>
+			<frame>
+				<reportElement positionType="Float" x="13" y="220" width="353" height="40" uuid="bc13e16b-fb73-4090-a1be-c915a2aef179"/>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="4" width="100" height="8" uuid="f42699ff-db70-4acf-89ef-4f32ea304adc"/>
+					<text><![CDATA[NOMBRE DEL JEFE DE AREA:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="13" width="229" height="8" uuid="58f4b32a-d62f-4044-bdfc-641e770d13d4"/>
+					<text><![CDATA[Fecha:  .........../.........../...............]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="21" width="45" height="8" uuid="4430264e-ccc0-40d1-9534-ae7efcdfd893"/>
+					<text><![CDATA[Observacion:]]></text>
+				</staticText>
+				<line>
+					<reportElement style="lineaPunto" x="5" y="37" width="343" height="1" uuid="d53a6e20-9b8b-4306-91c3-435b06008837"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="103" y="9" width="133" height="1" uuid="d1fbced2-61e3-45e0-88eb-c53d9ab2a513"/>
+				</line>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

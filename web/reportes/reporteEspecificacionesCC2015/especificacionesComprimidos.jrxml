@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-10T08:34:56 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteEspecificacionesProcesoInyectables" pageWidth="979" pageHeight="498" orientation="Landscape" columnWidth="979" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<queryString>
+		<![CDATA[exec PAA_ESPECIFICACIONES_PRODUCTO_FF_COMPRIMIDOS]]>
+	</queryString>
+	<field name="nombre_prod" class="java.lang.String"/>
+	<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+	<field name="CONCENTRACION_ENVASE_PRIMARIO" class="java.lang.String"/>
+	<field name="presentacionPrimaria" class="java.lang.String"/>
+	<field name="forma" class="java.lang.String"/>
+	<field name="colorNucleo" class="java.lang.String"/>
+	<field name="diametroPromedio" class="java.lang.String"/>
+	<field name="espesorPromedio" class="java.lang.String"/>
+	<field name="largoPromedio" class="java.lang.String"/>
+	<field name="anchoPromedio" class="java.lang.String"/>
+	<field name="PESO_TEORICO" class="java.lang.Double"/>
+	<field name="pesoMaximo" class="java.lang.Double"/>
+	<field name="pesoMinimo" class="java.lang.Double"/>
+	<field name="pesoMinimoAccion" class="java.lang.Double"/>
+	<field name="pesoMaximoAccion" class="java.lang.Double"/>
+	<field name="dureza" class="java.lang.String"/>
+	<field name="friabilidad" class="java.lang.String"/>
+	<field name="desintegracion" class="java.lang.String"/>
+	<field name="cuantificacion" class="java.lang.String"/>
+	<field name="disolucion" class="java.lang.String"/>
+	<field name="colorRecubierto" class="java.lang.String"/>
+	<field name="pesoMinimoRecubierto" class="java.lang.Double"/>
+	<field name="pesoMaximoRecubierto" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="71" splitType="Stretch">
+			<rectangle>
+				<reportElement style="celdaCabecera" x="0" y="0" width="977" height="69" uuid="2729bfa1-92db-45a4-af92-d09b6b4ec95f"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="textoCabecera" x="0" y="14" width="69" height="54" uuid="b1f860bb-2f75-41c7-9453-d144456af8c8"/>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="69" y="13" width="1" height="57" uuid="68e63a55-ae6e-4a45-8664-5cf02e0fa568"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="141" y="14" width="1" height="55" uuid="51c44cb5-dd55-493a-9231-18dfb75f9ded"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="69" y="14" width="71" height="54" uuid="a67e08ba-d8cc-4eaf-ac2c-c791d4aac0f1"/>
+				<textElement>
+					<paragraph tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[NOMBRE GENERICO/ CONCENTRACIÓN]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="0" y="13" width="979" height="1" uuid="4b153a63-99f8-41e7-bcf5-45763ea608a9"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="199" y="0" width="1" height="69" uuid="b9a210b6-8f24-46cd-afb7-5e2008b0acb3"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="634" y="13" width="1" height="57" uuid="8307715f-da5c-4d30-bb01-95c93027c7a0"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="595" y="14" width="40" height="54" uuid="85efda47-e8b5-4642-a4dd-cb70f4a7473d"/>
+				<text><![CDATA[DUREZA]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="483" y="26" width="1" height="44" uuid="dd13fd14-04ce-4aa7-bfe1-1596fa42fee7"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="304" y="25" width="38" height="44" uuid="90b316c3-2dfa-4f07-884a-600fbd9c340e"/>
+				<text><![CDATA[ESPESOR /ALTURA]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="304" y="24" width="1" height="45" uuid="fecf5270-8482-41fc-a429-28de34ed2566"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="790" y="14" width="60" height="54" uuid="b3841976-88db-44d5-9c8e-590466057f0c"/>
+				<text><![CDATA[% DISOLUCIÓN]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="412" y="13" width="1" height="56" uuid="55b90301-c0ac-41d9-bb32-472deffb9f05"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="412" y="14" width="35" height="54" uuid="7e905b3f-651f-4f30-8d28-3a9c0cf5e878"/>
+				<text><![CDATA[PESO TEÓRICO(g)]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="943" y="24" width="1" height="45" uuid="d78560db-ae46-4d64-ba21-6de31fe56e0d"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="900" y="25" width="42" height="44" uuid="e845e8a8-8cde-40ea-8510-205efef44c48"/>
+				<text><![CDATA[PESO MAXIMO (g)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="142" y="14" width="56" height="55" uuid="8d35fab1-348b-4b55-9051-0de5610d23b4"/>
+				<text><![CDATA[PRESENTACIÓN PRIMARIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="852" y="1" width="126" height="12" uuid="de491b09-04b7-407a-8c81-f4ca50274394"/>
+				<textElement>
+					<font size="5"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[INFORMACION DEL COMPRIMIDO RECUBIERTO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="0" y="68" width="979" height="1" uuid="908ad11b-b930-4ff8-a821-42cdb091be07"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="198" y="0" width="666" height="12" uuid="ce28843c-c835-4456-9314-061f6c3dad7d"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[INFORMACION PRODUCTO NO RECONSTITUIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="553" y="26" width="41" height="42" uuid="a2588e0b-b97f-471d-a24f-b514544b47ac"/>
+				<text><![CDATA[PESO MINIMO (g)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="447" y="26" width="36" height="43" uuid="b398e15b-12de-4e81-90d5-617c83e6e18d"/>
+				<text><![CDATA[PESO MAXIMO (g)]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="517" y="13" width="1" height="56" uuid="e2df9a87-7290-49bd-b947-3a9129174fab"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="447" y="13" width="70" height="12" uuid="55895574-36b3-4c4c-b8df-9d3f101b36fa"/>
+				<text><![CDATA[LIMITE DE ALERTA]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="199" y="25" width="213" height="1" uuid="0b0c86e8-c444-4a02-9429-fc1b0b156b79"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="200" y="14" width="70" height="10" uuid="30e3ea45-f20e-4637-abfa-fa98420b03cb"/>
+				<text><![CDATA[ASPECTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="851" y="25" width="47" height="44" uuid="9f6938cf-1692-4fa5-a400-88b0c4b1574a"/>
+				<text><![CDATA[COLOR COMPRIMIDO RECUBIERTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="0" y="1" width="198" height="12" uuid="30e2023e-606e-429a-b472-391ce7aa45f8"/>
+				<text><![CDATA[INFORMACION GENERAL]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="233" y="24" width="1" height="45" uuid="982e1d9b-bd1b-4d48-ac93-d6325f20c503"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="200" y="25" width="32" height="44" uuid="15d00720-9ae4-47ef-b545-94869eba9502"/>
+				<text><![CDATA[FORMA]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="270" y="13" width="1" height="56" uuid="b6fd99a1-4fd2-4a85-b6fa-3bd063b4f4f9"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="234" y="25" width="36" height="44" uuid="18005db1-5dec-46e7-a752-65e4d4ba3d2a"/>
+				<text><![CDATA[COLOR NUCLEO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="447" y="25" width="147" height="1" uuid="e6967eab-0484-4709-aa92-b748f7281796"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="447" y="13" width="1" height="57" uuid="b89831fe-64cc-4b56-bc2b-55d98a0ba98f"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="376" y="25" width="36" height="44" uuid="14437554-f81b-40ab-aee1-c19c62f8e096"/>
+				<text><![CDATA[ANCHO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="483" y="25" width="34" height="44" uuid="2bdf1ba8-4817-47f2-9cc6-cdfed1ff4571"/>
+				<text><![CDATA[PESO MINIMO (g)]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="594" y="13" width="1" height="56" uuid="ee836434-0856-4c0c-a519-7ae21481d21c"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="517" y="26" width="36" height="42" uuid="8c9b2b82-93fd-40df-86a9-35aec060e7c2"/>
+				<text><![CDATA[PESO MAXIMO(g)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="270" y="13" width="142" height="12" uuid="f93f107b-c09d-4d68-8717-cfc139654447"/>
+				<text><![CDATA[DIMENSIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="635" y="14" width="39" height="54" uuid="4328a74a-461a-4157-bdd5-afe2eaa665b8"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[FRIABILIDAD]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="789" y="13" width="1" height="56" uuid="676000bb-2603-427c-9e1e-ea46338db474"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="677" y="13" width="39" height="55" uuid="5afa6548-8c5c-4b3b-b2cc-cb31c95ce16c"/>
+				<textElement>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[DESINTEGRACIÓN]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="850" y="0" width="1" height="69" uuid="b944bc4d-b7c0-416c-9065-974cec974501"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="717" y="14" width="72" height="55" uuid="6cd52947-6b05-4f3d-83d1-508d12d39dc1"/>
+				<text><![CDATA[CUANTIFICACIÓN DEL PRINCIPIO ACTIVO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="899" y="24" width="1" height="45" uuid="4cf7f07a-36f2-401f-b144-7b60a545cdae"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="945" y="25" width="34" height="44" uuid="f04824f5-02e2-404d-a983-a441c710c3dc"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PESO MINIMO (g)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="849" y="14" width="130" height="10" uuid="e790ded7-5824-44af-a898-f9664e0c9ed7"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[PARAMETROS FISICOS/FISICOQUIMICOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" x="270" y="24" width="34" height="44" uuid="da678847-7bed-49ab-9d01-ef8fcaf553f6"/>
+				<text><![CDATA[DIAMETRO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="342" y="24" width="1" height="45" uuid="07f47c3e-34bf-4fc8-94a2-0601335cfee3"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="342" y="25" width="34" height="43" uuid="94b819fd-dd61-4dba-8aeb-2bc69fec2c59"/>
+				<text><![CDATA[LARGO]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="376" y="24" width="1" height="46" uuid="05e347b2-8de7-4952-8d29-f6a15db739b6"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="553" y="25" width="1" height="44" uuid="8095ebb3-40fd-4da0-bf08-fc2c38cc9805"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="517" y="13" width="77" height="12" uuid="57e99f87-272c-4a6a-9af9-28d4e0785423"/>
+				<text><![CDATA[LIMITE DE ACCIÓN]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="716" y="13" width="1" height="57" uuid="12f5f765-f34f-4887-92cf-7959d67f3c85"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="675" y="13" width="1" height="57" uuid="fdd5a255-f9c0-4da1-8341-d27d74331e64"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="851" y="25" width="128" height="1" uuid="9867c767-2fa5-42cd-8748-0d3a607d5a8d"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="-1" width="979" height="1" uuid="402c8c9d-5d65-4eec-aae3-e5e4aa81748c"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="95" splitType="Stretch">
+			<textField>
+				<reportElement key="" style="textoBody" x="0" y="-1" width="69" height="95" uuid="32fbd14b-f09a-4598-a764-8fdc48942864"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_prod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="69" y="-1" width="73" height="95" uuid="560bd5a4-e298-4186-a5e2-46844fe2397d"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONCENTRACION_ENVASE_PRIMARIO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" x="69" y="-2" width="1" height="97" uuid="4368c90c-570e-4b6a-8987-3d2b5cf20f57"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="141" y="-2" width="1" height="96" uuid="eb96a0cf-ff44-4e2c-a4d1-d5be0851e54e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="233" y="-2" width="1" height="97" uuid="8c3d2ae3-4ea0-470f-90f5-6b5b83fac9a2"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="270" y="-2" width="1" height="97" uuid="57ee9445-955a-42df-b465-5eb2415c3b75"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="342" y="-2" width="1" height="97" uuid="0e8d04bf-bde5-4f23-8a49-a9ece726ddbe"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="376" y="-2" width="1" height="97" uuid="dd9b957d-6f97-44f5-9058-c9fb1fd1bbaa"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="447" y="-1" width="1" height="96" uuid="6bcf3c94-92cb-40fe-b1f8-8cd57041a7ee"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="517" y="-2" width="1" height="97" uuid="971ac818-cddd-419d-b062-7bbe5ec49830"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="553" y="-2" width="1" height="97" uuid="176941bc-5bca-448a-914d-df775c1c3d09"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="594" y="-2" width="1" height="97" uuid="4ff89008-dd83-44b7-a997-bfcb5689d198"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="94" width="979" height="1" uuid="c69a195b-6de2-400b-8586-e81047de4979"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="675" y="-1" width="1" height="96" uuid="cb69a6fd-b45e-4221-8ee9-877a26bf07e8"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="304" y="-2" width="1" height="97" uuid="da832bd5-bd0c-4e1c-a0d8-4f4b8232dba6"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="412" y="-2" width="1" height="97" uuid="add69af6-39a5-4d3e-bdd9-227d1641168e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="483" y="-1" width="1" height="96" uuid="3a9839f1-f3a4-46b8-b5bd-d97249d0c3eb"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="634" y="-2" width="1" height="97" uuid="55553a8b-4eaf-4d5e-9fc4-707a51f41022"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="716" y="-1" width="1" height="96" uuid="148634d6-c4d1-4d6e-85fb-6c3552f0f332"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="789" y="-2" width="1" height="97" uuid="86b2719a-0c9a-4c3b-8453-63eeb7d24959"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="899" y="-2" width="1" height="97" uuid="3c2e4494-3be3-4a18-a727-0ae419f8cc82"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="199" y="-2" width="1" height="97" uuid="c55a22e5-9783-47dd-ae14-1315d82a2a14"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="850" y="-2" width="1" height="97" uuid="e6a5920c-3b56-44d8-a23a-19ad8921aef2"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="943" y="-2" width="1" height="96" uuid="9ba3bfe3-273d-4148-8e50-eb3892589472"/>
+			</line>
+			<textField>
+				<reportElement style="textoBody" x="142" y="-1" width="58" height="95" uuid="8fc8a6aa-2335-469a-a5e0-ca83b50805bd"/>
+				<textFieldExpression><![CDATA[$F{presentacionPrimaria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="200" y="-1" width="33" height="95" uuid="4bd6dbf7-7f62-4b62-85cd-85d4730e9f81"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{forma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" style="textoBody" x="233" y="-1" width="37" height="95" uuid="11b34ed6-0b1a-49e9-bf8c-610d21ab21ed"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{colorNucleo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="271" y="-1" width="33" height="95" uuid="dd72881b-0169-48e6-892d-e9c2e27641f5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{diametroPromedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="305" y="-1" width="37" height="95" uuid="8de0994f-9ed3-4952-a7c8-aed8e7beffcb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{espesorPromedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="343" y="-1" width="33" height="95" uuid="97b02555-43e7-435c-9bcf-07a66ad09ff2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{largoPromedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="376" y="-1" width="36" height="95" uuid="c503e852-21e3-4cfe-b105-5f1a4801184e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{anchoPromedio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.000">
+				<reportElement style="textoBody" x="412" y="-1" width="35" height="95" uuid="7f1794d2-4bdf-4d56-9d2a-8bd6eb611b89"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PESO_TEORICO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.000">
+				<reportElement style="textoBody" x="448" y="-1" width="35" height="95" uuid="6206093e-13f8-4cf5-b8a4-03a9c4e4078b"/>
+				<textFieldExpression><![CDATA[$F{pesoMaximo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.000">
+				<reportElement style="textoBody" x="483" y="-1" width="34" height="95" uuid="088c4e84-3f54-487a-b914-6ac2ccc881d1"/>
+				<textFieldExpression><![CDATA[$F{pesoMinimo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.000">
+				<reportElement style="textoBody" x="517" y="-2" width="36" height="96" uuid="66e5250e-3bf4-4ae6-a454-589b4d11ebc8"/>
+				<textFieldExpression><![CDATA[$F{pesoMaximoAccion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.000">
+				<reportElement style="textoBody" x="554" y="-2" width="40" height="96" uuid="1646319a-4938-404c-a58e-a83c8a205d3a"/>
+				<textFieldExpression><![CDATA[$F{pesoMinimoAccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" style="textoBody" x="594" y="-2" width="40" height="96" uuid="89b38d3e-f57d-47ef-ad01-652c89856153"/>
+				<textFieldExpression><![CDATA[$F{dureza}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="635" y="-1" width="39" height="95" uuid="f146a47f-8be5-419c-9d9d-4a64cc0a27da"/>
+				<textFieldExpression><![CDATA[$F{friabilidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="676" y="-1" width="39" height="95" uuid="b145ec88-38b8-4512-812b-df6e256de648"/>
+				<textFieldExpression><![CDATA[$F{desintegracion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="717" y="-2" width="72" height="96" uuid="66776919-fb7c-42f5-8767-6595acafef87"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuantificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="790" y="-1" width="60" height="95" uuid="c901b63a-c5eb-4f1b-9362-4f588c578175"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disolucion}.replaceAll("&lt;","<")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="851" y="-1" width="47" height="95" uuid="a702468d-8411-4367-800e-5455aa20217b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{colorRecubierto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement style="textoBody" x="901" y="-2" width="42" height="96" uuid="6041f93a-437d-4b62-8e83-046f346861d8">
+					<printWhenExpression><![CDATA[$F{pesoMaximoRecubierto}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pesoMaximoRecubierto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBody" x="944" y="-2" width="34" height="96" uuid="a5aa0ea1-8c0e-4900-89c9-864b37379b3a">
+					<printWhenExpression><![CDATA[$F{pesoMinimoRecubierto}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pesoMinimoRecubierto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBody" x="901" y="0" width="42" height="94" uuid="1c3c7045-1f81-4a61-9a73-1275b5a09f7e">
+					<printWhenExpression><![CDATA[$F{pesoMaximoRecubierto}<=0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[N.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" x="945" y="0" width="34" height="94" uuid="445bbcbd-996c-48a8-a37a-ce5e04a4c337">
+					<printWhenExpression><![CDATA[$F{pesoMinimoRecubierto}<=0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[N.A.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

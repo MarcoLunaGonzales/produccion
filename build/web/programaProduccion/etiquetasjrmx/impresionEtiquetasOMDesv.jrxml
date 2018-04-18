@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-11-25T17:31:35 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionEtiquetasOMDesv" pageWidth="297" pageHeight="223" orientation="Landscape" columnWidth="275" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" uuid="f7fa9eff-508b-4669-9e04-3e144701e3fa">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="codProgramaProd" class="java.lang.String"/>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="FECHA_PESAJE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select m.NOMBRE_MATERIAL,
+       detalleLote.nombre_prod_semiterminado,
+       cast(round(dfmdf.CANTIDAD,2) as varchar)+' '+um.ABREVIATURA as CANTIDAD,
+       um.ABREVIATURA,
+       isnull((
+         select distinct (iade.LOTE_MATERIAL_PROVEEDOR) + ''
+         from SALIDAS_ALMACEN sa
+              inner join SALIDAS_ALMACEN_DETALLE_INGRESO sadi on
+              sadi.COD_SALIDA_ALMACEN = sa.COD_SALIDA_ALMACEN
+              inner join INGRESOS_ALMACEN_DETALLE_ESTADO iade on
+              iade.COD_INGRESO_ALMACEN = sadi.COD_INGRESO_ALMACEN and
+              sadi.ETIQUETA = iade.ETIQUETA and sadi.COD_MATERIAL =
+              iade.COD_MATERIAL
+         where sa.COD_LOTE_PRODUCCION = d.COD_LOTE_PRODUCCION and
+               iade.COD_MATERIAL = dfmd.COD_MATERIAL for xml path ('')
+       ),'') lote_proveedor,
+       GETDATE() fecha_impresion
+from DESVIACION d inner join DESVIACION_FORMULA_MAESTRA_DETALLE_MP dfmd ON
+dfmd.COD_DESVIACION=d.COD_DESVIACION
+ inner join DESVIACION_FORMULA_MAESTRA_DETALLE_MP_FRACCIONES dfmdf
+on dfmd.COD_DESVIACION=dfmdf.COD_DESVIACION and dfmd.COD_MATERIAL=dfmdf.COD_MATERIAL
+inner join materiales m on m.COD_MATERIAL=dfmd.COD_MATERIAL
+inner join UNIDADES_MEDIDA um on um.COD_UNIDAD_MEDIDA=dfmd.COD_UNIDAD_MEDIDA
+cross apply
+(
+select top 1 cpv.nombre_prod_semiterminado from PROGRAMA_PRODUCCION pp inner join COMPONENTES_PROD_VERSION cpv on 
+pp.COD_COMPPROD=cpv.COD_COMPPROD and pp.COD_COMPPROD_VERSION=cpv.COD_VERSION
+where pp.COD_LOTE_PRODUCCION=d.COD_LOTE_PRODUCCION and pp.COD_PROGRAMA_PROD=d.COD_PROGRAMA_PROD
+order by pp.COD_TIPO_PROGRAMA_PROD
+) detalleLote
+where d.COD_PROGRAMA_PROD=$P{codProgramaProd} and d.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+order by m.NOMBRE_MATERIAL asc,dfmdf.CANTIDAD desc]]>
+	</queryString>
+	<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+	<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.lang.String"/>
+	<field name="ABREVIATURA" class="java.lang.String"/>
+	<field name="lote_proveedor" class="java.lang.String"/>
+	<field name="fecha_impresion" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="201" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="0" width="275" height="201" forecolor="#000000" backcolor="#FFFFFF" uuid="faf994f6-3778-40ab-a067-a777a034a55f"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement key="line-5" x="0" y="26" width="275" height="1" forecolor="#000000" uuid="3ae97e94-853d-434c-b467-c206becbb09b"/>
+			</line>
+			<line>
+				<reportElement key="line-6" x="0" y="57" width="275" height="1" forecolor="#000000" uuid="4444f249-54d5-4487-9e4f-449b6ed6870c"/>
+			</line>
+			<line>
+				<reportElement key="line-7" x="0" y="110" width="275" height="1" forecolor="#000000" uuid="a3acb991-f6be-4ec9-9b8b-9758bb41f027"/>
+			</line>
+			<line>
+				<reportElement key="line-8" x="0" y="82" width="275" height="1" forecolor="#000000" uuid="b8f84e56-c25e-4e0e-bfcc-41b447dadd78"/>
+			</line>
+			<line>
+				<reportElement key="line-9" x="0" y="119" width="275" height="1" forecolor="#000000" uuid="d63e49d3-0814-4d13-97d3-3da4c9d24bd4"/>
+			</line>
+			<line>
+				<reportElement key="line-12" x="59" y="0" width="1" height="143" uuid="41525b2f-a310-4e32-bb97-d8db88d11cd7"/>
+			</line>
+			<line>
+				<reportElement key="line-13" x="181" y="120" width="1" height="25" uuid="a3eb35c4-f3fe-416f-961c-b09da15a44d2"/>
+			</line>
+			<line>
+				<reportElement key="line-14" x="182" y="170" width="1" height="31" uuid="2f5053f9-eda5-4612-a8fe-de474421e963"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-1" x="7" y="7" width="48" height="12" uuid="fadb8542-fa6b-4598-b0b2-af20b77f456c"/>
+				<textElement>
+					<font fontName="Arial_OM" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="111" y="7" width="102" height="16" uuid="108b157e-ddf1-43c7-816f-af9bdb196837"/>
+				<textElement>
+					<font fontName="Arial_OM" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATERIA PRIMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="4" y="62" width="51" height="11" uuid="3e0b50df-4102-4421-a180-20a185e40bf6"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="5" y="89" width="30" height="11" uuid="f0501d89-dae9-498b-b771-1f0f9a0e75e8"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="4" y="125" width="30" height="11" uuid="26cfe8ea-8f01-470a-a844-ab975304c0a2"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TARA:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="63" y="33" width="208" height="20" uuid="ca4b8804-a7e7-4480-8645-f3781da40958"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" x="67" y="125" width="30" height="11" uuid="c8639ed4-3e53-4953-a0fd-cd591b2af791"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NETO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="190" y="125" width="36" height="11" uuid="d7c48b4e-d6e4-44e9-9b85-a24f0ea838d7"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRUTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" x="4" y="151" width="84" height="11" uuid="eb09b1d3-9c75-41c5-b541-a1c603e3e68b"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOTE PROVEEDOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" x="4" y="173" width="136" height="11" uuid="00e881ac-b2f9-4494-9af3-4746edbc9bd7"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre responsable de pesaje:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="88" y="151" width="179" height="12" uuid="332d850a-baef-46d4-93ce-af14d5a951bf"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lote_proveedor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-10" x="186" y="174" width="27" height="11" uuid="a216cafc-36b6-4ee0-b092-0a03ddd2d7b1"/>
+				<textElement>
+					<font fontName="Arial_OM" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="98" y="126" width="53" height="11" uuid="61e38d6c-0b00-43c4-ad41-9dad1250571b"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-15" x="0" y="170" width="275" height="1" forecolor="#000000" uuid="f6aead99-e1b9-4ed2-8bf9-a9bc77e15435"/>
+			</line>
+			<line>
+				<reportElement key="line-16" x="0" y="144" width="275" height="1" forecolor="#000000" uuid="b15b0b77-d9d8-40e7-9800-37d57b92e26b"/>
+			</line>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" x="63" y="59" width="208" height="22" uuid="c1855d89-e2bc-45ec-9175-e2819011b6c9"/>
+				<subreportParameter name="codProgramaProd">
+					<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codLoteProduccion">
+					<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./impresionEtiquetasOMProductos.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" x="63" y="87" width="208" height="21" uuid="99e69327-1129-4424-8c11-bfa12fa31945"/>
+				<subreportParameter name="codProgramaProd">
+					<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codLoteProduccion">
+					<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["./impresionEtiquetasOMLotes.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="216" y="175" width="59" height="11" uuid="eb72f5b6-12ac-47fb-a107-b6d7e8d729f8"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA_PESAJE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a" isBlankWhenNull="false">
+				<reportElement key="textField" x="216" y="187" width="41" height="9" uuid="dcc19ba7-3371-4fc3-a4ba-612102330f77"/>
+				<textElement>
+					<font fontName="Arial_OM" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_impresion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

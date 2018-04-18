@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-01-18T18:42:08 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionOrdenManufactura" pageWidth="610" pageHeight="792" columnWidth="526" leftMargin="42" rightMargin="42" topMargin="17" bottomMargin="17" uuid="46ff880b-427f-4d6d-82a3-48b2fd69d73e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.2"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer"/>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="dirLogoCofar" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select cppom.COD_VERSION,
+       pom.NOMBRE_PROCESO_ORDEN_MANUFACTURA,
+       pom.COD_PROCESO_ORDEN_MANUFACTURA,
+	ffpom.URL_REPORTE
+from COMPONENTES_PROD_PROCESO_ORDEN_MANUFACTURA cppom
+inner join FORMAS_FARMACEUTICAS_PROCESO_ORDEN_MANUFACTURA ffpom on cppom.COD_FORMA_FARMACEUTICA_PROCESO_ORDEN_MANUFACTURA=ffpom.COD_FORMA_FARMACEUTICA_PROCESO_ORDEN_MANUFACTURA
+inner join PROCESOS_ORDEN_MANUFACTURA pom on pom.COD_PROCESO_ORDEN_MANUFACTURA=ffpom.COD_PROCESO_ORDEN_MANUFACTURA
+where ffpom.APLICA_ANEXO=1 and cppom.COD_VERSION in
+(
+select top 1 pp.COD_COMPPROD_VERSION
+                             from PROGRAMA_PRODUCCION pp
+                             where pp.COD_LOTE_PRODUCCION =
+                             $P{codLoteProduccion} and
+                                   pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+                             order by pp.COD_TIPO_PROGRAMA_PROD
+)
+order by cppom.ORDEN]]>
+	</queryString>
+	<field name="COD_VERSION" class="java.lang.Integer"/>
+	<field name="NOMBRE_PROCESO_ORDEN_MANUFACTURA" class="java.lang.String"/>
+	<field name="COD_PROCESO_ORDEN_MANUFACTURA" class="java.lang.Integer"/>
+	<field name="URL_REPORTE" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band height="758" splitType="Stretch">
+			<line>
+				<reportElement style="linea" x="0" y="0" width="1" height="758" uuid="c4e4c98b-178f-4d52-882e-e6aeecde387e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="527" y="0" width="1" height="758" uuid="57612008-fe8d-4f56-9729-92dd015e3514"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="1" y="757" width="526" height="1" uuid="1ef1d5ca-d079-423a-8827-ba8afd89acf8"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="1" y="0" width="526" height="1" uuid="d10bbb2f-f6be-448a-9f70-0f71002905af"/>
+			</line>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="133" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="1" width="525" height="130" uuid="1340070d-4e2f-4685-bac1-207e2fbc67f4"/>
+				<subreportParameter name="dirLogoCofar">
+					<subreportParameterExpression><![CDATA[$P{dirLogoCofar}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nroPagina">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codProgramaProd">
+					<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombreProcesoOrdenManufactura">
+					<subreportParameterExpression><![CDATA[$F{NOMBRE_PROCESO_ORDEN_MANUFACTURA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codLoteProduccion">
+					<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"cabeceraAnexoOm.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="625">
+			<subreport>
+				<reportElement mode="Transparent" x="0" y="0" width="526" height="623" uuid="887c7de0-4af8-4c25-b593-58eb2a7f82cf"/>
+				<subreportParameter name="codProgramaProd">
+					<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codLoteProduccion">
+					<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+$F{URL_REPORTE}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

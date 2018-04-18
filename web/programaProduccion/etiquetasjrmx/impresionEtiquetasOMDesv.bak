@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="impresionEtiquetasOMDesv"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="297"
+		 pageHeight="223"
+		 columnWidth="275"
+		 columnSpacing="0"
+		 leftMargin="11"
+		 rightMargin="11"
+		 topMargin="11"
+		 bottomMargin="11"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="codProgramaProd" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="codLoteProduccion" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="FECHA_PESAJE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select m.NOMBRE_MATERIAL,
+       detalleLote.nombre_prod_semiterminado,
+       cast(round(dfmdf.CANTIDAD,2) as varchar)+' '+um.ABREVIATURA as CANTIDAD,
+       um.ABREVIATURA,
+       isnull((
+         select distinct (iade.LOTE_MATERIAL_PROVEEDOR) + ''
+         from SALIDAS_ALMACEN sa
+              inner join SALIDAS_ALMACEN_DETALLE_INGRESO sadi on
+              sadi.COD_SALIDA_ALMACEN = sa.COD_SALIDA_ALMACEN
+              inner join INGRESOS_ALMACEN_DETALLE_ESTADO iade on
+              iade.COD_INGRESO_ALMACEN = sadi.COD_INGRESO_ALMACEN and
+              sadi.ETIQUETA = iade.ETIQUETA and sadi.COD_MATERIAL =
+              iade.COD_MATERIAL
+         where sa.COD_LOTE_PRODUCCION = d.COD_LOTE_PRODUCCION and
+               iade.COD_MATERIAL = dfmd.COD_MATERIAL for xml path ('')
+       ),'') lote_proveedor,
+       GETDATE() fecha_impresion
+from DESVIACION d inner join DESVIACION_FORMULA_MAESTRA_DETALLE_MP dfmd ON
+dfmd.COD_DESVIACION=d.COD_DESVIACION
+ inner join DESVIACION_FORMULA_MAESTRA_DETALLE_MP_FRACCIONES dfmdf
+on dfmd.COD_DESVIACION=dfmdf.COD_DESVIACION and dfmd.COD_MATERIAL=dfmdf.COD_MATERIAL
+inner join materiales m on m.COD_MATERIAL=dfmd.COD_MATERIAL
+inner join UNIDADES_MEDIDA um on um.COD_UNIDAD_MEDIDA=dfmd.COD_UNIDAD_MEDIDA
+cross apply
+(
+select top 1 cpv.nombre_prod_semiterminado from PROGRAMA_PRODUCCION pp inner join COMPONENTES_PROD_VERSION cpv on 
+pp.COD_COMPPROD=cpv.COD_COMPPROD and pp.COD_COMPPROD_VERSION=cpv.COD_VERSION
+where pp.COD_LOTE_PRODUCCION=d.COD_LOTE_PRODUCCION and pp.COD_PROGRAMA_PROD=d.COD_PROGRAMA_PROD
+order by pp.COD_TIPO_PROGRAMA_PROD
+) detalleLote
+where d.COD_PROGRAMA_PROD=$P{codProgramaProd} and d.COD_LOTE_PRODUCCION=$P{codLoteProduccion}
+order by m.NOMBRE_MATERIAL asc,dfmdf.CANTIDAD desc]]></queryString>
+
+	<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+	<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.lang.String"/>
+	<field name="ABREVIATURA" class="java.lang.String"/>
+	<field name="lote_proveedor" class="java.lang.String"/>
+	<field name="fecha_impresion" class="java.sql.Timestamp"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="201"  isSplitAllowed="true" >
+				<rectangle>
+					<reportElement
+						x="0"
+						y="0"
+						width="275"
+						height="201"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="rectangle-1"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" >
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+</graphicElement>
+				</rectangle>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="26"
+						width="275"
+						height="0"
+						forecolor="#000000"
+						key="line-5"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="57"
+						width="275"
+						height="0"
+						forecolor="#000000"
+						key="line-6"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="110"
+						width="275"
+						height="1"
+						forecolor="#000000"
+						key="line-7"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="82"
+						width="275"
+						height="0"
+						forecolor="#000000"
+						key="line-8"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="119"
+						width="275"
+						height="0"
+						forecolor="#000000"
+						key="line-9"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="59"
+						y="0"
+						width="0"
+						height="143"
+						key="line-12"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="181"
+						y="120"
+						width="0"
+						height="25"
+						key="line-13"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="182"
+						y="170"
+						width="0"
+						height="31"
+						key="line-14"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="7"
+						y="7"
+						width="43"
+						height="12"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[CODIGO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="111"
+						y="7"
+						width="80"
+						height="16"
+						key="staticText-2"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[MATERIA PRIMA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="4"
+						y="62"
+						width="51"
+						height="11"
+						key="staticText-3"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="89"
+						width="30"
+						height="11"
+						key="staticText-4"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[LOTE:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="4"
+						y="125"
+						width="30"
+						height="11"
+						key="staticText-5"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TARA:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="63"
+						y="33"
+						width="208"
+						height="20"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="67"
+						y="125"
+						width="30"
+						height="11"
+						key="staticText-6"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[NETO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="190"
+						y="125"
+						width="36"
+						height="11"
+						key="staticText-7"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[BRUTO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="4"
+						y="151"
+						width="81"
+						height="11"
+						key="staticText-8"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[LOTE PROVEEDOR:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="4"
+						y="173"
+						width="122"
+						height="11"
+						key="staticText-9"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Nombre responsable de pesaje:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="88"
+						y="151"
+						width="179"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lote_proveedor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="186"
+						y="174"
+						width="27"
+						height="11"
+						key="staticText-10"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Fecha:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="98"
+						y="126"
+						width="53"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="170"
+						width="275"
+						height="0"
+						forecolor="#000000"
+						key="line-15"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="144"
+						width="275"
+						height="0"
+						forecolor="#000000"
+						key="line-16"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="63"
+						y="59"
+						width="208"
+						height="22"
+						key="subreport-1"/>
+					<subreportParameter  name="codProgramaProd">
+						<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="codLoteProduccion">
+						<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "impresionEtiquetasOMProductos.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="63"
+						y="87"
+						width="208"
+						height="21"
+						key="subreport-2"/>
+					<subreportParameter  name="codProgramaProd">
+						<subreportParameterExpression><![CDATA[$P{codProgramaProd}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="codLoteProduccion">
+						<subreportParameterExpression><![CDATA[$P{codLoteProduccion}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "impresionEtiquetasOMLotes.jasper"]]></subreportExpression>
+				</subreport>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="216"
+						y="175"
+						width="51"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{FECHA_PESAJE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="h.mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="216"
+						y="187"
+						width="41"
+						height="9"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.sql.Timestamp"><![CDATA[$F{fecha_impresion}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-06-19T12:48:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaRepesada" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="34a95c68-1eaa-4b20-bc4c-bd6e53f596be">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="325"/>
+	<property name="ireport.y" value="27"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA["209566"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer("384")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirLogoCofar" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D://PRODUCCION OFICIAL//PRODUCCION//build//web//img//cofarOm.jpg"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[EXEC PAA_DATOS_LOTE_ORDEN_MANUFACTURA $P{codLoteProduccion},$P{codProgramaProd}]]>
+	</queryString>
+	<field name="nombreProducto" class="java.lang.String"/>
+	<field name="nombreForma" class="java.lang.String"/>
+	<field name="loteProduccion" class="java.lang.String"/>
+	<field name="concentracionProducto" class="java.lang.String"/>
+	<field name="registroSanitario" class="java.lang.String"/>
+	<field name="vidaUtil" class="java.lang.String"/>
+	<field name="fechaVencimiento" class="java.lang.String"/>
+	<field name="tamanioLoteProduccion" class="java.lang.String"/>
+	<field name="presentacionesPrimarias" class="java.lang.String"/>
+	<field name="saborProducto" class="java.lang.String"/>
+	<field name="presentacionesSecundarias" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="440" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="1" width="524" height="439" uuid="f5efa641-bf93-4fbf-ba20-cb11bb438f28">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<image>
+				<reportElement x="11" y="2" width="79" height="54" uuid="31d10e29-d982-4fb4-a494-c77397c233e3">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{dirLogoCofar}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement style="linea" x="0" y="56" width="526" height="1" uuid="feaeae2b-8d58-4d02-934b-1c9468632759">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement style="linea" x="100" y="0" width="1" height="56" uuid="eddeafb8-66e6-4f9f-a60d-34df7d62113f"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" positionType="Float" x="190" y="82" width="310" height="18" uuid="2c8276cd-edbd-409c-94de-56815c6bf161"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreProducto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="82" width="120" height="18" uuid="8493e614-a90a-4456-8edb-5c7286b9edb2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Producto:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" positionType="Float" x="150" y="169" width="350" height="20" uuid="447f50a8-318a-4b33-9101-c8389a266dc3">
+					<printWhenExpression><![CDATA[!$F{loteProduccion}.contains("H")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loteProduccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="169" width="80" height="20" uuid="57154d25-1817-45e2-8a16-ee525c07d1ed"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Lote:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" positionType="Float" isPrintRepeatedValues="false" x="190" y="204" width="310" height="23" uuid="7df1c738-e24f-4e8d-ad2d-8f849343d857"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaVencimiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="204" width="120" height="23" uuid="89cd0fd8-cfea-4898-aa55-ec295fb0dc9c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Expiración:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" positionType="Float" x="200" y="274" width="300" height="20" uuid="825033da-e982-494c-b209-d5634588e06a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presentacionesPrimarias}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="274" width="130" height="20" uuid="3f1eaeb0-edbf-42ac-9007-f1fc64a00ed6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Presentación:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" positionType="Float" x="260" y="307" width="240" height="16" uuid="c3e82f3c-f29e-4ba2-a80a-1265c6f41776"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tamanioLoteProduccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="307" width="190" height="16" uuid="53f56549-f6f4-4597-8a1e-dcf1a6e7e243"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tamaño de Lote Industrial:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="69" y="384" width="111" height="20" uuid="cfacd00b-11d7-44b5-8ee0-9ce668e310a8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Firma Jefe de Area:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="69" y="414" width="141" height="20" uuid="66d71dd3-4a06-41ca-9618-b741f2ebc010"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nombre de Jefe de Area:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" positionType="Float" x="186" y="398" width="274" height="1" uuid="629eb9be-744b-4d50-947e-8fae44c92305">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="212" y="427" width="254" height="1" uuid="f661ccf6-529f-4121-8bf9-771d28e6eea6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement style="textoBold" x="101" y="2" width="425" height="54" uuid="dd56e49c-e46d-4c95-82c3-afebae3c3d02"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loteProduccion}.contains("H")?"FORMULA MAESTRA":"ORDEN DE MANUFACTURA"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="238" width="160" height="24" uuid="831492d2-07fe-4762-a522-91589bce8328"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha de Fabricación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="233" y="238" width="216" height="24" uuid="b1163354-d1be-4448-9e72-15e423b44359"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[........./........../.................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="135" width="120" height="18" uuid="d0767aa3-4200-41bd-817f-70bc2dae683a">
+					<printWhenExpression><![CDATA[$F{saborProducto}.length()>1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Sabor:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="190" y="135" width="310" height="18" uuid="a40f23e3-1800-420e-8363-d7f331906517">
+					<printWhenExpression><![CDATA[$F{saborProducto}.length()>1]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{saborProducto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" positionType="Float" x="200" y="340" width="300" height="20" uuid="a087e645-5fa1-4a21-90cd-8ace0fd11f23"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presentacionesSecundarias}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="70" y="340" width="130" height="30" uuid="1579719b-3a84-4dbf-8b4c-9ec4a617f021"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Presentaciones Secundarias:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="69" y="103" width="431" height="1" forecolor="#FFFFFF" uuid="eaed4c11-8eb3-4b2b-ae56-c885f894309a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="69" y="158" width="431" height="1" forecolor="#FFFFFF" uuid="1aaef32d-b195-4e32-ba60-b59aee81bf28">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="70" y="195" width="431" height="1" forecolor="#FFFFFF" uuid="44280cd7-5112-4305-93cb-48053e4b878b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="70" y="233" width="431" height="1" forecolor="#FFFFFF" uuid="79ed9730-a642-4319-ac0a-53f9fa4aa182">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="69" y="268" width="431" height="1" forecolor="#FFFFFF" uuid="a9e5218c-e370-4b5a-8238-0d2b6ead1ebf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="70" y="302" width="431" height="1" forecolor="#FFFFFF" uuid="93df84c2-c4f0-4ace-b620-8203bbdec5e0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="70" y="331" width="431" height="1" forecolor="#FFFFFF" uuid="6e1b0e5d-1ee3-43f3-8ed5-8aec7d71a1b2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="70" y="379" width="431" height="1" forecolor="#FFFFFF" uuid="d6faf9e4-7210-4c9a-aef6-6f7fe735fbd6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" positionType="Float" x="220" y="109" width="281" height="18" uuid="7e1efbe7-8d90-488e-a81f-259e276d6417"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreForma}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="71" y="109" width="149" height="18" uuid="fb452762-3743-47de-bafe-22440dcc4199"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Forma Farmaceútica:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="71" y="130" width="431" height="1" forecolor="#FFFFFF" uuid="0d3d671d-319c-4854-8f08-96a8fc32ba3a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

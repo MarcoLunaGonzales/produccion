@@ -1,0 +1,136 @@
+.mainTable{
+	width			: 830px;
+	vertical-align	: top;
+  	text-align		: left;
+	background-color: #dddddd;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.stdTable{
+	text-align		: left;
+}
+
+.formatTable{
+	width			: 50%;
+	height			: 100%;
+	vertical-align	: middle;
+	text-align		: center;
+}
+
+.formatRow{
+	vertical-align	: middle;
+	text-align		: center;
+}
+
+.mainForm{
+	margin			: 10px;
+	padding			: 10px;
+	vertical-align	: top;
+	text-align		: right;
+	border-width	: 1px;
+  	border-style	: solid;
+  	border-color	: gray;
+  	background-color: #dddddd;
+}
+
+.preContent{
+	width			: 50px;
+	vertical-align	: bottom;
+	padding			: 0px 5px 0px 5px;
+}
+
+.content{
+	width			: 0%;
+	padding			: 0px 5px 0px 5px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.contentText{
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+	width			: 354px;
+}
+
+.contentBar{
+	width			: 354px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.checkbox{
+	width			: 100px;
+	vertical-align	: bottom;
+	padding			: 0px 5px 0px 5px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.dropdown{
+	width			: 19px;
+}
+
+.calendarButton{
+	width			: 22px;
+}
+
+.dropdownButton{
+	width			: 19px;
+}
+
+.buttonTop{
+	width			: 22px;
+	vertical-align	: top;
+	padding			: 0px 5px 0px 5px;
+}
+
+.buttonBottom{
+	width			: 22px;
+	vertical-align	: bottom;
+	padding			: 0px 5px 0px 5px;
+}
+
+.emptyLine{
+	height			: 10px;
+}
+
+.date{
+	width			: 175px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.vTop{
+	vertical-align	: top;
+}
+
+.DateTime{
+	width 			: 175px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.DateTimeTable{
+	width 			: 150px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.ParameterSel{
+	width 			: 200px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.MultiSel{
+	width 			: 354px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}
+
+.submitButton{
+	width			: 100px;
+	font-family		: Verdana, Arial, Helvetica, sans-serif;
+	font-size		: 14px;
+}

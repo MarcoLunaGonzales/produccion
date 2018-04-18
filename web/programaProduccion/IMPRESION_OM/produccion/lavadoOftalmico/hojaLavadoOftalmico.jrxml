@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-05-05T15:15:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaLavado" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="28"/>
+	<property name="ireport.y" value="373"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetMaquinaria" uuid="fccb4cdf-5321-4e45-90f7-da19bfbc8f55">
+		<parameter name="codVersion" class="java.lang.Integer"/>
+		<parameter name="notaEspecificacionLavado" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select cpvmp.COD_COMPPROD_VERSION_MAQUINARIA_PROCESO,m.COD_MAQUINA,m.NOMBRE_MAQUINA,m.CODIGO
+from COMPONENTES_PROD_VERSION_MAQUINARIA_PROCESO cpvmp
+inner join maquinarias m on m.COD_MAQUINA=cpvmp.COD_MAQUINA
+where cpvmp.COD_VERSION=$P{codVersion}
+and cpvmp.COD_PROCESO_ORDEN_MANUFACTURA=2
+order by m.NOMBRE_MAQUINA]]>
+		</queryString>
+		<field name="COD_COMPPROD_VERSION_MAQUINARIA_PROCESO" class="java.lang.Integer"/>
+		<field name="COD_MAQUINA" class="java.lang.Integer"/>
+		<field name="NOMBRE_MAQUINA" class="java.lang.String"/>
+		<field name="CODIGO" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetBandejasDespirogenizado" uuid="500cfade-09d5-406d-901c-29a0a7498287">
+		<parameter name="codCompProdVersionMaquinariaProceso" class="java.lang.Integer"/>
+		<parameter name="codTipoEspecificacionMaquinariaProducto" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select 1 as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="dataSetTiposMaterialRecepcionEnvase" uuid="39b97b9e-d25f-4846-b665-4899fedaefd4">
+		<queryString>
+			<![CDATA[SELECT  t.NOMBRE_TIPO_MATERIAL_RECEPCION_ENVASE FROM TIPOS_MATERIAL_RECEPCION_ENVASE t
+order by t.NOMBRE_TIPO_MATERIAL_RECEPCION_ENVASE]]>
+		</queryString>
+		<field name="NOMBRE_TIPO_MATERIAL_RECEPCION_ENVASE" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataCambioFormatoMaquina" uuid="37f53509-8f77-4735-8952-db0dec63eccf">
+		<queryString language="SQL">
+			<![CDATA[select 1 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as indicacionDespejeLinea,
+ip1.INDICACION_PROCESO as indicacionRecepcionAmpolla,
+ip2.INDICACION_PROCESO as preIndicacionesEspecificacion,
+ip3.INDICACION_PROCESO as notaEspecificacionLavado,
+       pp.COD_COMPPROD_VERSION
+from PROGRAMA_PRODUCCION pp
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip.COD_TIPO_INDICACION_PROCESO = 14 and
+     ip.COD_PROCESO_ORDEN_MANUFACTURA = 2
+left outer join INDICACION_PROCESO ip1 on ip1.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip1.COD_TIPO_INDICACION_PROCESO = 15 and
+     ip1.COD_PROCESO_ORDEN_MANUFACTURA = 2
+left outer join INDICACION_PROCESO ip2 on ip2.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip2.COD_TIPO_INDICACION_PROCESO = 11 and
+     ip2.COD_PROCESO_ORDEN_MANUFACTURA = 2
+left outer join INDICACION_PROCESO ip3 on ip3.COD_VERSION =
+     pp.COD_COMPPROD_VERSION and ip3.COD_TIPO_INDICACION_PROCESO = 5 and
+     ip3.COD_PROCESO_ORDEN_MANUFACTURA = 2
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion}
+ and  pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by case when pp.cod_compprod=pp.cod_compprod_padre then 1 else 2 end,
+pp.cod_tipo_programa_prod]]>
+	</queryString>
+	<field name="indicacionDespejeLinea" class="java.lang.String"/>
+	<field name="indicacionRecepcionAmpolla" class="java.lang.String"/>
+	<field name="preIndicacionesEspecificacion" class="java.lang.String"/>
+	<field name="notaEspecificacionLavado" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="279" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="11" y="161" width="505" height="35" uuid="1c1b7634-4127-4096-b235-46b06a5a0e02"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetBandejasDespirogenizado" uuid="c1b28e6e-4bd1-4cc3-be1c-9de79d3e97cf">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="30" uuid="a45c394f-7b04-4950-b51b-9ad10ad3ec0b">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="30" height="23" uuid="30b5db64-e047-461e-84ac-95db78c06985"/>
+								<text><![CDATA[N°]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody." x="0" y="0" width="29" height="15" uuid="b1593ef3-f6cb-4c40-bb6a-62be2545fe0c"/>
+								<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="a91ade20-99e2-4bbc-b1b8-9c16127f9326">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="3" y="0" width="64" height="23" uuid="e143f19f-4ea9-4167-8b87-35c01daee177"/>
+								<text><![CDATA[N° de Frascos lavados x Bandeja]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="60" uuid="bfbcdd7d-ce17-477a-a833-7d8570fb5e0d">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="23" uuid="f20c6625-7933-48a7-8d91-732fc777bfe4"/>
+								<text><![CDATA[N° de Bandejas]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="57" uuid="2da0f34e-7f09-43fb-aa76-a16e7f8d2da7">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="57" height="23" uuid="48cb605d-edbe-4f9b-878a-7beb23d8dd72"/>
+								<text><![CDATA[N° de Frascos Totales]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="59" uuid="383fbdeb-a240-4553-a07b-24fd1926ca9f">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="4" y="0" width="51" height="23" uuid="1dbad507-d210-456e-8b03-46233d957074"/>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[N° de Frascos a FRV]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="62" uuid="34005f86-11fe-4633-b343-7e31a273b666">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="62" height="23" uuid="4da13f1d-5e80-4667-bd46-bde3e0cb0082"/>
+								<text><![CDATA[Operario]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="56" uuid="1a9096bc-df3a-4b71-9558-cab496393f8d">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="56" height="23" uuid="6a674059-99cc-4146-a84b-269962e7ec9f"/>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="54" uuid="cb0e0678-64e2-40b8-9554-36a6522bd880">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="54" height="23" uuid="725d9d60-6f49-4285-a05c-06a934d0fd45"/>
+								<text><![CDATA[Hora Inicio]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="57" uuid="7e1ce542-aa6e-43cf-8ef2-3a16680ebb66">
+						<jr:tableHeader style="celdaCabecera" height="23" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="57" height="23" uuid="54797751-298d-44ea-bf3f-44432a834422"/>
+								<text><![CDATA[Hora Final]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="15" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<frame>
+				<reportElement positionType="Float" x="61" y="203" width="404" height="76" uuid="c6b503c6-e48a-40c2-8701-cdeacb6ccf10"/>
+				<rectangle>
+					<reportElement style="linea" x="2" y="4" width="400" height="70" uuid="9d6a2ca3-17cf-4419-b685-720118cb3701"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="textoBold" x="130" y="5" width="155" height="8" uuid="30c2d0cc-1fa6-4d5c-8f11-bf0af38a6f7d"/>
+					<text><![CDATA[RENDIMIENTO DEL PROCESO DE LAVADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="5" y="16" width="123" height="9" uuid="9a0214eb-3595-4a8d-8f51-625fd43184a3"/>
+					<text><![CDATA[Canidad de frascos recibidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="5" y="26" width="123" height="9" uuid="de175ee4-e330-4068-a230-a79402d2cc2c"/>
+					<text><![CDATA[Cantidad tapas recibidas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="5" y="37" width="123" height="9" uuid="2f65258c-487b-423b-890c-a805bc5a07d8"/>
+					<text><![CDATA[Cantidad tapones recibidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="5" y="46" width="123" height="9" uuid="cf267d62-d9a8-460e-970b-4f38f21c75f5"/>
+					<text><![CDATA[Cantidad de frascos lavados]]></text>
+				</staticText>
+				<line>
+					<reportElement style="lineaPunto" x="306" y="22" width="85" height="1" uuid="a957b7fc-cb8e-44f9-bf2a-d9468ab30b04"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="306" y="31" width="85" height="1" uuid="1a5ed144-e710-4680-ae37-bd61b5d2e202"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="306" y="40" width="85" height="1" uuid="3b0e7a53-c7df-46e1-b406-2bb565c2dabc"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="306" y="50" width="85" height="1" uuid="f4be0ec9-1f95-4b20-845f-ae1f091e909c"/>
+				</line>
+				<line>
+					<reportElement style="linea" x="2" y="13" width="400" height="1" uuid="a00b1160-78c8-42de-ad3a-2529b4424784"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" x="5" y="55" width="123" height="9" uuid="e8c193cf-459b-4675-a9ce-1ae364b80c51"/>
+					<text><![CDATA[Cantidad de frascos a FRV]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="5" y="64" width="123" height="9" uuid="2b66edf4-9a0a-4967-8c26-1a7db625b33f"/>
+					<text><![CDATA[Rendimiento Final]]></text>
+				</staticText>
+				<line>
+					<reportElement style="lineaPunto" x="305" y="59" width="85" height="1" uuid="74c5b6b3-083d-49bb-b2d2-05954ff87273"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="305" y="69" width="85" height="1" uuid="76198ee7-fe90-4e9c-87d5-a1837fbf1ce7"/>
+				</line>
+			</frame>
+			<rectangle>
+				<reportElement style="celdaCabecera" x="1" y="0" width="525" height="10" uuid="a9ce06b5-23f7-4e00-bb9e-d9860f8193f7"/>
+			</rectangle>
+			<line>
+				<reportElement style="linea" x="1" y="10" width="527" height="1" uuid="087e3e4c-d6dc-4b25-bad9-d41afc532153"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" x="3" y="1" width="523" height="8" uuid="8b0c3980-e0e6-4481-b550-caa8d1de3f44"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESPEJE DE LINEA ETAPA DE LAVADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="5" y="18" width="62" height="8" uuid="42de2e40-e551-4d69-ad1a-8ba789bdf6e0"/>
+				<text><![CDATA[APROBADO POR:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="71" y="24" width="133" height="1" uuid="04fc2056-5bfb-43df-899b-37cbdf3c7860"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" x="4" y="13" width="518" height="2" uuid="706e6458-c342-466f-8dfb-4ddd8ba49359"/>
+				<textFieldExpression><![CDATA[$F{indicacionDespejeLinea}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement style="celdaCabecera" positionType="Float" x="1" y="27" width="525" height="10" uuid="1bfdb118-a474-4746-8113-c9345845b83c"/>
+			</rectangle>
+			<line>
+				<reportElement style="linea" positionType="Float" x="1" y="26" width="527" height="1" uuid="c5a229ce-5ad3-4911-ad85-c357470171e8"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="1" y="37" width="527" height="1" uuid="de93a4f3-98a6-423c-9f22-c6a3258ca1a8"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="Float" x="1" y="28" width="523" height="8" uuid="43571007-977b-4477-8699-141bff4fc6a2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ETAPA DE LAVADO]]></text>
+			</staticText>
+			<frame>
+				<reportElement positionType="Float" x="33" y="45" width="428" height="108" uuid="fd748b75-7f6b-40d1-a6cc-84069dd82577"/>
+				<rectangle>
+					<reportElement style="linea" x="2" y="1" width="423" height="105" uuid="183b3b3d-5e3c-4133-a4ef-af5e956bbcbc"/>
+				</rectangle>
+				<line>
+					<reportElement style="linea" x="1" y="12" width="424" height="1" uuid="5921b430-736c-450e-82f2-6ff281b21c14"/>
+				</line>
+				<staticText>
+					<reportElement style="textoCabecera" x="111" y="3" width="237" height="8" uuid="80596f45-9686-403b-990c-aafc73038459"/>
+					<text><![CDATA[RECEPCION DE FRASCOS DE ALMACEN Y TRASLADO AL AREA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="4" y="15" width="85" height="8" uuid="c7474627-6ca1-4826-bca8-97ebe3abfd61"/>
+					<text><![CDATA[Encargado de Recepción:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="4" y="24" width="28" height="8" uuid="3579944b-32c9-4e7a-8819-6f0179b7843e"/>
+					<text><![CDATA[Fecha:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="4" y="33" width="41" height="8" uuid="02839e3c-5a04-4fdb-afc6-6b4d2145578e"/>
+					<text><![CDATA[Hora Inicio:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="4" y="42" width="41" height="8" uuid="794e756f-a7d1-4a60-aba3-2a3c4c70523f"/>
+					<text><![CDATA[Hora Final:]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table" x="50" y="52" width="340" height="21" uuid="3a28044e-bd90-422a-962e-10face73b745"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="dataSetTiposMaterialRecepcionEnvase" uuid="5b0ac7a2-c6d1-4577-a77b-4c0ce3621b94">
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="75" uuid="08a894dd-cf4e-48bd-ad80-dc3a891ca9cf">
+							<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="75" height="14" uuid="6968618e-57c4-4935-abd2-6e80118e633c"/>
+									<text><![CDATA[Material Recibido]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="13" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="75" height="13" uuid="a64a9c7e-5912-495a-8243-13a59985d809"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_TIPO_MATERIAL_RECEPCION_ENVASE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="87" uuid="4c60626b-4c53-4abc-9fba-68f24b756933">
+							<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="87" height="14" uuid="68c8ec4b-2edc-48ee-8ad1-17fd32a07dc6"/>
+									<text><![CDATA[N° de Packs Recibidos]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="13" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="80" uuid="225c8307-cca8-41fe-957f-1696cfbfec97">
+							<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="80" height="14" uuid="8cb0ea0b-9bae-4630-9152-006d2ff00fad"/>
+									<text><![CDATA[N° de Ampollas por Pack]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="13" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="74" uuid="5ce5c1cc-1cab-499f-a6b8-ea2e4ebdd60c">
+							<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="74" height="14" uuid="44c494cc-a21b-4d5c-aef6-b376827a41bf"/>
+									<text><![CDATA[N° de Ampollas Recibidas]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="13" rowSpan="1"/>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<line>
+					<reportElement style="lineaPunto" x="93" y="21" width="235" height="1" uuid="42899f1d-8969-4756-86aa-fe9ee65f05b8"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="35" y="29" width="89" height="1" uuid="96d6930b-55b3-4715-92e2-36cff55cdcd7"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="47" y="38" width="90" height="1" uuid="1ba75718-a850-4b81-8831-dd61b17be0c4"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="47" y="46" width="90" height="1" uuid="3f3e0f34-7e6e-4a9f-ade9-00fb1680b5cf"/>
+				</line>
+			</frame>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="5" y="40" width="516" height="3" uuid="d1ca27ee-d688-4d4f-9576-879e48683c39"/>
+				<textFieldExpression><![CDATA[$F{indicacionRecepcionAmpolla}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="texto" positionType="Float" x="11" y="155" width="516" height="3" uuid="64fbe8ec-dd3a-4df8-b05e-903f9def9097"/>
+				<textFieldExpression><![CDATA[$F{notaEspecificacionLavado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-05-24T18:58:07 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapImpresionGeneral" pageWidth="527" pageHeight="693" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<subDataset name="dataSetEspecificacionesFisicas" uuid="fccb4cdf-5321-4e45-90f7-da19bfbc8f55">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="localPrueba"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[SELECT fmer.COD_ESPECIFICACION,e.COD_TIPO_RESULTADO_ANALISIS,e.NOMBRE_ESPECIFICACION,fmer.inciso,e.unidad
+FROM FORMA_FARMACEUTICA_ESPECIFICACIONES_RAP fmer
+inner join ESPECIFICACIONES_FISICAS_CC e on e.COD_ESPECIFICACION=fmer.COD_ESPECIFICACION
+where fmer.COD_FORMA in 
+(
+select cp.COD_FORMA from COMPONENTES_PROD cp inner join ##TEMP_COD_COMPPROD cppp
+on cp.COD_COMPPROD=cppp.codCompProd
+)
+AND FMER.COD_TIPO_ESPECIFICACION=1
+order by fmer.INCISO]]>
+		</queryString>
+		<field name="COD_ESPECIFICACION" class="java.lang.Integer"/>
+		<field name="COD_TIPO_RESULTADO_ANALISIS" class="java.lang.Integer"/>
+		<field name="NOMBRE_ESPECIFICACION" class="java.lang.String"/>
+		<field name="inciso" class="java.lang.String"/>
+		<field name="unidad" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="DatasetEspecificacionesQuimicas" uuid="0b19603b-4cc2-4aca-9330-26cce5dceee7">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="localPrueba"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[SELECT fmer.COD_ESPECIFICACION,e.COD_TIPO_RESULTADO_ANALISIS,e.NOMBRE_ESPECIFICACION,fmer.inciso,e.unidad
+FROM FORMA_FARMACEUTICA_ESPECIFICACIONES_RAP fmer
+inner join ESPECIFICACIONES_QUIMICAS_CC e on e.COD_ESPECIFICACION=fmer.COD_ESPECIFICACION
+where fmer.COD_FORMA in 
+(
+select cp.COD_FORMA from COMPONENTES_PROD cp inner join ##TEMP_COD_COMPPROD cppp
+on cp.COD_COMPPROD=cppp.codCompProd
+)
+AND FMER.COD_TIPO_ESPECIFICACION=2
+order by fmer.INCISO]]>
+		</queryString>
+		<field name="COD_ESPECIFICACION" class="java.lang.Integer"/>
+		<field name="COD_TIPO_RESULTADO_ANALISIS" class="java.lang.Integer"/>
+		<field name="NOMBRE_ESPECIFICACION" class="java.lang.String"/>
+		<field name="inciso" class="java.lang.String"/>
+		<field name="unidad" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date("01/01/2015")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select getdate() as feha,(select TOP 1 P.nombre_prod +'('+ff.nombre_forma+')'
+from ##TEMP_COD_COMPPROD tc
+	inner join COMPONENTES_PROD cp on cp.COD_COMPPROD=tc.codCompProd
+	inner join FORMAS_FARMACEUTICAS ff on ff.cod_forma=cp.COD_FORMA
+    INNER JOIN PRODUCTOS P ON P.cod_prod=CP.COD_PROD) AS NOMBRE]]>
+	</queryString>
+	<field name="feha" class="java.sql.Timestamp"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<background>
+		<band height="692" splitType="Stretch">
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="0" y="675" width="527" height="1" uuid="4d6e767b-8c03-44e9-978c-da90080c67d7"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="-1" y="663" width="527" height="1" uuid="9b526d24-2f11-4354-83c6-202a54b3fd43"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="1" y="642" width="527" height="1" uuid="19cd021c-59ce-46cd-b7f6-a42954716dad"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="0" y="624" width="527" height="1" uuid="6f40e708-1178-4d2b-ad89-e42bdb3d0d80"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="0" y="598" width="527" height="1" uuid="55c2569e-b4d8-474b-bdb8-8c6df065ad8a"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="0" y="585" width="527" height="1" uuid="ff39d90c-7a15-4025-a7a8-bb544bd169a2"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="FixRelativeToBottom" x="5" y="587" width="142" height="10" uuid="8054fb59-232c-48e3-a972-604e51d4215e"/>
+				<text><![CDATA[FECHA DE EMISIÓN DEL INFORME:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="71" y="599" width="1" height="90" uuid="c36cab74-859f-43e5-8c82-699481bb901c"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="140" y="598" width="1" height="92" uuid="80f0709c-4562-4c2b-a5c7-1e981de41ba7"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="204" y="598" width="1" height="92" uuid="04c7c4fd-946e-486a-8e8d-00833e6d45bf"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="280" y="598" width="1" height="91" uuid="12b971c5-14bf-45cd-a7bb-d0a4de87b78e"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="350" y="599" width="1" height="91" uuid="ff175684-5dd6-4053-99de-2658dcd101aa"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="410" y="598" width="1" height="92" uuid="7cc11407-a079-4d1d-a14f-027097452be4"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="470" y="598" width="1" height="92" uuid="1875a1d4-bd58-4a1d-97d3-24a243cf06a3"/>
+			</line>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="FixRelativeToBottom" x="72" y="600" width="68" height="24" uuid="f60cd876-d918-4744-8526-e4276b2360da"/>
+				<text><![CDATA[Elaborado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="FixRelativeToBottom" x="141" y="599" width="63" height="26" uuid="19b1533d-e566-471f-ab37-b9db685910fb"/>
+				<text><![CDATA[Revisado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="FixRelativeToBottom" x="205" y="599" width="75" height="26" uuid="101e2e21-1d13-4d60-95da-34b9b3c71e1e"/>
+				<text><![CDATA[Revisado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="FixRelativeToBottom" x="280" y="599" width="70" height="26" uuid="71a68c81-08f9-4192-8578-51eb5293455b"/>
+				<text><![CDATA[Revisado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="FixRelativeToBottom" x="350" y="598" width="60" height="27" uuid="521aa79a-82b0-498f-bd21-3d4f041004a1"/>
+				<text><![CDATA[Revisado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="FixRelativeToBottom" x="410" y="599" width="60" height="26" uuid="390fc6b9-2a36-441e-8c52-816348395e61"/>
+				<text><![CDATA[VoBo Aseguramiento de Calidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoCabecera" positionType="FixRelativeToBottom" x="471" y="599" width="56" height="25" uuid="6bc88f88-29c3-45ce-ab37-9f23010ca3b7"/>
+				<text><![CDATA[Aprobado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="0" y="625" width="71" height="18" uuid="7c9d2050-7af9-4e2d-b911-e83a6042396f"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="72" y="625" width="68" height="18" uuid="84683d27-6cc8-4a47-8546-d6f7b8bcdf27"/>
+				<text><![CDATA[Dra. Carla Garfias Salas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="141" y="625" width="63" height="18" uuid="5135e251-159e-457c-a060-af9c017111ca"/>
+				<text><![CDATA[Dra. Tereza Guzman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="205" y="625" width="75" height="18" uuid="4a6f3645-9702-4d15-9efa-b55586a87cf3"/>
+				<text><![CDATA[Dr. Miguel Gonzales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="281" y="625" width="69" height="17" uuid="c9b91238-1091-4364-a58f-279089149760"/>
+				<text><![CDATA[Dra. Sleena Chaparro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="350" y="626" width="61" height="17" uuid="6ba03b85-8a1d-4ee0-af24-74f695e0117f"/>
+				<text><![CDATA[Dra. Carolina Torrejon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="410" y="625" width="60" height="17" uuid="363dcaa8-883c-49cb-90c4-f1af63dcdceb"/>
+				<text><![CDATA[Dra. Angelica Paz]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="471" y="625" width="56" height="17" uuid="09772105-91a6-4ca1-a426-aa020534ce76"/>
+				<text><![CDATA[Ing. Juan Alberto Rivera ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="0" y="642" width="71" height="22" uuid="3c88ba71-4d8a-40b2-bb08-361a90f0697d"/>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="72" y="642" width="68" height="22" uuid="34853f20-91d0-46a9-9752-2e843f4b5879"/>
+				<text><![CDATA[Dirección técnica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="141" y="643" width="63" height="20" uuid="5eb5e421-2541-4be3-b407-a7f818f21b86"/>
+				<text><![CDATA[Jefe de Control de Calidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="205" y="643" width="75" height="20" uuid="3277008f-938e-4c60-b16c-02e4c8345f9c"/>
+				<text><![CDATA[Jefe de Producción de Solidos no Esteriles ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="280" y="643" width="70" height="20" uuid="906b37dd-6cb4-4838-bb6e-819669a87a71"/>
+				<text><![CDATA[Responsable de Estabilidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="351" y="643" width="59" height="20" uuid="54f21fde-b6cb-45a0-aaf6-17f5d1405b2c"/>
+				<text><![CDATA[Regencia Farmaceutica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="411" y="643" width="59" height="20" uuid="cebbddac-45b0-485c-9cd4-13013cd3f740"/>
+				<text><![CDATA[Lider de Calidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="471" y="643" width="56" height="20" uuid="9b9526f2-a5b3-4bf4-8cb7-28c8bde1c970"/>
+				<text><![CDATA[Gerencia Industrial ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="0" y="663" width="71" height="13" uuid="1f6c3cd8-c0b0-4d77-aee7-a3c48f51dd33"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBody" positionType="FixRelativeToBottom" x="0" y="675" width="71" height="15" uuid="1f685021-d05e-46b6-9cb6-b0013f890978"/>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="0" y="689" width="527" height="1" uuid="a603282e-b52b-463e-b714-bb5b7db73f10"/>
+			</line>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="318" splitType="Stretch">
+			<staticText>
+				<reportElement style="texto" x="22" y="23" width="88" height="10" uuid="1ad8a0ba-9bf9-4d24-b60a-d02144c00b63"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[1) Información general]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="22" y="33" width="88" height="10" uuid="adcdfccf-ea37-4a7a-9240-c8b5b6695fa6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[2) Reporte de Lotes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="22" y="43" width="158" height="10" uuid="fa8464f1-e210-408c-b351-d40be379f566"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3) Reporte de rendimiento de Lotes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="22" y="74" width="298" height="10" uuid="ee181fde-2b5c-4922-b5b8-ac426df5faaf"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[6) Resultados de atributos criticos de calidad y datos estadisticos por cada atributo]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="30" y="84" width="290" height="11" uuid="af81140e-1e5c-4277-9b90-aaebad76d36a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataSetEspecificacionesFisicas" uuid="9909ea3e-6f13-4269-9183-420e8e6dc7ec">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="11" width="290">
+						<textField>
+							<reportElement style="texto" x="0" y="0" width="290" height="11" uuid="f3f7552c-1b34-42d8-aa85-32149df17c31"/>
+							<textFieldExpression><![CDATA[$F{inciso}+") "+$F{NOMBRE_ESPECIFICACION}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="30" y="95" width="290" height="11" uuid="f09830fd-abd1-49da-956c-c233036de3f2"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="DatasetEspecificacionesQuimicas" uuid="9d4c1aff-a098-403b-a979-96d075aef6ee">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="11" width="290">
+						<textField>
+							<reportElement style="texto" x="0" y="0" width="290" height="11" uuid="2981b740-9ce8-4924-91b8-848e43b86c63"/>
+							<textFieldExpression><![CDATA[$F{inciso}+") "+$F{NOMBRE_ESPECIFICACION}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="118" width="298" height="10" uuid="66564da5-d60d-446a-af18-3d726d5c6c21"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[7) Descripción de parametros de aseguramiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="30" y="128" width="298" height="10" uuid="ceb63e0d-c4c0-47f9-9752-6eb5dea30e5b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[a)Desviaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="30" y="138" width="298" height="10" uuid="43a8ca60-619f-46db-a190-de5c5d80832c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[b) Resultados fuera de especificación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="30" y="148" width="298" height="10" uuid="d7af2e52-6baf-40d0-bacd-b6ce01cb8fc5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[c) Reclamos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="30" y="158" width="298" height="10" uuid="04cadbe0-7f99-4ae2-a743-3ae5dce76955"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[d) Control de cambios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="30" y="168" width="298" height="10" uuid="4ee200d8-18ed-4d28-8c77-7f380b0d0816"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[e) Retrabajo, reproceso, reacondicionamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="30" y="178" width="298" height="10" uuid="21c5aed1-8c3c-44d1-8270-a99a529edb6b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[f) Retiro de producto del mercado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="188" width="298" height="10" uuid="d7147ce8-1be1-4980-9df2-5ffb1c223bab"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[8) Estabilidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="198" width="298" height="10" uuid="37cc3858-0e41-4577-a8c8-ff3dd4d86f3d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9) Validación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="208" width="298" height="10" uuid="b3e45aa5-a12d-4ba3-9914-0a9ebbd255df"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[10) Discusión]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="218" width="298" height="10" uuid="7d9a29ae-cc0c-4c6e-86ec-cd519aa28495"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[11) Conclusiones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="22" y="228" width="378" height="10" uuid="485d78d1-47ca-4659-8943-10979df62f08"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[12) Responsabilidades y fechas de compromiso para los capas generados durante las conclusiones]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoBold" x="21" y="10" width="499" height="13" uuid="a3d98a0b-0034-4a8b-98c7-7692901b0dac"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="texto" x="22" y="53" width="158" height="10" uuid="e9d0797a-ec20-477d-a5e3-69014320134c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[4) Defectos encontrados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" positionType="Float" x="30" y="107" width="290" height="10" uuid="d47e5108-f72d-42be-8292-dc6b6847d42f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[g) Volumen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="22" y="63" width="158" height="10" uuid="4548b30f-5811-4581-9146-208cdb2e74bc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[5) Balance de unidades de producción]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

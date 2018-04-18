@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-08-31T11:45:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impresionOrdenManufactura" pageWidth="610" pageHeight="792" columnWidth="526" leftMargin="42" rightMargin="42" topMargin="17" bottomMargin="17" uuid="46ff880b-427f-4d6d-82a3-48b2fd69d73e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.2"/>
+	<property name="ireport.x" value="103"/>
+	<property name="ireport.y" value="240"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresion8px.jrtx"]]></template>
+	<style name="celdaRowspan">
+		<box>
+			<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Style2"/>
+	<subDataset name="dataSetMaterialMpMr" uuid="f20fb794-1065-4da4-b563-b6406f5de00a">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160105"/>
+		<parameter name="codSolicitudMantenimiento" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select m.COD_MATERIAL,
+       m.NOMBRE_MATERIAL,
+       um.NOMBRE_UNIDAD_MEDIDA,
+       cp.nombre_prod_semiterminado,
+       fm.CANTIDAD_LOTE,
+       datosFm.CANTIDAD
+from COMPONENTES_PROD cp
+     inner join FORMULA_MAESTRA fm on fm.COD_COMPPROD = cp.COD_COMPPROD
+     inner join 
+     (
+       select fmd.CANTIDAD,
+              fmd.COD_FORMULA_MAESTRA,
+              fmd.COD_MATERIAL
+       from FORMULA_MAESTRA_DETALLE_MP fmd
+       union
+       select fmdr.CANTIDAD,
+              fmdr.COD_FORMULA_MAESTRA,
+              fmdr.COD_MATERIAL
+       from FORMULA_MAESTRA_DETALLE_MR fmdr
+     ) as datosFm on datosFm.COD_FORMULA_MAESTRA = fm.COD_FORMULA_MAESTRA
+     INNER JOIN MATERIALES m on m.COD_MATERIAL = datosFm.COD_MATERIAL
+     INNER JOIN UNIDADES_MEDIDA um on um.COD_UNIDAD_MEDIDA = m.COD_UNIDAD_MEDIDA
+where cp.COD_ESTADO_COMPPROD = 1 and
+      fm.COD_ESTADO_REGISTRO = 1 AND
+      cp.COD_AREA_EMPRESA IN ( select a.codAreaEmpresa from dbo.##codAreaEmpresaMaterialesProductoTemp a )  AND
+      cp.COD_TIPO_PRODUCCION in ( select t.codTipoProgramaProd from dbo.##codTipoProduccionMaterialesProductoTemp t)
+order by m.NOMBRE_MATERIAL,
+         cp.nombre_prod_semiterminado]]>
+		</queryString>
+		<field name="COD_MATERIAL" class="java.lang.Integer"/>
+		<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+		<field name="NOMBRE_UNIDAD_MEDIDA" class="java.lang.String"/>
+		<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+		<field name="CANTIDAD_LOTE" class="java.lang.Double"/>
+		<field name="CANTIDAD" class="java.lang.Double"/>
+		<variable name="GROUP_SUM" class="java.lang.Double" resetType="Group" resetGroup="Group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CANTIDAD}]]></variableExpression>
+		</variable>
+		<group name="Group1">
+			<groupExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="dataSetMaterialEp" uuid="46f8ba59-f5f2-4c0a-97da-ae41e672a5ac">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20160105"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codSolicitudMantenimiento" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select m.COD_MATERIAL,
+       m.NOMBRE_MATERIAL,
+       um.NOMBRE_UNIDAD_MEDIDA,
+       cp.nombre_prod_semiterminado,
+       fm.CANTIDAD_LOTE,
+       tpp.NOMBRE_TIPO_PROGRAMA_PROD,
+       fmd.CANTIDAD
+from COMPONENTES_PROD cp
+     inner join FORMULA_MAESTRA fm on fm.COD_COMPPROD = cp.COD_COMPPROD
+     inner join FORMULA_MAESTRA_DETALLE_EP fmd on fmd.COD_FORMULA_MAESTRA =
+     fm.COD_FORMULA_MAESTRA
+     inner join PRESENTACIONES_PRIMARIAS pp on pp.COD_PRESENTACION_PRIMARIA =
+     fmd.COD_PRESENTACION_PRIMARIA and pp.COD_COMPPROD = cp.COD_COMPPROD
+     inner join TIPOS_PROGRAMA_PRODUCCION tpp on tpp.COD_TIPO_PROGRAMA_PROD =
+     pp.COD_TIPO_PROGRAMA_PROD
+     INNER JOIN MATERIALES m on m.COD_MATERIAL = fmd.COD_MATERIAL
+     INNER JOIN UNIDADES_MEDIDA um on um.COD_UNIDAD_MEDIDA = m.COD_UNIDAD_MEDIDA
+where cp.COD_ESTADO_COMPPROD = 1 and
+      fm.COD_ESTADO_REGISTRO = 1 and
+      pp.COD_ESTADO_REGISTRO = 1 AND
+      cp.COD_AREA_EMPRESA IN ( select a.codAreaEmpresa from dbo.##codAreaEmpresaMaterialesProductoTemp a )  AND
+      cp.COD_TIPO_PRODUCCION in ( select t.codTipoProgramaProd from dbo.##codTipoProduccionMaterialesProductoTemp t)
+order by m.NOMBRE_MATERIAL,
+         cp.nombre_prod_semiterminado,
+         tpp.NOMBRE_TIPO_PROGRAMA_PROD]]>
+		</queryString>
+		<field name="COD_MATERIAL" class="java.lang.Integer"/>
+		<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+		<field name="NOMBRE_UNIDAD_MEDIDA" class="java.lang.String"/>
+		<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+		<field name="CANTIDAD_LOTE" class="java.lang.Double"/>
+		<field name="NOMBRE_TIPO_PROGRAMA_PROD" class="java.lang.String"/>
+		<field name="CANTIDAD" class="java.lang.Double"/>
+		<variable name="GROUP_SUM1" class="java.lang.Double" resetType="Group" resetGroup="Group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CANTIDAD}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<group name="Group1">
+			<groupExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="dataSetMaterialEs" uuid="23b88495-7412-49fe-ab10-e9babf30877d">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[select m.COD_MATERIAL,
+       m.NOMBRE_MATERIAL,
+       um.NOMBRE_UNIDAD_MEDIDA,
+       cp.nombre_prod_semiterminado,
+       fm.CANTIDAD_LOTE,
+       tpp.NOMBRE_TIPO_PROGRAMA_PROD,
+       pp.NOMBRE_PRODUCTO_PRESENTACION,
+       fmd.CANTIDAD
+from COMPONENTES_PROD cp
+     inner join FORMULA_MAESTRA fm on fm.COD_COMPPROD = cp.COD_COMPPROD
+     inner join COMPONENTES_PRESPROD cpp on cpp.COD_COMPPROD = cp.COD_COMPPROD
+     and cpp.COD_ESTADO_REGISTRO = 1
+     inner join FORMULA_MAESTRA_DETALLE_ES fmd on fmd.COD_FORMULA_MAESTRA =
+     fm.COD_FORMULA_MAESTRA and fmd.COD_PRESENTACION_PRODUCTO =
+     cpp.COD_PRESENTACION and fmd.COD_TIPO_PROGRAMA_PROD =
+     cpp.COD_TIPO_PROGRAMA_PROD
+     inner join PRESENTACIONES_PRODUCTO pp on pp.cod_presentacion =cpp.COD_PRESENTACION
+     inner join TIPOS_PROGRAMA_PRODUCCION tpp on tpp.COD_TIPO_PROGRAMA_PROD =
+     cpp.COD_TIPO_PROGRAMA_PROD
+     INNER JOIN MATERIALES m on m.COD_MATERIAL = fmd.COD_MATERIAL
+     INNER JOIN UNIDADES_MEDIDA um on um.COD_UNIDAD_MEDIDA = m.COD_UNIDAD_MEDIDA
+where cp.COD_ESTADO_COMPPROD = 1 and
+      fm.COD_ESTADO_REGISTRO = 1 and
+      pp.cod_estado_registro = 1 AND
+      cp.COD_AREA_EMPRESA IN ( select a.codAreaEmpresa from dbo.##codAreaEmpresaMaterialesProductoTemp a )  AND
+      cp.COD_TIPO_PRODUCCION in ( select t.codTipoProgramaProd from dbo.##codTipoProduccionMaterialesProductoTemp t)
+order by m.NOMBRE_MATERIAL,
+         cp.nombre_prod_semiterminado,
+         tpp.NOMBRE_TIPO_PROGRAMA_PROD]]>
+		</queryString>
+		<field name="COD_MATERIAL" class="java.lang.Integer"/>
+		<field name="NOMBRE_MATERIAL" class="java.lang.String"/>
+		<field name="NOMBRE_UNIDAD_MEDIDA" class="java.lang.String"/>
+		<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+		<field name="CANTIDAD_LOTE" class="java.lang.Double"/>
+		<field name="NOMBRE_TIPO_PROGRAMA_PROD" class="java.lang.String"/>
+		<field name="NOMBRE_PRODUCTO_PRESENTACION" class="java.lang.String"/>
+		<field name="CANTIDAD" class="java.lang.Double"/>
+		<variable name="GROUP_SUM2" class="java.lang.Double" resetType="Group" resetGroup="Group1" incrementType="Group" incrementGroup="Group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CANTIDAD}]]></variableExpression>
+		</variable>
+		<group name="Group1">
+			<groupExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="dirLogoCofar" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D://PRODUCCION OFICIAL//PRODUCCION//build//web//img//cofarOm.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreAreaEmpresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA["nombreAreaEmpresa"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreTipoProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA["nombreTipoProduccion"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[set nocount on
+if object_id('tempdb.dbo.##codAreaEmpresaMaterialesProductoTemp') is null
+begin
+  create table ##codAreaEmpresaMaterialesProductoTemp
+  (
+	  codAreaEmpresa integer
+  )
+end
+
+
+if object_id('tempdb.dbo.##codTipoProduccionMaterialesProductoTemp') is null
+begin 
+   create table ##codTipoProduccionMaterialesProductoTemp
+  (
+	  codTipoProgramaProd integer
+  )
+end 
+set nocount off
+select 1 as nro]]>
+	</queryString>
+	<field name="nro" class="java.lang.Integer"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band height="758" splitType="Stretch">
+			<line>
+				<reportElement style="linea" x="0" y="0" width="1" height="758" uuid="c4e4c98b-178f-4d52-882e-e6aeecde387e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="526" y="0" width="1" height="758" uuid="57612008-fe8d-4f56-9729-92dd015e3514"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="1" y="757" width="524" height="1" uuid="1ef1d5ca-d079-423a-8827-ba8afd89acf8">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement style="linea" x="1" y="0" width="526" height="1" uuid="d10bbb2f-f6be-448a-9f70-0f71002905af">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement style="textoBold" x="461" y="0" width="30" height="10" uuid="27b6bf04-e4c7-4623-b3ff-601e1d3c80c0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="textoBold" x="496" y="0" width="30" height="10" uuid="dc21d0e8-a6da-44a5-b9a0-a0fc2ce885f6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement style="linea" mode="Transparent" x="461" y="0" width="65" height="10" uuid="adaa13e0-8992-467b-8bb6-ba0b736046f5"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<line direction="BottomUp">
+				<reportElement style="linea" x="491" y="0" width="5" height="10" uuid="8ad5a7ae-e76d-4109-9df8-6aeec7d0377c"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="282">
+			<componentElement>
+				<reportElement x="0" y="54" width="525" height="70" uuid="0d250718-0799-4b91-b1f0-1b3978e0eba7">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetMaterialMpMr" uuid="9d64befc-99b4-46cd-9b06-72ed061b7674">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="526" uuid="1d479d8e-5cab-4a9a-8dde-d58b4204fe17">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [6]"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="525" height="15" uuid="d6503938-3e37-4737-8d8e-04364286659a"/>
+								<text><![CDATA[MATERIA PRIMA - MATERIAL REACTIVO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="130" uuid="c6f52e5e-53b7-4714-b4cf-3fe9c38b5048">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaRowspan" height="16">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<box>
+										<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="130" height="24" uuid="e237a190-d7ec-4a30-8054-93e2d6ebef27"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Material]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaRowspan" height="20">
+								<textField isStretchWithOverflow="true">
+									<reportElement style="textoBody" x="0" y="0" width="130" height="20" isPrintInFirstWholeBand="true" uuid="d59ceee2-a5d4-4cb5-a873-15069b810231"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="4185e7d2-95ef-441e-a3d4-43d3dd0e7148">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaRowspan" height="16">
+									<box>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="70" height="24" uuid="f7cf8a2f-4544-40e0-86c1-4182b7d70e2e"/>
+									<textElement textAlignment="Center">
+										<paragraph leftIndent="0" rightIndent="0"/>
+									</textElement>
+									<text><![CDATA[Unidad de Medida]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="20">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="textoBody" isPrintRepeatedValues="false" x="0" y="0" width="70" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Group1" uuid="c9fb7133-72c0-4b7e-8a65-bffbe4986c8b">
+										<printWhenExpression><![CDATA[$V{Group1_COUNT}==1 || $V{PAGE_COUNT}==1]]></printWhenExpression>
+									</reportElement>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_UNIDAD_MEDIDA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="180" uuid="3e0bb656-7680-4e95-9ae9-07af626e8eeb">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16"/>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="180" height="24" uuid="9885df6b-5ca7-49b6-9bf7-b63f6bbb5f98"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Producto]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField isStretchWithOverflow="true">
+									<reportElement style="textoBody" x="0" y="0" width="180" height="20" uuid="0b3cbc1e-f054-4604-81eb-9a453436e852"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{nombre_prod_semiterminado}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="d5e8a5af-43f5-4b16-871a-c9d6dffd13bc">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16">
+									<staticText>
+										<reportElement style="textoCabecera" x="0" y="0" width="60" height="16" uuid="b7c97e6b-0617-44e1-80ab-70e83aaede4c"/>
+										<textElement textAlignment="Right">
+											<font size="7"/>
+											<paragraph leftIndent="0" rightIndent="5"/>
+										</textElement>
+										<text><![CDATA[TOTAL]]></text>
+									</staticText>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="24" uuid="daf3ddda-5a0c-46f4-a5b2-cef3a69b75db"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Tamaño Lote]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField pattern="##0">
+									<reportElement style="textoBody" x="0" y="0" width="60" height="20" uuid="8af2bb19-ca0f-49f8-8055-1b3c05ff93d6"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD_LOTE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="86" uuid="b26d3f27-ca0b-4419-8693-75470e7ec623">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16">
+									<textField pattern="####0.00">
+										<reportElement style="textoCabecera" x="0" y="0" width="86" height="16" uuid="5da774c7-b6b8-4984-bcb4-f78a5ae7a0a2"/>
+										<textElement textAlignment="Right" verticalAlignment="Middle">
+											<font size="7"/>
+											<paragraph rightIndent="5"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{GROUP_SUM}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="86" height="24" uuid="69fdcbb9-0810-4c08-9d5f-577e9d4375fd"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Cantidad]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<textField pattern="###0.00">
+									<reportElement style="textoBody" x="0" y="0" width="86" height="20" uuid="356fd4b6-13a4-41ca-a53d-fa95767dacfb"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="134" width="525" height="70" uuid="33c08109-cbc4-4247-ba84-3af933bbf298">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetMaterialEp" uuid="c68434dd-2257-42df-8552-a3866bf02dd2">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="526" uuid="1c5df4dd-dd46-4979-a93c-03a9310bd012">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [7]"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="525" height="15" uuid="50bdf475-f049-4429-aa64-2aebd4498210"/>
+								<text><![CDATA[EMPAQUE PRIMARIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="120" uuid="30fa2002-6e20-4692-a956-7b308f42c08c">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaRowspan" height="16">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<box>
+										<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="120" height="24" uuid="a3f5cee5-3dd4-4154-8fcc-4c9d8e306e34"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Material]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaRowspan" height="20">
+								<textField isStretchWithOverflow="true">
+									<reportElement style="textoBody" isPrintRepeatedValues="false" x="0" y="0" width="120" height="20" isPrintInFirstWholeBand="true" uuid="24458eda-2a78-405f-af1a-b691e2f8132e"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="7f60f099-09b4-4fce-8738-a959531ca46d">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaRowspan" height="16">
+									<box>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="24" uuid="42f6ab28-8425-4a1f-bfdc-2f1bf787d61d"/>
+									<textElement textAlignment="Center">
+										<paragraph leftIndent="0" rightIndent="0"/>
+									</textElement>
+									<text><![CDATA[Unidad de Medida]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="20">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="textoBody" isPrintRepeatedValues="false" x="0" y="0" width="60" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Group1" uuid="1514ad7b-b127-44c9-9edc-31c772460f88">
+										<printWhenExpression><![CDATA[$V{Group1_COUNT}==1 || $V{PAGE_COUNT}==1]]></printWhenExpression>
+									</reportElement>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_UNIDAD_MEDIDA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="160" uuid="525574a3-8db8-4fe0-82a7-4efdd37082b9">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16"/>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="160" height="24" uuid="4777b84b-164c-4fac-8dbd-3edfcdd000a8"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Producto]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField isStretchWithOverflow="true">
+									<reportElement style="textoBody" x="0" y="0" width="160" height="20" uuid="a16c0b8f-4d0a-44c9-8a79-3aed148ca91d"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{nombre_prod_semiterminado}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="7c618d22-1f0b-4fcb-a705-04c8a5a29086">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16"/>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="70" height="24" uuid="206bf32a-4f9e-4121-8efb-ec78ff072b56"/>
+									<text><![CDATA[Tipo Producción]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField>
+									<reportElement style="textoBody" x="0" y="0" width="70" height="20" uuid="f9da5907-9f51-41ca-a9ee-db06299e5530"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NOMBRE_TIPO_PROGRAMA_PROD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="22c193ba-56c3-4343-9dfd-b063d17fbaa9">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16">
+									<staticText>
+										<reportElement style="textoCabecera" x="0" y="0" width="50" height="16" uuid="ae1f8082-3d18-4dd0-8b4e-79736c4083f8"/>
+										<textElement textAlignment="Right">
+											<font size="7"/>
+											<paragraph leftIndent="0" rightIndent="5"/>
+										</textElement>
+										<text><![CDATA[TOTAL]]></text>
+									</staticText>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="50" height="24" uuid="b4c888fb-3354-43af-b457-af15d89a75ef"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Tamaño Lote]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField pattern="##0">
+									<reportElement style="textoBody" x="0" y="0" width="50" height="20" uuid="e64745b1-7786-49cb-89ef-43c4f812455a"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD_LOTE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="66" uuid="b28893c6-4e61-435a-8038-707c5d1f4055">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16">
+									<textField pattern="####0.00">
+										<reportElement style="textoCabecera" x="0" y="0" width="66" height="16" uuid="cdfc4ffd-4192-4294-88e6-0816161425a8"/>
+										<textElement textAlignment="Right" verticalAlignment="Middle">
+											<font size="7"/>
+											<paragraph rightIndent="5"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{GROUP_SUM1}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="66" height="24" uuid="046977f0-3999-4b11-a308-0c1cb5a18728"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Cantidad]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<textField pattern="###0.00">
+									<reportElement style="textoBody" x="0" y="0" width="66" height="20" uuid="4c516fb2-73b1-40d8-a061-f3fca08a0a04"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="209" width="525" height="70" uuid="041393ea-2ef0-4d1e-a7b4-0ca15afa8730">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetMaterialEs" uuid="78aadcb6-1b4a-4dae-8abf-1848f067a882">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="526" uuid="0b978a8f-ce89-4c67-8be1-b8c9f56abd6a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [7]"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="524" height="15" uuid="75593007-16d3-4cf2-9120-af6d99544806"/>
+								<text><![CDATA[EMPAQUE SECUNDARIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="109" uuid="49345595-7eba-424d-9cf3-f3d6674d2140">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaRowspan" height="16">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<box>
+										<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="109" height="24" uuid="33dacdf4-9678-49f6-8b50-321b0b38f92d"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Material]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaRowspan" height="20">
+								<textField isStretchWithOverflow="true">
+									<reportElement style="textoBody" isPrintRepeatedValues="false" x="0" y="0" width="109" height="20" isPrintInFirstWholeBand="true" uuid="372ca5f1-1c31-4a75-8097-4ee6a52885c5"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle">
+										<paragraph lineSpacing="Single" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOMBRE_MATERIAL}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="51" uuid="ef3ea60f-4f53-45cd-a02d-17fe925e35cd">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaRowspan" height="16">
+									<box>
+										<topPen lineWidth="0.0"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="51" height="24" uuid="6e84c4b4-19df-46f7-af9b-3be502418e92"/>
+									<textElement textAlignment="Center">
+										<paragraph leftIndent="0" rightIndent="0"/>
+									</textElement>
+									<text><![CDATA[Unidad de Medida]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="20">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement style="textoBody" isPrintRepeatedValues="false" x="0" y="0" width="51" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Group1" uuid="cdb6fe44-efd4-4ff7-83f0-2d1002771006">
+										<printWhenExpression><![CDATA[$V{Group1_COUNT}==1 || $V{PAGE_COUNT}==1]]></printWhenExpression>
+									</reportElement>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle">
+										<paragraph lineSpacing="Single" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOMBRE_UNIDAD_MEDIDA}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="113" uuid="202d46cc-b6af-42ef-968b-b26153af05d4">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16"/>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="113" height="24" uuid="224a14fa-9d46-4d6a-9b93-aefc262dbead"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Producto]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField isStretchWithOverflow="true">
+									<reportElement style="textoBody" x="0" y="0" width="113" height="20" uuid="83585b26-5329-4d28-80ec-9172b4677cce"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle">
+										<paragraph lineSpacing="Single" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{nombre_prod_semiterminado}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="2d0ea6ce-6ba4-43ac-b238-3f1c09870bb4">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16"/>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="60" height="24" uuid="327a57d0-6ee4-450e-bbb6-7068c808abf2"/>
+									<text><![CDATA[Tipo Producción]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField>
+									<reportElement style="textoBody" x="0" y="0" width="60" height="20" uuid="ec65c55e-7d16-4f8b-bd19-3e3d304685a1"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle">
+										<paragraph lineSpacing="Single" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOMBRE_TIPO_PROGRAMA_PROD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="84" uuid="1f9b34fc-e885-4c10-bd6d-3f4f1e4f6623">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16"/>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="84" height="24" uuid="7cc30a06-6027-4772-850b-e5f12df75f88"/>
+									<textElement verticalAlignment="Middle"/>
+									<text><![CDATA[Presentación]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField isStretchWithOverflow="true">
+									<reportElement style="textoBody" x="0" y="0" width="84" height="20" uuid="10530452-e02a-4287-999d-379d35233461"/>
+									<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+									<textElement verticalAlignment="Middle">
+										<paragraph lineSpacing="Single" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{NOMBRE_PRODUCTO_PRESENTACION}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="50" uuid="5cff3b1e-1d8a-475d-b166-ace98caccdd2">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16">
+									<staticText>
+										<reportElement style="textoCabecera" x="0" y="0" width="50" height="16" uuid="edb4368d-08b8-4ba2-83bc-41d44709e316"/>
+										<textElement textAlignment="Right">
+											<font size="7"/>
+											<paragraph leftIndent="0" rightIndent="5"/>
+										</textElement>
+										<text><![CDATA[TOTAL]]></text>
+									</staticText>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="50" height="24" uuid="d7f38f04-9004-49ec-98ba-8e39eb62aef3"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Tamaño Lote]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<textField pattern="##0">
+									<reportElement style="textoBody" x="0" y="0" width="50" height="20" uuid="fa983481-13e3-4a93-a81b-51484af999e5"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD_LOTE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="59" uuid="98abb42a-69d8-4849-b135-6648651b87c7">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+							<jr:groupFooter groupName="Group1">
+								<jr:cell style="celdaCabecera" height="16">
+									<textField pattern="####0.00">
+										<reportElement style="textoCabecera" x="0" y="0" width="59" height="16" uuid="164f51f7-458f-481b-82c8-db3ff1760741"/>
+										<textElement textAlignment="Right" verticalAlignment="Middle">
+											<font size="7"/>
+											<paragraph rightIndent="5"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{GROUP_SUM2}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:columnHeader style="celdaCabecera" height="24">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="59" height="24" uuid="ec5e4bb4-45dc-45ab-863a-3fbd4fcb2e20"/>
+									<textElement>
+										<paragraph leftIndent="3" rightIndent="3"/>
+									</textElement>
+									<text><![CDATA[Cantidad]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="celdaBody" height="20">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<textField pattern="###0.00">
+									<reportElement style="textoBody" x="0" y="0" width="59" height="20" uuid="a3a972f3-60af-4b22-b6bd-75446f99be76"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<break>
+				<reportElement positionType="Float" x="0" y="132" width="98" height="1" uuid="f394cfa8-2b63-4677-9003-7ceca47275a0"/>
+			</break>
+			<break type="Column">
+				<reportElement positionType="Float" x="0" y="207" width="100" height="1" uuid="63f7a027-6f93-468c-879b-635f51e9552f"/>
+			</break>
+			<image isUsingCache="false">
+				<reportElement x="30" y="6" width="64" height="39" uuid="193c0a84-3d6e-4848-92f3-67a763537067">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{dirLogoCofar}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="textoBold" x="189" y="3" width="200" height="14" uuid="64f0290f-7a66-445a-9208-a12af578a538"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Reporte Materiales Por Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="127" y="22" width="70" height="15" uuid="fb67b0f4-240f-4921-a654-ef7f560c4b37"/>
+				<text><![CDATA[Area Producción:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="126" y="39" width="70" height="15" uuid="a8022517-7df4-4a6f-bbe0-aae2bbb07e2e"/>
+				<text><![CDATA[Tipo Producción:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="200" y="22" width="280" height="15" uuid="26935662-597d-442b-b4e8-183b70fb5820"/>
+				<textFieldExpression><![CDATA[$P{nombreAreaEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="201" y="39" width="279" height="14" uuid="379e6ea0-afe0-48ee-b545-00311a0802e9"/>
+				<textFieldExpression><![CDATA[$P{nombreTipoProduccion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

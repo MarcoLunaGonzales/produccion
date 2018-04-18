@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-05-22T11:18:39 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaRutaTransporteProducto" pageWidth="527" pageHeight="623" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="c7fd5500-bdad-4a45-a600-88973068be8e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetVeriricacionConternedores" uuid="fd3d7589-cc6f-4003-9627-3f0869fa8d4a">
+		<parameter name="codLoteProduccion" class="java.lang.String"/>
+		<parameter name="codProgramaProd" class="java.lang.String"/>
+		<parameter name="codTipoMaterial" class="java.lang.String"/>
+		<parameter name="cantidadLoteProduccion" class="java.lang.Double"/>
+		<parameter name="unidadMedidaOm" class="java.lang.String"/>
+		<parameter name="cantidadUnitariaLote" class="java.lang.Double"/>
+		<parameter name="textoPeso" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select 1 as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro
+union
+select 6 as nro
+union
+select 7 as nro
+union
+select 8 as nro
+union
+select 9 as nro
+union
+select 10 as nro
+union
+select 11 as nro
+union
+select 12 as nro
+union
+select 13 as nro
+union
+select 14 as nro
+union
+select 15 as nro
+union
+select 16 as nro
+union
+select 17 as nro
+union
+select 18 as nro
+union
+select 19 as nro
+union
+select 20 as nro
+union
+select 21 as nro
+union
+select 22 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+		<variable name="cantidadUnidadProducto" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+		<variable name="cantidadTotal" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="codProgramaProd" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select top 1 ip.INDICACION_PROCESO as notaVerificacionContenedores
+	,pp.COD_COMPPROD_VERSION
+
+from PROGRAMA_PRODUCCION pp
+     inner join COMPONENTES_PROD_VERSION cpv on cpv.COD_VERSION =pp.COD_COMPPROD_VERSION
+     left outer join INDICACION_PROCESO ip on ip.COD_VERSION =pp.COD_COMPPROD_VERSION
+	 and ip.COD_TIPO_INDICACION_PROCESO = 5-- tipos de indicacio:nota
+	 and ip.COD_PROCESO_ORDEN_MANUFACTURA = 29 --hoja de ruta
+where pp.COD_LOTE_PRODUCCION = $P{codLoteProduccion} and
+      pp.COD_PROGRAMA_PROD = $P{codProgramaProd}
+order by pp.COD_TIPO_PROGRAMA_PROD]]>
+	</queryString>
+	<field name="notaVerificacionContenedores" class="java.lang.String"/>
+	<field name="COD_COMPPROD_VERSION" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="150" splitType="Stretch">
+			<rectangle>
+				<reportElement style="celdaCabecera" x="0" y="0" width="526" height="8" uuid="67e7a944-cf65-4e59-81fc-076b4e48df00"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="textoBold" x="196" y="0" width="128" height="8" uuid="fdf7b9b2-2302-4a8d-9316-3104d1df149c"/>
+				<text><![CDATA[VERIFICACIÓN DE CONTENEDORES]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" x="0" y="8" width="526" height="1" uuid="2955f7fe-ccd3-4865-b284-347a27d72522"/>
+			</line>
+			<componentElement>
+				<reportElement key="table" x="156" y="28" width="227" height="27" uuid="3b952b00-522e-48eb-a563-06687e7407fb"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetVeriricacionConternedores" uuid="36c70684-14ff-46d1-a2b4-54c88f2dc3e4">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="113" uuid="4572ee75-70cb-44fe-93e2-35833c4b784d">
+						<jr:tableFooter style="celdaCabecera" height="14" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="113" height="14" uuid="ec0786a1-71cb-43b2-bfc6-a92641418707"/>
+								<text><![CDATA[TOTALES]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="113" height="13" uuid="22690f8c-d1ad-422b-bddc-4205907b7be6"/>
+								<text><![CDATA[N° de envase/contenedor]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="85" height="14" forecolor="#FFFFFF" uuid="ef9dbd51-70a4-46a4-bb68-b716eb58d813"/>
+								<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="114" uuid="d5bf6ce2-45e0-4f86-8d80-a127208d08fa">
+						<jr:tableFooter style="celdaCabecera" height="14" rowSpan="1"/>
+						<jr:columnHeader style="celdaCabecera" height="13" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="114" height="13" uuid="b568a91a-885c-4c32-8e00-151ba1178050"/>
+								<text><![CDATA[Unidades entregas por contenedor]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="textoBold" x="9" y="12" width="24" height="9" uuid="95a8fe54-071f-4d75-b345-a20978978f11"/>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="33" y="12" width="461" height="9" uuid="4d8e0134-5f3a-47b2-adef-4b18179c1bbb"/>
+				<textFieldExpression><![CDATA[$F{notaVerificacionContenedores}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="111" y="65" width="392" height="1" uuid="da07b728-45f7-4f52-8c17-eaa669a5f5dc"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="9" y="80" width="493" height="1" uuid="c78bd774-82e5-402a-b744-478a6d3b99ba"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="10" y="59" width="367" height="10" uuid="6dc07e61-7b81-494e-8e1a-206065ce8a08"/>
+				<text><![CDATA[OBSERVACIONES DE ENVIÓ:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="92" width="526" height="1" uuid="4d15a41b-476f-4adb-9861-63258d75779e"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="9" y="97" width="78" height="8" uuid="67dc31e7-5698-4810-ad82-8664243ea750"/>
+				<text><![CDATA[FECHA DE RECEPCIÓN:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="92" y="103" width="180" height="1" uuid="e8612cbd-f855-4eac-9b4f-e0a9786e13ea"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="106" width="526" height="1" uuid="d0eee7c5-b857-41d9-ab8c-be7a3c0db7cf"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="9" y="110" width="153" height="8" uuid="a82c2e75-34ee-4fcd-b686-41e287f1be27"/>
+				<text><![CDATA[NOMBRE ENCARGADO DE RECEPCIÓN (ACD):]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="165" y="116" width="182" height="1" uuid="de778740-7a7c-4e7e-8cd8-a525bbe2a688"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="351" y="110" width="30" height="8" uuid="10d72086-5be3-490a-9266-ad44ecff86ef"/>
+				<text><![CDATA[FIRMA:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="384" y="116" width="125" height="1" uuid="7f6c0233-823c-40a5-85b1-596a53b52b6e"/>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="Float" x="0" y="119" width="526" height="1" uuid="1c7242cb-e552-420a-a6c2-e35a5a5a4b58"/>
+			</line>
+			<staticText>
+				<reportElement style="textoBold" positionType="Float" x="8" y="123" width="115" height="10" uuid="5851200b-86de-4993-97d6-63a8dcb4fa57"/>
+				<text><![CDATA[OBSERVACIONES DE RECEPCIÓN:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="124" y="130" width="377" height="1" uuid="db11e862-6f8c-41aa-ad0f-e13837fde8fb"/>
+			</line>
+			<line>
+				<reportElement style="lineaPunto" positionType="Float" x="7" y="144" width="493" height="1" uuid="5067d020-4ef3-42c4-b022-46fb4770eec6"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-05-12T16:58:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hojaControlDosificado" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<subDataset name="dataSetRegistrosOtros" uuid="39b97b9e-d25f-4846-b665-4899fedaefd4">
+		<queryString>
+			<![CDATA[select 1  as nro
+union
+select 2 as nro
+union
+select 3 as nro
+union
+select 4 as nro
+union
+select 5 as nro]]>
+		</queryString>
+		<field name="nro" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="dateSetParametrosRendimiento" uuid="4f0ca332-1481-4f24-b063-0454b15e448c">
+		<queryString language="SQL">
+			<![CDATA[select
+'AMPOLLAS ENVASADAS PARA ACONDICIONAMIENTO' as parametro
+union
+select
+'AMPOLLAS PARA CONTROL DE CALIDAD' as parametro
+union
+select
+'AMPOLLAS PARA CONTROL DE VOLUMEN' as parametro
+union
+select
+'GLOBOS,NEGRAS,CARBONES' as parametro
+union
+select
+'LAVADAS-DESPIROGENIZADAS' as parametro
+union
+select
+'ROTAS' as parametro]]>
+		</queryString>
+		<field name="parametro" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="codProgramaProd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codLoteProduccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 1 as nro]]>
+	</queryString>
+	<field name="nro" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="211" splitType="Stretch">
+			<frame>
+				<reportElement positionType="Float" x="10" y="168" width="353" height="40" uuid="2751bd3c-6f10-4605-bad9-ccd0d1fd3640"/>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="5" width="119" height="8" uuid="89bead2f-8084-4809-8db4-e442d4f468f3"/>
+					<text><![CDATA[NOMBRE DEL JEFE DE AREA:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="14" width="229" height="8" uuid="6bd12094-cc8e-4f59-ae09-e6816ec46661"/>
+					<text><![CDATA[Fecha:  .........../.........../...............]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="textoBold" x="3" y="22" width="45" height="8" uuid="c04a67bc-50e1-4d1e-9959-18042ef8307a"/>
+					<text><![CDATA[Observacion:]]></text>
+				</staticText>
+				<line>
+					<reportElement style="lineaPunto" x="5" y="38" width="343" height="1" uuid="a70801d4-e65e-47da-9c29-7599024852dc"/>
+				</line>
+				<line>
+					<reportElement style="lineaPunto" x="122" y="8" width="133" height="1" uuid="39948ffd-aea9-43ef-b015-9cef7549e4e2"/>
+				</line>
+			</frame>
+			<componentElement>
+				<reportElement key="table" x="44" y="7" width="431" height="29" uuid="71335ed0-f615-4959-80e4-6f2db98ad4fa"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dateSetParametrosRendimiento" uuid="2f6a1f9c-286f-4737-8b48-9a7a5b942a60">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="311" uuid="0d61d60b-8400-4812-b3f5-474c396d6944">
+						<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="311" height="14" uuid="568dc3a8-98ec-4839-86af-f5b5f228cb1a"/>
+								<textElement>
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CANTIDAD DE AMPOLLAS]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody." x="10" y="0" width="301" height="14" uuid="7600a93a-cb6e-437d-96ec-e0b38ac49958"/>
+								<textFieldExpression><![CDATA[$F{parametro}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="114" uuid="daeaff04-bc30-49f1-9c41-7549a49b5249">
+						<jr:tableHeader style="celdaCabecera" height="14" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="114" height="14" uuid="278a191e-58da-4d62-a6cd-2f878be282b3"/>
+								<textElement>
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CANTIDAD]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="celdaBody" height="14" rowSpan="1">
+							<line>
+								<reportElement style="lineaPunto" x="7" y="10" width="101" height="1" uuid="541c3614-b1e3-4158-82c1-946ec0f94628"/>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<frame>
+				<reportElement positionType="Float" x="55" y="40" width="409" height="36" uuid="feac80aa-b8a7-450b-971f-b8af479c5c2f"/>
+				<rectangle>
+					<reportElement style="linea" x="2" y="3" width="404" height="29" uuid="9ac6e7d1-a861-4cb2-a350-a604f2416dcf"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="texto" x="31" y="13" width="39" height="8" uuid="4d340cc0-3030-4e8a-bcfe-7a53ae6f01a4"/>
+					<text><![CDATA[Rendimiento=]]></text>
+				</staticText>
+				<line>
+					<reportElement style="linea" x="74" y="17" width="255" height="1" uuid="a71bec59-cfde-4a5f-9159-0369b582b21d"/>
+				</line>
+				<staticText>
+					<reportElement style="texto" x="125" y="8" width="125" height="8" uuid="e04f967d-fa5c-4188-b220-89b9f81fd21f"/>
+					<text><![CDATA[Cant. enviada Acond.+ Control de Calidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="157" y="20" width="69" height="8" uuid="a17d2d0b-d62c-4b4d-8375-3a13c33f50a0"/>
+					<text><![CDATA[Cant. Ampollas Lavadas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="texto" x="333" y="12" width="71" height="10" uuid="387106c1-3e21-4d71-869c-450305fdd41d"/>
+					<text><![CDATA[x 100=............................%]]></text>
+				</staticText>
+			</frame>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="42" y="81" width="429" height="38" uuid="f33f0ef0-477b-4430-825e-9b7efbf4cb5c"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRegistrosOtros" uuid="d6a71a7e-4cbc-45db-87d1-d4ad0c256c07">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="425" uuid="7e8e7cfb-62e5-446f-be70-e0ee38382fca">
+						<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="425" height="12" uuid="a86af6bf-34af-4800-afc2-ea2a0c30acf3"/>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Documentación para envio de producto a acondicionamiento]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:column width="85" uuid="01b38542-f08f-45c3-9014-2d8e39ea592e">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="2c10533b-8c8a-4536-8eac-29cd9b3c0e5c"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Personal]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="85" height="12" forecolor="#FFFFFF" uuid="acc50666-173e-405e-b700-0cd986d2124b"/>
+									<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="85" uuid="1209734b-df9c-4c03-9dd4-b4f038a7d988">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="033d1934-a79e-47d9-9cf3-2cf89a044f8e"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Fecha]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="85" uuid="b2d05fb9-ec25-4a4e-8df5-116ced71e2d6">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="c3205404-c8e2-40bd-9db0-b49b9cbfffa4"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Inicio]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="85" uuid="55ba7df2-a466-40f6-9e2f-fc9556172d27">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="86c2cf63-12a7-403b-912c-8f870291b4d8"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Final]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="85" uuid="6b475d80-279f-4774-bb5d-de50bec0bf98">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="19cf6966-3e71-470f-bf0d-083cc4c3f770"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Horas Hombre]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table" positionType="Float" x="42" y="126" width="429" height="38" uuid="c2e21f1f-b6eb-4a0a-ad5d-ed1ff630ed58"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRegistrosOtros" uuid="9f687125-7730-4a99-890b-7bc5f869c481">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="425" uuid="e5f6698e-4564-4f93-83f6-ea30144342ac">
+						<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="425" height="12" uuid="f9780427-4448-4352-a8aa-55b444027540"/>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Transporte de contenedores de producto a acondicionamiento]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:column width="85" uuid="ce2203fa-a225-46ce-b46c-c165edd731fc">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="949afb8b-01b1-40bc-853a-b308f485f7bf"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Personal]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1">
+								<textField>
+									<reportElement style="textoBody." x="0" y="0" width="85" height="12" forecolor="#FFFFFF" uuid="48755822-2f94-4e62-8d86-b76aa6f4fbb6"/>
+									<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="85" uuid="fa03fc02-e646-4f45-ba67-fb1025a2b063">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="40097f5e-2bf1-4d82-af63-8951ef0f3703"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Fecha]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="85" uuid="0e417ec1-2a4e-4686-bf55-e820af8f4ec6">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="21d818de-e9fc-4537-8580-891aec3f945c"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Inicio]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="85" uuid="d2edc4ee-5f77-4fd1-855a-92237e4ddd00">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="f76852b4-9ab4-4889-8db1-d462e2a0462c"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Hora Final]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="85" uuid="592da1cf-5dad-432f-a42d-e4de493dc65a">
+							<jr:tableHeader style="celdaCabecera" height="12" rowSpan="1">
+								<staticText>
+									<reportElement style="textoCabecera" x="0" y="0" width="85" height="12" uuid="e1b8aeae-48cf-4ed0-8fbf-4a8a2a35b3a8"/>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Horas Hombre]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:detailCell style="celdaBody" height="12" rowSpan="1"/>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

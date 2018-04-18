@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2017-09-25T09:14:49 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteIngresosAcondLog" pageWidth="610" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="526" leftMargin="42" rightMargin="42" topMargin="17" bottomMargin="17" uuid="46ff880b-427f-4d6d-82a3-48b2fd69d73e">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.2"/>
+	<property name="ireport.x" value="103"/>
+	<property name="ireport.y" value="240"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20170721"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosImpresionOM.jrtx"]]></template>
+	<style name="filaDetalle" style="textoBody." mode="Opaque" backcolor="#FFFFFF">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{codIngresoAcondLog1} == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#ADFFB4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaCantidadTotal" style="filaDetalle">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{CANT_TOTAL_INGRESO}.equals($F{CANT_TOTAL_INGRESO2})]]></conditionExpression>
+			<style backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaFechaVencimiento" style="filaDetalle">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!(new SimpleDateFormat("dd/MM/yyyy")).format($F{FECHA_VEN}).equals(
+	(new SimpleDateFormat("dd/MM/yyyy")).format($F{FECHA_VEN2})
+)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaPeso" style="filaDetalle">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{PESO_PRODUCCION}.equals( $F{PESO_PRODUCCION2} )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaEnvase" style="filaDetalle">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{NOMBRE_ENVASE}.equals( $F{NOMBRE_ENVASE2} )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaCantidadEnvase" style="filaDetalle">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{cantidad_envase}.equals( $F{cantidad_envase2} )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="filaCabecera" style="textoBody." mode="Opaque" backcolor="#FFFFFF">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{codIngresoAcondLog1} == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#ADFFB4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaNroIngreso" style="filaCabecera">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{NRO_INGRESOACOND}.equals($F{NRO_INGRESOACOND2})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaAlmacenDestino" style="filaCabecera">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{NOMBRE_ALMACENACOND}.equals($F{NOMBRE_ALMACENACOND2})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaTipoIngreso" style="filaCabecera">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{NOMBRE_TIPOINGRESOACOND}.equals($F{NOMBRE_TIPOINGRESOACOND2})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaEstadoIngreso" style="filaCabecera">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{NOMBRE_ESTADO_INGRESOACOND}.equals($F{NOMBRE_ESTADO_INGRESOACOND2})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<style name="celdaObservacion" style="filaCabecera" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{OBS_INGRESOACOND}.equals($F{OBS_INGRESOACOND2})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F9FFC4"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="dateSetIngresoAcondLog" uuid="f9ff16f0-7cfe-45aa-9900-774da12eabdb">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20170721"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codIngresoAcondLog2" class="java.lang.Integer"/>
+		<parameter name="codIngresoAcondLog1" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select vial.NOMBRE_ALMACENACOND,vial2.NOMBRE_ALMACENACOND as NOMBRE_ALMACENACOND2,
+	vial.NOMBRE_ESTADO_INGRESOACOND,vial2.NOMBRE_ESTADO_INGRESOACOND as NOMBRE_ESTADO_INGRESOACOND2,
+    vial.NRO_INGRESOACOND,vial2.NRO_INGRESOACOND as NRO_INGRESOACOND2,
+    vial.NRO_DOC_INGRESOACOND,vial2.NRO_DOC_INGRESOACOND as NRO_DOC_INGRESOACOND2,
+    vial.NOMBRE_TIPOINGRESOACOND,vial2.NOMBRE_TIPOINGRESOACOND as  NOMBRE_TIPOINGRESOACOND2,
+    vial.OBS_INGRESOACOND,vial2.OBS_INGRESOACOND as OBS_INGRESOACOND2
+    
+from VISTA_INGRESOS_ACOND_LOG vial
+	full outer join VISTA_INGRESOS_ACOND_LOG vial2 on vial.COD_INGRESO_ACOND = vial2.COD_INGRESO_ACOND
+			and vial.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog1} 
+			and vial2.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog2}
+where (vial.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog1} 
+	and vial2.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog2})
+		or (vial.COD_INGRESO_ACOND_LOG is null
+	and vial2.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog2})]]>
+		</queryString>
+		<field name="NOMBRE_ALMACENACOND" class="java.lang.String"/>
+		<field name="NOMBRE_ALMACENACOND2" class="java.lang.String"/>
+		<field name="NOMBRE_ESTADO_INGRESOACOND" class="java.lang.String"/>
+		<field name="NOMBRE_ESTADO_INGRESOACOND2" class="java.lang.String"/>
+		<field name="NRO_INGRESOACOND" class="java.lang.Integer"/>
+		<field name="NRO_INGRESOACOND2" class="java.lang.Integer"/>
+		<field name="NRO_DOC_INGRESOACOND" class="java.lang.String"/>
+		<field name="NRO_DOC_INGRESOACOND2" class="java.lang.String"/>
+		<field name="NOMBRE_TIPOINGRESOACOND" class="java.lang.String"/>
+		<field name="NOMBRE_TIPOINGRESOACOND2" class="java.lang.String"/>
+		<field name="OBS_INGRESOACOND" class="java.lang.String"/>
+		<field name="OBS_INGRESOACOND2" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataSetDetalleAcondLog" uuid="a8111b1f-cd79-460b-9591-89feeaeccf92">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="local20170721"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="codIngresoAcondLog1" class="java.lang.Integer"/>
+		<parameter name="codIngresoAcondLog2" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select vidl.nombre_prod_semiterminado,vidl2.nombre_prod_semiterminado as nombre_prod_semiterminado2
+	,vidl.CANT_TOTAL_INGRESO,vidl2.CANT_TOTAL_INGRESO as CANT_TOTAL_INGRESO2
+    ,vidl.COD_LOTE_PRODUCCION,vidl2.COD_LOTE_PRODUCCION as COD_LOTE_PRODUCCION2
+    ,vidl.FECHA_VEN,vidl2.FECHA_VEN as FECHA_VEN2
+    ,vidl.PESO_PRODUCCION,vidl2.PESO_PRODUCCION as PESO_PRODUCCION2
+    ,vidl.NOMBRE_ENVASE, vidl2.NOMBRE_ENVASE as NOMBRE_ENVASE2
+    ,vidl.cantidad_envase,vidl2.cantidad_envase as cantidad_envase2
+from VISTA_INGRESOS_DETALLE_ACOND_LOG vidl
+	full outer join VISTA_INGRESOS_DETALLE_ACOND_LOG vidl2 on vidl2.COD_COMPPROD = vidl.COD_COMPPROD
+    	and vidl.COD_LOTE_PRODUCCION = vidl2.COD_LOTE_PRODUCCION
+        and vidl.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog1} 
+        and vidl2.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog2} 
+where (vidl.COD_INGRESO_ACOND_LOG =  $P{codIngresoAcondLog1} 
+		and vidl2.COD_INGRESO_ACOND_LOG = $P{codIngresoAcondLog2} )
+		or(vidl.COD_INGRESO_ACOND_LOG is null and 
+					vidl2.COD_INGRESO_ACOND_LOG = $P{codIngresoAcondLog2} )]]>
+		</queryString>
+		<field name="nombre_prod_semiterminado" class="java.lang.String"/>
+		<field name="nombre_prod_semiterminado2" class="java.lang.String"/>
+		<field name="CANT_TOTAL_INGRESO" class="java.lang.Integer"/>
+		<field name="CANT_TOTAL_INGRESO2" class="java.lang.Integer"/>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="COD_LOTE_PRODUCCION2" class="java.lang.String"/>
+		<field name="FECHA_VEN" class="java.sql.Timestamp"/>
+		<field name="FECHA_VEN2" class="java.sql.Timestamp"/>
+		<field name="PESO_PRODUCCION" class="java.lang.Double"/>
+		<field name="PESO_PRODUCCION2" class="java.lang.Double"/>
+		<field name="NOMBRE_ENVASE" class="java.lang.String"/>
+		<field name="NOMBRE_ENVASE2" class="java.lang.String"/>
+		<field name="cantidad_envase" class="java.lang.Integer"/>
+		<field name="cantidad_envase2" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codIngresoAcond" class="java.lang.Integer" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Integer("22382")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirLogoCofar" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D://PROYECTOS//PRODUCCION_DESARROLLO//build//web//img//nuevoLogoCofar.jpg"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.AP_PATERNO_PERSONAL+' '+p.AP_MATERNO_PERSONAL+' '+p.NOMBRES_PERSONAL+' '+p.nombre2_personal as nombrePersonal,
+	ial.FECHA_TRANSACCION,ial.DESCRIPCION_CAUSA_TRANSACCION,ttl.NOMBRE_TIPO_TRANSACCION_LOG
+    ,ial.COD_INGRESO_ACOND_LOG,isnull(datosLogAnterior.COD_INGRESO_ACOND_LOG,0) as COD_INGRESO_ACOND_LOGAnterior
+FROM INGRESOS_ACOND_LOG ial 
+	left outer join personal p on p.COD_PERSONAL = ial.COD_PERSONAL_TRANSACCION
+    inner join TIPOS_TRANSACCION_LOG ttl on ttl.COD_TIPO_TRANSACCION_LOG = ial.COD_TIPO_TRANSACCION_LOG
+    outer APPLY(
+        select top 1 ial2.COD_INGRESO_ACOND_LOG
+        from INGRESOS_ACOND_LOG ial2 
+        where ial2.FECHA_TRANSACCION < ial.FECHA_TRANSACCION
+        		and ial.COD_INGRESO_ACOND = ial2.COD_INGRESO_ACOND
+        order by ial2.FECHA_TRANSACCION desc
+    ) as datosLogAnterior
+where ial.COD_INGRESO_ACOND =  $P{codIngresoAcond} 
+order by ial.FECHA_TRANSACCION]]>
+	</queryString>
+	<field name="nombrePersonal" class="java.lang.String"/>
+	<field name="FECHA_TRANSACCION" class="java.sql.Timestamp"/>
+	<field name="DESCRIPCION_CAUSA_TRANSACCION" class="java.lang.String"/>
+	<field name="NOMBRE_TIPO_TRANSACCION_LOG" class="java.lang.String"/>
+	<field name="COD_INGRESO_ACOND_LOG" class="java.lang.Integer"/>
+	<field name="COD_INGRESO_ACOND_LOGAnterior" class="java.lang.Integer"/>
+	<title>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement style="textoBold" x="1" y="0" width="525" height="14" uuid="45329a8f-b2fe-4867-9e31-a34c39225967"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE INGRESOS DE ACONDICIONAMIENTO LOG]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="172" y="19" width="59" height="10" backcolor="#ADFFB4" uuid="280be3bc-d919-4235-8eb8-2f0cf5992ef0"/>
+				<graphicElement>
+					<pen lineWidth="0.2" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="292" y="19" width="59" height="10" backcolor="#F9FFC4" uuid="b4c5ba55-ce9f-40cb-a636-946e2eee8531">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.2" lineColor="#000000"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement style="textoBold" x="142" y="19" width="29" height="10" uuid="7904f657-b4ea-418d-af26-662e3317b885"/>
+				<text><![CDATA[Nuevo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="252" y="19" width="39" height="10" uuid="95c7101b-a91b-4e8e-8c39-c3aedc0f8699"/>
+				<text><![CDATA[Modificado]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="91">
+			<textField>
+				<reportElement style="texto" x="260" y="10" width="266" height="12" uuid="f4212623-f254-45b1-9891-7603ea7045bb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombrePersonal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="160" y="10" width="100" height="12" uuid="ba9a188c-84e0-4339-bc7b-8dddc37dc93a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Persona Transacción:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoCabeceraProceso" x="0" y="0" width="526" height="10" uuid="b265b14a-6945-4a0b-a48d-d6d88a0cf844">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["Log: "+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="texto" x="79" y="10" width="80" height="12" uuid="730c2b4e-0c24-4c3e-ae94-861b9c4297c6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA_TRANSACCION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" style="textoBold" x="5" y="10" width="74" height="12" uuid="9f2eb34d-9878-4eda-9587-e25e04182a0c">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha Transacción:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="texto" x="79" y="22" width="80" height="12" uuid="ff778631-f176-46b2-8f21-ddf220abd840"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_TIPO_TRANSACCION_LOG}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="5" y="22" width="74" height="12" uuid="b889a5b2-c3d0-44b8-8401-e6380c18086c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Tipo Transacción:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="texto" x="260" y="22" width="266" height="12" uuid="bf15a50e-c8b5-46d3-abe8-4c531d0fae3a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION_CAUSA_TRANSACCION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" x="160" y="22" width="100" height="12" uuid="8f6c1fd6-4ee1-4908-982e-8280cf43bd9b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Observación/ Justificación:]]></text>
+			</staticText>
+			<line>
+				<reportElement style="linea" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="83" uuid="bb76ab60-b843-4d69-adcb-5bbb72e08ffd">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement style="linea" stretchType="RelativeToBandHeight" x="526" y="0" width="1" height="83" uuid="2ff239af-9008-4150-b118-e78ef2518633">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement style="linea" positionType="FixRelativeToBottom" x="0" y="83" width="527" height="1" uuid="17104472-fef5-4eed-9ecb-3f4533271600">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement x="5" y="34" width="510" height="16" uuid="6cb6a6e8-1a68-446f-979e-0d0ce77bb369">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dateSetIngresoAcondLog" uuid="76bf51be-3772-4e19-a187-68bac587dbfe">
+						<datasetParameter name="codIngresoAcondLog1">
+							<datasetParameterExpression><![CDATA[$F{COD_INGRESO_ACOND_LOGAnterior}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codIngresoAcondLog2">
+							<datasetParameterExpression><![CDATA[$F{COD_INGRESO_ACOND_LOG}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="100" uuid="c78a7359-a82a-4afd-b5f6-b442691b860a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="100" height="14" uuid="8001007d-2836-4a59-a7aa-464197de20dc"/>
+								<text><![CDATA[Nro. Ingreso]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="celdaNroIngreso" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="12" uuid="793c37d9-bc89-4086-b756-bd9d0b341578"/>
+								<textFieldExpression><![CDATA[$F{NRO_INGRESOACOND2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="e542f660-b0d6-4cfb-bb50-620302b74280">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="100" height="14" uuid="41e25559-fdfb-48dd-b57a-a687f87f0f67"/>
+								<text><![CDATA[Almacén Destino]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField isStretchWithOverflow="true">
+								<reportElement key="" style="celdaAlmacenDestino" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="12" uuid="4078b6b3-d050-420f-a2b7-7d19ba3c58b9"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_ALMACENACOND2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="0f12e3ff-fb66-4ee3-9cc5-e9dfeb6d5a05">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="100" height="14" uuid="fb0ab6c1-12eb-4711-8409-1ab185ed1670"/>
+								<text><![CDATA[Tipo de Ingreso]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="celdaTipoIngreso" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="12" uuid="6fd4e124-ca0e-463c-8dce-b0f789a841c3"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_TIPOINGRESOACOND2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="bccb5f10-0a09-46fd-9459-909f10a96157">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="80" height="14" uuid="d660dc39-aebb-4c08-a383-27b5bec5c0e2"/>
+								<text><![CDATA[Estado Ingreso]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="celdaEstadoIngreso" stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="12" uuid="ed51bd88-2cf6-4003-b3dc-055f3841505d"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_ESTADO_INGRESOACOND2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="130" uuid="4c023fdd-fc4d-4d4b-bda0-ad7400f09815">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="14">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="130" height="14" uuid="0bf90019-ab03-44da-82d1-90cb3756df16"/>
+								<text><![CDATA[Observación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="12">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="celdaObservacion" stretchType="RelativeToBandHeight" x="0" y="0" width="130" height="12" uuid="7299db83-1f9d-4d70-8f44-d3f95f4d428f"/>
+								<textFieldExpression><![CDATA[$F{OBS_INGRESOACOND2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="5" y="53" width="509" height="20" uuid="ab37c40c-fce4-44b8-8f33-9afadc2a8b7b">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetDetalleAcondLog" uuid="adef5fe8-0e11-41e0-9dbd-5d9cdf35e511">
+						<datasetParameter name="codIngresoAcondLog1">
+							<datasetParameterExpression><![CDATA[$F{COD_INGRESO_ACOND_LOGAnterior}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codIngresoAcondLog2">
+							<datasetParameterExpression><![CDATA[$F{COD_INGRESO_ACOND_LOG}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="100" uuid="6872c2f2-5dd4-4353-b8b7-c891e2c6f5c5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="100" height="15" uuid="d766b485-3cb0-4e8b-8e17-3c575bafc314"/>
+								<text><![CDATA[Producto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="17">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="filaDetalle" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="17" uuid="ce8a4878-8e41-4b0d-a585-a23cf1256c70"/>
+								<textFieldExpression><![CDATA[$F{nombre_prod_semiterminado2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="8c314588-c9ad-46f3-897e-6cb026e42d82">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="15" uuid="df2f402b-2d10-4b3d-9c78-da0a6e2846d1"/>
+								<text><![CDATA[Lote]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="17">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="filaDetalle" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="17" uuid="2514442c-c081-4238-a510-7215ddacd6b1"/>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="e5817098-dce7-4461-8885-ad1e6fc354e7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="15" uuid="a28db4c6-0b88-4ea4-a19b-e0bd9287d140"/>
+								<text><![CDATA[Fecha Vencimiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="17">
+							<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+								<reportElement style="celdaFechaVencimiento" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="17" uuid="58a83355-37ba-4056-906d-76024a89ca42"/>
+								<textFieldExpression><![CDATA[$F{FECHA_VEN2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="1e1d66ea-3612-4f3c-bbfc-1749b20b474f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="80" height="15" uuid="1cac3b32-f44c-436f-a8ea-8927d1142a4c"/>
+								<text><![CDATA[Cantidad Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="17">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="celdaCantidadTotal" stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="17" uuid="c6186466-3776-4631-9c76-905a0bdff86c"/>
+								<textFieldExpression><![CDATA[$F{CANT_TOTAL_INGRESO2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="3f401773-c5a0-46b3-b07b-81731f5c5d34">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="15" uuid="abb4930c-9ff8-4988-aff3-02901fdc0004"/>
+								<text><![CDATA[Peso Kg]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="17">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="celdaPeso" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="17" uuid="c256a1bd-fecb-442c-a07c-84d72adb3670"/>
+								<textFieldExpression><![CDATA[$F{PESO_PRODUCCION2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="d27296f6-d436-4837-9e27-6c9130e3c624">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="60" height="15" uuid="0de4c773-23bc-44fe-9612-017d6b69bf29"/>
+								<text><![CDATA[Cantidad envases]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="17">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="celdaCantidadEnvase" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="17" uuid="c04a750f-5141-474c-af1b-4fc48d1136e0"/>
+								<textFieldExpression><![CDATA[$F{cantidad_envase2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="ad638e78-5cf8-4695-a502-5d2ed6c5bc03">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="celdaCabecera" height="15">
+							<staticText>
+								<reportElement style="textoCabecera" x="0" y="0" width="70" height="15" uuid="9bb870ef-d08c-4caf-919a-d1106169f932"/>
+								<text><![CDATA[Envase]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="17">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="celdaEnvase" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="17" uuid="7f5a2f0c-ba36-447b-8e3e-dee2049eac70"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_ENVASE2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement key="" style="texto" x="490" y="0" width="37" height="10" uuid="f1eccf55-a695-4003-ad5c-30690608c320"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="390" y="0" width="100" height="10" uuid="6926d435-c81c-4726-83c8-cc8b7d7b41d4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

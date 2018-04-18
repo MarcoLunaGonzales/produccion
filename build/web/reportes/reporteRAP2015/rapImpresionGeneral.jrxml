@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2015-12-10T10:13:40 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapImpresionGeneral" pageWidth="527" pageHeight="637" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55ac62b2-6ce5-4880-bf9d-ae1f67824f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<template><![CDATA["C:\\stylosJasperReport\\StylosOM.jrtx"]]></template>
+	<subDataset name="dataSetRapInformacionGeneral" uuid="fccb4cdf-5321-4e45-90f7-da19bfbc8f55">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="fechaInicio" class="java.util.Date"/>
+		<parameter name="fechaFinal" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[exec PAA_RAP_INFORMACION_GENERAL_LOTES_PRODUCCION $P{fechaInicio},$P{fechaFinal}]]>
+		</queryString>
+		<field name="COD_LOTE_PRODUCCION" class="java.lang.String"/>
+		<field name="fechaVencimiento" class="java.sql.Timestamp"/>
+		<field name="nombre_forma" class="java.lang.String"/>
+		<field name="NRO_VERSION" class="java.lang.Integer"/>
+		<field name="REG_SANITARIO" class="java.lang.String"/>
+		<field name="VIDA_UTIL" class="java.lang.Integer"/>
+		<field name="CONCENTRACION_ENVASE_PRIMARIO" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date("01/01/2015")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select getdate() as feha]]>
+	</queryString>
+	<field name="feha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="10" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="103" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" x="13" y="22" width="459" height="81" uuid="f96b113b-619b-4894-9ef4-63552b001dd4"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataSetRapInformacionGeneral" uuid="c3a4a9cc-09ab-4a1e-ba5e-8657637cba18">
+						<datasetParameter name="fechaInicio">
+							<datasetParameterExpression><![CDATA[$P{fechaInicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechaFinal">
+							<datasetParameterExpression><![CDATA[$P{fechaFinal}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="51" uuid="49a78fa9-22a1-47d3-8ff2-2e0eb6f42b88">
+						<jr:columnHeader style="celdaCabecera" height="27" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="51" height="27" uuid="febfb0ff-9233-4358-a041-caba69c0ace7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="52" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="51" height="52" uuid="6fa8e902-c41d-44e8-8af9-3659c7162a6d"/>
+								<textElement>
+									<font size="8" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{COD_LOTE_PRODUCCION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="ee560a30-cfe0-49bb-b451-1297bf1cdfae">
+						<jr:columnHeader style="celdaCabecera" height="27" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="50" height="27" uuid="2572bfa3-78c8-4dde-851f-322edd42cb8c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[FECHA DE EXPIRACION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="52" rowSpan="1">
+							<textField pattern="MMM-yyyy">
+								<reportElement style="textoBody" x="0" y="0" width="50" height="52" uuid="9ba800c3-7304-4c41-ae5f-1855e7456675"/>
+								<textElement>
+									<font size="8" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fechaVencimiento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="a4a211be-c7ba-4504-91c4-4d51b2c9efd5">
+						<jr:columnHeader style="celdaCabecera" height="27" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="90" height="27" uuid="a69a251c-4550-4917-90d3-b63db95eb45c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[CONCENTRACION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="52" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="90" height="52" uuid="83ef1950-deb9-4cb2-8f79-c55957346417"/>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CONCENTRACION_ENVASE_PRIMARIO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="f1f42749-92a4-4e48-a603-742a63c424cc">
+						<jr:columnHeader style="celdaCabecera" height="27" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="76" height="27" uuid="4a9622d9-f72e-462e-b2e7-f6939d021198"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[FORMA FARMACEUTICA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="52" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="76" height="52" uuid="0d61113f-7b32-479f-b7c2-356e8f422d8a"/>
+								<textElement>
+									<font size="8" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nombre_forma}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="8e8b1f83-011e-449d-9bfe-4e85445ca71b">
+						<jr:columnHeader style="celdaCabecera" height="27" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="60" height="27" uuid="dc099ae9-db5c-4338-88f4-9311358ff257"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[CODIGO FORMULA MAESTRA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="52" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="60" height="52" uuid="e4444bde-1a81-40c2-b27c-ef433a115bfc"/>
+								<textElement>
+									<font size="8" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NRO_VERSION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="ca22277f-3c3a-4b84-9222-8e8eb6ba5647">
+						<jr:columnHeader style="celdaCabecera" height="27" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="80" height="27" uuid="c2126c46-1395-4988-bd0d-a014731bb8a8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[No REGISTRO SANITARIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="52" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="80" height="52" uuid="152a6bea-d254-4ef7-90f7-708c5668798a"/>
+								<textElement>
+									<font size="8" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{REG_SANITARIO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="77668a3d-c41a-4493-8df8-0953a775c1d3">
+						<jr:columnHeader style="celdaCabecera" height="27" rowSpan="1">
+							<staticText>
+								<reportElement style="textoBold" x="0" y="0" width="58" height="27" uuid="81f25627-801f-4f27-89a0-aa467ea8863f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[TIEMPO DE VALIDEZ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="celdaBody" height="52" rowSpan="1">
+							<textField>
+								<reportElement style="textoBody" x="0" y="0" width="60" height="52" uuid="90bc9fb7-a505-42c3-917f-9f568d2e061c"/>
+								<textElement>
+									<font size="8" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{VIDA_UTIL}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="texto" x="12" y="4" width="81" height="15" uuid="1ad8a0ba-9bf9-4d24-b60a-d02144c00b63"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[1) Información general]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

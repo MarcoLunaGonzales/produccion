@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-02-12T10:58:50 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cabeceraOm" pageWidth="527" pageHeight="127" columnWidth="527" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="57ce3b9d-5f2a-4c3e-9614-509d4d32c73d">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="texto" fill="Solid" fontName="Arial_OM" fontSize="6" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+	<style name="textoBold" hTextAlign="Center" hImageAlign="Center" vTextAlign="Top" vImageAlign="Top" fontName="Arial_OM" fontSize="5" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="linea">
+		<pen lineWidth="0.6" lineColor="#000000"/>
+	</style>
+	<parameter name="codProgramaProd" class="java.lang.Integer"/>
+	<parameter name="codLoteProduccion" class="java.lang.String"/>
+	<parameter name="nroPagina" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer("1")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreProcesoOrdenManufactura" class="java.lang.String">
+		<defaultValueExpression><![CDATA["HOJA SEGUIMIENTO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dirLogoCofar" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D://PRODUCCION OFICIAL//PRODUCCION//web//img//nuevoLogoCofar.jpg"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[EXEC PAA_DATOS_LOTE_ORDEN_MANUFACTURA $P{codLoteProduccion},$P{codProgramaProd}]]>
+	</queryString>
+	<field name="nombreProducto" class="java.lang.String"/>
+	<field name="nombreForma" class="java.lang.String"/>
+	<field name="loteProduccion" class="java.lang.String"/>
+	<field name="concentracionProducto" class="java.lang.String"/>
+	<field name="registroSanitario" class="java.lang.String"/>
+	<field name="vidaUtil" class="java.lang.String"/>
+	<field name="fechaVencimiento" class="java.lang.String"/>
+	<field name="tamanioLoteProduccion" class="java.lang.String"/>
+	<field name="presentacionesPrimarias" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="127" splitType="Stretch">
+			<staticText>
+				<reportElement style="texto" x="291" y="3" width="57" height="8" uuid="9b902b9b-ec85-4c3f-8078-8d1f1dcd704f"/>
+				<text><![CDATA[Número de Página]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="291" y="12" width="18" height="8" uuid="fe5e0310-e2ba-4d32-89fb-53eddd10a809"/>
+				<text><![CDATA[Lote]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="291" y="24" width="36" height="8" uuid="b064e851-3291-49b7-a3bd-d058aea77e7f"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Expiración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="4" y="98" width="62" height="8" uuid="9a1e5559-9ad8-4085-9cc5-7dc1aca6b72c"/>
+				<text><![CDATA[Forma Farmaceútica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="291" y="41" width="50" height="8" uuid="6c11bb7c-d5c9-4bb3-8c45-238c1a706169"/>
+				<text><![CDATA[Presentación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="291" y="61" width="76" height="8" uuid="6b777143-3762-48dc-a6ad-16a11a26b124"/>
+				<text><![CDATA[N° de Registro Sanitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="291" y="76" width="76" height="8" uuid="8e17ffc6-dece-47d6-9e45-cccc8a287e69"/>
+				<text><![CDATA[Vida util del producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="290" y="93" width="84" height="8" uuid="28ea0166-a0c3-4066-b1db-9667cac81741"/>
+				<text><![CDATA[Tamaño de Lote Industrial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="3" y="65" width="91" height="24" uuid="10b75897-543b-4cd3-89c1-62155e8f63dc"/>
+				<text><![CDATA[Nombre Genérico/ Concentración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="texto" x="5" y="43" width="62" height="8" uuid="66416b09-fd26-4c70-a3ec-b06f8217623a"/>
+				<text><![CDATA[Nombre Comercial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="textoBold" x="156" y="2" width="72" height="8" uuid="1ca40d2a-0e08-4ee9-811f-a2fd608f991e"/>
+				<text><![CDATA[FORMULA MAESTRA]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoBold" x="384" y="2" width="46" height="7" uuid="6f2ae9c3-8515-489e-95bd-0f44eeee6b03"/>
+				<textFieldExpression><![CDATA[$P{nroPagina}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="textoBold" mode="Opaque" x="447" y="2" width="10" height="8" uuid="505c8c75-b481-4e64-ab2b-086ab0f74d1a"/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="textoBold" x="100" y="41" width="182" height="12" uuid="0ae5b92d-57f5-436e-a8b5-08728ec0cd48"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="100" y="98" width="183" height="9" uuid="74c7feba-6a88-43f2-a906-2128f797ba4a"/>
+				<textFieldExpression><![CDATA[$F{nombreForma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="382" y="12" width="142" height="8" uuid="f701e1b3-9927-4bff-9252-ea749e19b490">
+					<printWhenExpression><![CDATA[!$F{loteProduccion}.contains("H")]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{loteProduccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="103" y="65" width="177" height="23" uuid="468b8910-49c2-406d-a550-5d4ecbf0a185"/>
+				<textFieldExpression><![CDATA[$F{concentracionProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="382" y="58" width="141" height="15" uuid="67657aaa-ed17-48b9-94d2-752d1a8a2de6"/>
+				<textFieldExpression><![CDATA[$F{registroSanitario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="383" y="75" width="138" height="15" uuid="7290cb81-4088-4679-bce6-bbdbe4d40531"/>
+				<textFieldExpression><![CDATA[$F{vidaUtil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="textoBold" x="102" y="12" width="182" height="22" uuid="8b10e8aa-6f93-4589-aafa-b7ae33179633"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreProcesoOrdenManufactura}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" x="0" y="35" width="527" height="1" uuid="fd034d3a-6a7c-4db7-9988-de7d31f2e95e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="39" width="527" height="1" uuid="eec5d5c5-1325-4597-ac7a-8c7f478f5863"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="57" width="527" height="1" uuid="d0bb1b11-1c23-4034-9c05-153e489c38df"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="113" width="527" height="1" uuid="17f4733f-4030-4b56-86be-12e41f99e387"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="96" width="285" height="1" uuid="6e3ccff2-4a7c-4cbc-93a0-c1e95419fd45"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="286" y="74" width="240" height="1" uuid="5512f9b0-cc0f-4940-8fbb-2a735f49c21e"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="286" y="90" width="240" height="1" uuid="cd4d2e10-a16d-44c0-8a07-bb44afa16a1a"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="287" y="20" width="240" height="1" uuid="2f1782c4-b93b-43ec-b206-24e04a6f9323"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="99" y="10" width="428" height="1" uuid="9bc6c779-45c9-4488-9d66-51370efd3741"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="98" y="0" width="1" height="35" uuid="81c1b3d3-91e3-4370-8dbc-4531ceb85170"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="98" y="40" width="1" height="73" uuid="d7d0c506-c6f5-416e-9217-c4552572d927"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="285" y="40" width="1" height="73" uuid="23a889a5-0977-434f-9137-1536432ddf28"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="377" y="40" width="1" height="73" uuid="12ea4916-d8ec-4c0b-b4b6-a9c9ac0831e3"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="286" y="0" width="1" height="35" uuid="57de85ae-e13d-4173-bebd-2ecf68d66dfd"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="377" y="0" width="1" height="35" uuid="9ef4d29f-02fe-4e12-b62d-a2cf13065e59"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="434" y="0" width="1" height="10" uuid="00783a9b-20ce-4b97-a420-26d174437fa8"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="474" y="0" width="1" height="10" uuid="9e94a3ae-0b4f-4db8-afb6-fdbd5d7aad7e"/>
+			</line>
+			<rectangle>
+				<reportElement x="2" y="117" width="524" height="9" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="0a25000c-3264-4e91-a6c8-f1c27e176e55"/>
+			</rectangle>
+			<textField>
+				<reportElement style="textoBold" x="179" y="117" width="183" height="9" uuid="4ccd76f5-df50-48df-8c0d-d0838efd05bd"/>
+				<textFieldExpression><![CDATA[$P{nombreProcesoOrdenManufactura}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement style="linea" x="0" y="116" width="527" height="1" uuid="111c4e3c-74c4-464c-9468-f60cf356e49b"/>
+			</line>
+			<line>
+				<reportElement style="linea" x="0" y="125" width="527" height="1" uuid="ed2b32a8-f400-41a9-8fdc-552bcc482067"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement style="texto" x="383" y="21" width="139" height="15" uuid="7b17f46e-69e2-46b2-92e0-12baf184b83d"/>
+				<textFieldExpression><![CDATA[$F{fechaVencimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="382" y="91" width="140" height="23" uuid="dbf28429-e269-4202-afbc-27a850f6138f"/>
+				<textFieldExpression><![CDATA[$F{tamanioLoteProduccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="texto" x="382" y="39" width="141" height="20" uuid="3a7d3c54-cf45-4cb6-bb48-c2cf03004b9d"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presentacionesPrimarias}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="false">
+				<reportElement x="22" y="1" width="47" height="33" uuid="7d13c7f0-b7cc-425d-94a5-00201a97ed8c"/>
+				<imageExpression><![CDATA[$P{dirLogoCofar}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
